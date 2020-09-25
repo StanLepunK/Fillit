@@ -23,6 +23,8 @@ int block_init(t_block *temp_block) {
 	temp_block->row_max = 4;
 	temp_block->col_max = 4;
 
+  // if (!(temp_block->p_line->content = (char*)malloc(sizeof(char) *temp_block->col_max)))
+	// 	return (0);
   if (!(temp_block->previous_line = (char*)malloc(sizeof(char) *temp_block->col_max)))
 		return (0);
   return(1);

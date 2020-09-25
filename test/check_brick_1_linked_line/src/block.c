@@ -1,18 +1,18 @@
 #include "block.h"
 
 
-void line_check(t_block *t_blk, t_line *t_ln) {
+void line_check(t_line *t_ln) {
 	char	c;
 	char previous;
 
   t_ln->state = t_ln->threshold;
-	if(ft_strlen(t_ln->content) == t_blk->row_max) { // why row_max it's weird ?
+	if(ft_strlen(t_ln->content) == t_ln->col_max) {
 		t_ln->state = 0;
 		previous = 0;
 		while((c = *t_ln->content++) !=  '\0') {
 			if(c == t_ln->b || c == t_ln->a) {
 				if(c == t_ln->a) {
-					t_blk->brick += 1;
+					t_ln->brick += 1;
 				}
 				if(previous != 0 && previous != c) {
 					t_ln->state++;
@@ -32,6 +32,13 @@ void line_check(t_block *t_blk, t_line *t_ln) {
 	}
 }
 
+void line_set(t_line *t_ln, char *line) {
+	t_ln->brick = 0;
+	t_ln->state = 0;
+	t_ln->valid = 0;
+	t_ln->content = ft_strcpy(t_ln->content, line);
+}
+
 
 void compare_lines(t_block *t_blk, t_line *t_ln) {
 	int index;
@@ -40,10 +47,8 @@ void compare_lines(t_block *t_blk, t_line *t_ln) {
 	while(index < t_blk->col_max && t_blk->brick <= t_blk->brick_max) {
 		if(t_ln->content[index] == t_ln->a && t_ln->content[index] == t_blk->previous_line[index]) {
 			t_ln->valid = 1;
-      // break;
-		} else {
-      t_ln->valid = 0;
-    }
+      break;
+		} 
 		if(t_ln->content[index] == t_ln->b) {
       t_ln->valid = 1;  
     }
@@ -53,7 +58,8 @@ void compare_lines(t_block *t_blk, t_line *t_ln) {
 
 
 void block_set(t_block *t_blk, t_line *t_ln) {
-  line_check(t_blk, t_ln);
+  line_check(t_ln);
+	t_blk->brick += t_ln->brick;
   if(t_ln->valid == 1) {
 		if(ft_strlen(t_blk->previous_line) == t_blk->col_max) {
       compare_lines(t_blk, t_ln);
@@ -82,7 +88,7 @@ void checker(const int fd, t_block *temp_block) {
 	block_init(temp_block);
   
 	while (get_next_line(fd, &line) > 0) {
-    temp_line.content = ft_strcpy(temp_line.content, line);
+		line_set(&temp_line, line);
 		block_set(temp_block, &temp_line);
 		// free(temp_line.content);
 		free(line);

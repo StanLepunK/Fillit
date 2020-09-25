@@ -19,6 +19,7 @@ struct s_line {
 	int state;
 	int threshold;
 
+	int brick;
 	int col;
 	int col_max;
 
@@ -45,7 +46,8 @@ struct s_block {
 void checker(const int fd, t_block *temp_block);
 
 int line_init(t_line *temp_line);
-void line_check(t_block *temp_block, t_line *temp_line);
+void line_set(t_line *temp_line, char *line);
+void line_check(t_line *temp_line);
 
 int block_init(t_block *temp_block);
 void block_set(t_block *temp_block, t_line *temp_line);

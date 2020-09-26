@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 
+
 typedef struct s_line t_line;
 struct s_line {
 	int id;
@@ -23,18 +24,13 @@ struct s_line {
 	int brick;
 	int col;
 	int col_max;
-
-	t_line *next;
 };
 
 typedef struct s_block t_block;
 struct s_block {
-
   int id;
 
-	t_line *line; // not used at this time 
 	t_line *p_line;
-	char *previous_line; // maybe must move to t_line ?
 
 	int row;
 	int row_max;
@@ -46,12 +42,14 @@ struct s_block {
 };
 
 
-void checker(const int fd, t_block *temp_block);
+int checker(const int fd, t_block *temp_block);
 
+void line_set_arguments(t_line *temp_line);
 int line_init(t_line *temp_line);
 void line_set(t_line *temp_line, char *line);
 void line_check(t_line *temp_line, char *line);
 
+void block_set_arguments(t_block *temp_block);
 int block_init(t_block *temp_block);
 void block_set(t_block *temp_block, t_line *temp_line, char *line);
 

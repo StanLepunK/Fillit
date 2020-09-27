@@ -25,7 +25,6 @@ void line_check(t_line *t_ln, char *line) {
 		}
 	}
 
-	// printf("temp->valid %i, temp->state %i, temp->threshold %i\n",t_ln->valid, t_ln->state, t_ln->threshold);
   t_ln->valid = 0;
   if(t_ln->state < t_ln->threshold) {
 		t_ln->valid = 1;
@@ -46,7 +45,8 @@ void compare_lines(t_block *t_blk, t_line *t_ln) {
 
 	index = 0;
 	while(index < t_ln->col_max) {
-    if(t_ln->content[index] == t_ln->a && t_ln->content[index] == t_blk->p_line->content[index]) {
+    printf("compare_lines() by char >>> curent <> previous >>> %c <> %c\n",t_ln->content[index], t_blk->p_line.content[index]);
+    if(t_ln->content[index] == t_ln->a && t_ln->content[index] == t_blk->p_line.content[index]) {
 			t_ln->valid = 1;
       break;
 		}

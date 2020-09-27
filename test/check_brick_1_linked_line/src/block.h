@@ -30,7 +30,7 @@ typedef struct s_block t_block;
 struct s_block {
   int id;
 
-	t_line *p_line;
+	t_line p_line;
 
 	int row;
 	int row_max;

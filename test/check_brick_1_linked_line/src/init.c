@@ -28,11 +28,7 @@ void block_set_arguments(t_block *temp_block) {
 
 int block_init(t_block *temp_block) {
   block_set_arguments(temp_block);
-  t_line p_line;
-  temp_block->p_line = &p_line;
-  if (!(temp_block->p_line->content = (char*)malloc(sizeof(char) *temp_block->col_max)))
+  if (!(temp_block->p_line.content = (char*)malloc(sizeof(char) *temp_block->col_max)))
 		return (0);
-
-  // printf("0 ft_strlen(temp_block->p_line->content): %lu\n",ft_strlen(temp_block->p_line->content));
   return(1);
 }

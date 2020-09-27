@@ -3,7 +3,8 @@
 void block_set(t_block *t_blk, t_line *t_ln, char *line) {
   line_check(t_ln, line);
 	t_blk->brick += t_ln->brick;
-	if(t_ln->valid == 1 && t_blk->row > 0) {
+	if(t_ln->valid == 1 && t_blk->row > 0 && t_blk->brick < t_blk->brick_max) {
+		t_ln->valid = 0;
 		if(ft_strlen(t_blk->p_line.content) == t_blk->col_max) { 
       compare_lines(t_blk, t_ln);
 			free(t_blk->p_line.content);

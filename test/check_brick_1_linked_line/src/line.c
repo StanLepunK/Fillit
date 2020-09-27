@@ -45,8 +45,10 @@ void compare_lines(t_block *t_blk, t_line *t_ln) {
 
 	index = 0;
 	while(index < t_ln->col_max) {
-    printf("compare_lines() by char >>> curent <> previous >>> %c <> %c\n",t_ln->content[index], t_blk->p_line.content[index]);
+    // printf("compare_lines() by char >>> curent <> previous >>> %c <> %c\n",t_ln->content[index], t_blk->p_line.content[index]);
     if(t_ln->content[index] == t_ln->a && t_ln->content[index] == t_blk->p_line.content[index]) {
+      printf("compare_lines() by char >>> curent <> previous >>> %c <> %c\n",t_ln->content[index], t_blk->p_line.content[index]);
+      printf("compare_lines() current line is valid\n");
 			t_ln->valid = 1;
       break;
 		}

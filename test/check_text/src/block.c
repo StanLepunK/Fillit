@@ -20,7 +20,9 @@ void block_set(t_block *t_blk, t_line *t_ln, char *line) {
       && t_blk->brick == t_blk->brick_max 
       && t_ln->state < t_ln->threshold 
       && t_ln->valid == 1) {
-		printf("add block\n");
+		printf("block_set() >>> add block\n");
+		printf("block_set() >>> previous: %s\n",t_blk->p_line.content);
+		printf("block_set() >>> current: %s\n",t_ln->content);
 		block_set_arguments(t_blk);
 	}
 	

@@ -13,7 +13,7 @@ struct s_tetro_line {
 
 typedef struct s_tetro t_tetro;
 struct s_tetro {
-  t_tetro_line tetro_line;
+  t_tetro_line *tetro_line;
   t_tetro *next;
 };
 

@@ -34,13 +34,13 @@ int main() {
     add_tetro_line(&line, str);
   }
   add_tetro(&tetro, line);
-  // clear_tetro_line(&line);
+  clear_tetro_line(&line);
   
-  str = "....";
-  for(int i = 0 ; i < line_length ; i++) {
-    add_tetro_line(&line, str);
-  }
-  add_tetro(&tetro, line);
+  // str = "....";
+  // for(int i = 0 ; i < line_length ; i++) {
+  //   add_tetro_line(&line, str);
+  // }
+  // add_tetro(&tetro, line);
   // clear_tetro_line(&line);
 
 

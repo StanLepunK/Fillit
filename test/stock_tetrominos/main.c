@@ -20,38 +20,37 @@ void clear_tetro_line(t_tetro_line **ref) {
 int main() {
   // line
   char *str = "####";
-  t_tetro_line *line;
-  line = NULL;
+  t_tetro_line *tetro_line;
+  tetro_line = NULL;
 
   t_tetro *tetro;
   tetro = NULL;
 
-  int line_length = strlen(str);
+  int num_row = 4;
 
-
-
-  for(int i = 0 ; i < line_length ; i++) {
-    add_tetro_line(&line, str);
+  for(int i = 0 ; i < num_row ; i++) {
+    add_tetro_line(&tetro_line, str, i);
   }
-  add_tetro(&tetro, line);
-  clear_tetro_line(&line);
+  add_tetro(&tetro, tetro_line);
+  print_tetro_line(tetro->tetro_line);
+  // clear_tetro_line(&tetro_line);
   
   // str = "....";
-  // for(int i = 0 ; i < line_length ; i++) {
-  //   add_tetro_line(&line, str);
+  // for(int i = 0 ; i < num_row ; i++) {
+  //   add_tetro_line(&tetro_line, str, i);
   // }
-  // add_tetro(&tetro, line);
-  // clear_tetro_line(&line);
+  // add_tetro(&tetro, tetro_line);
+  // clear_tetro_line(&tetro_line);
 
 
   // str = "****";
-  // for(int i = 0 ; i < line_length ; i++) {
-  //   add_tetro_line(&line, str);
+  // for(int i = 0 ; i < num_row ; i++) {
+  //   add_tetro_line(&tetro_line, str, i);
   // }
-  // add_tetro(&tetro, line);
-  // clear_tetro_line(&line);
+  // add_tetro(&tetro, tetro_line);
+  //clear_tetro_line(&tetro_line);
   
-  print_tetro(tetro);
+  // print_tetro(tetro);
 
   return (0);
 }

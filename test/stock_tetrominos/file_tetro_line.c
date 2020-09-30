@@ -2,13 +2,13 @@
 
 
 
-int add_tetro_line(t_tetro_line **ref, char *str) {
+int add_tetro_line(t_tetro_line **ref, char *str, int rank) {
 	t_tetro_line *temp;
+	temp = NULL;
 	if(!(temp = (t_tetro_line*)malloc(sizeof(t_tetro_line))))
 		return (0);
-	// temp->str = str; // may be strdup here
-	temp->str = strdup(str);
-  // swap part
+	// temp_line->str = strdup(str);
+	temp->id = rank;
 	temp->next = (*ref);
   (*ref) = temp;
 	return(1);
@@ -16,9 +16,15 @@ int add_tetro_line(t_tetro_line **ref, char *str) {
 
 void print_tetro_line(t_tetro_line *tetro_line) {
 	while(tetro_line) {
-		printf("str: %s\n",tetro_line->str);
-		// printf("0 print_tetro_line()\n");
+		// printf("str: %s\n",tetro_line->str);
+		printf("id: %i\n",tetro_line->id);
 		tetro_line = tetro_line->next;
-		// printf("1 print_tetro_line()\n");
+		printf("print_tetro_line() tetro_line->next %p\n", tetro_line);
+		// printf("after str: %s\n",tetro_line->str);
+		if(tetro_line->str == NULL) 
+			printf("print_tetro_line() tetro_line->str NULL\n");
+		if(tetro_line == NULL) 
+			printf("print_tetro_line() NULL\n");
 	}
+	// printf("print_tetro_line() out of while\n");
 }

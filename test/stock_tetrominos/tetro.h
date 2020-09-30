@@ -8,6 +8,7 @@
 typedef struct s_tetro_line t_tetro_line;
 struct s_tetro_line {
   char *str;
+  int id;
   t_tetro_line *next;
 };
 
@@ -19,7 +20,7 @@ struct s_tetro {
 
 
 int add_tetro(t_tetro **ref, t_tetro_line *tetro_line);
-int add_tetro_line(t_tetro_line **ref, char *str);
+int add_tetro_line(t_tetro_line **ref, char *str, int rank);
 
 void print_tetro(t_tetro *tetro);
 void print_tetro_line(t_tetro_line *tetro_line);

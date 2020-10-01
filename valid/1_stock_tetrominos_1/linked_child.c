@@ -26,14 +26,14 @@ int dup(t_tetro_line **ref, t_tetro_line *src) {
 	return(ret);
 }
 
-int add_tetro(t_tetro **ref, t_tetro_line *c) {
+int add_tetro(t_tetro **ref, t_tetro_line *tl) {
 	t_tetro *temp;
 	int ret = 0;
 	temp = NULL;
 	if(!(temp = (t_tetro*)malloc(sizeof(t_tetro))))
 		return (0);
 	temp->tetro_line = NULL;
-	ret = dup(&temp->tetro_line, c);
+	ret = dup(&temp->tetro_line, tl);
 	temp->next = (*ref);
   (*ref) = temp;
 	return(ret);

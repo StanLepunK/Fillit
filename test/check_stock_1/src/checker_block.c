@@ -38,7 +38,7 @@ void add_tetrominos(t_block *t_blk, t_tetro *ref_tetro, t_tetro_line **ref_tl) {
 	if(t_blk->valid) {
 		tetro_add(&ref_tetro, *ref_tl);
 		// printf("avant\n");
-		tetro_print(ref_tetro);
+		// tetro_print(ref_tetro);
 		tetro_clear_line(ref_tl);
 
 		// printf("après\n");
@@ -65,7 +65,7 @@ int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 			tetro_add_line(&tl, t_blk->row, temp_line.content);
 			add_tetrominos(t_blk, *ref_tetro, &tl);
 		} else {
-			tetro_clear_line(&tl);
+			// tetro_clear_line(&tl);
 		}
 		// free
 		free(line);

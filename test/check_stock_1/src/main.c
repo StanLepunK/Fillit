@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/01 19:01:43 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/01 19:00:15 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ int main(int num, char **arg) {
 		int fd = open(arg[1], O_RDONLY);
 		checker(fd, &checker_block, &tetrominos);
 	}
+
+	tetro_print(tetrominos);	
 	return (0);
 }

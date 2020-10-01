@@ -18,12 +18,13 @@ int checker_line_init(t_line *temp_line) {
 }
 
 // block
-void checker_block_set_arguments(t_block *temp_block) {
-  temp_block->row = 0;
-	temp_block->brick = 0;
-  temp_block->brick_max = 4;
-	temp_block->row_max = 4;
-	temp_block->col_max = 4;
+void checker_block_set_arguments(t_block *blk) {
+  blk->valid = 0;
+  blk->row = 0;
+	blk->brick = 0;
+  blk->brick_max = 4;
+	blk->row_max = 4;
+	blk->col_max = 4;
 }
 
 int checker_block_init(t_block *temp_block) {

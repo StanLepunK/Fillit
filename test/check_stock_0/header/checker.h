@@ -30,6 +30,7 @@ struct s_line {
 typedef struct s_block t_block;
 struct s_block {
   int id;
+	int valid;
 
 	t_line p_line;
 
@@ -43,7 +44,7 @@ struct s_block {
 };
 
 
-int checker(const int fd, t_block *temp_block, t_tetro *tetro);
+int checker(const int fd, t_block *temp_block, t_tetro **ref_tetro);
 
 void checker_line_set_arguments(t_line *temp_line);
 int checker_line_init(t_line *temp_line);
@@ -52,7 +53,7 @@ void checker_line(t_line *temp_line, char *line);
 
 void checker_block_set_arguments(t_block *temp_block);
 int checker_block_init(t_block *temp_block);
-void checker_block_set(t_block *temp_block, t_line *temp_line, char *line);
+// void checker_block_set(t_block *temp_block, t_line *temp_line, char *line);
 
 void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 

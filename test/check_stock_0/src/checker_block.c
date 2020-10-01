@@ -1,6 +1,9 @@
 #include "../header/checker.h"
 #include "../header/tetro.h"
 
+
+
+
 void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
   checker_line(t_ln, line);
 	t_blk->brick += t_ln->brick;
@@ -15,16 +18,13 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 	if(t_ln->valid == 1) {
 		t_blk->p_line.content = ft_strdup(t_ln->content);
 		t_blk->row += 1;
-	}
+	} 
 		
 	if(t_blk->row == t_blk->row_max 
       && t_blk->brick == t_blk->brick_max 
       && t_ln->state < t_ln->threshold 
       && t_ln->valid == 1) {
-		printf("block_set() >>> add block\n");
-		printf("block_set() >>> previous: %s\n",t_blk->p_line.content);
-		printf("block_set() >>> current: %s\n",t_ln->content);
-		checker_block_set_arguments(t_blk);
+		t_blk->valid = 1;
 	}
 	
 	if(t_ln->state >= t_ln->threshold) {
@@ -32,18 +32,32 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 	}
 }
 
-int checker(const int fd, t_block *t_blk, t_tetro *tetro) {
+void add_tetrominos(t_block *t_blk, t_tetro *ref_tetro, t_tetro_line **ref_tl) {
+	if(t_blk->valid) {
+		tetro_add(&ref_tetro, *ref_tl);
+		tetro_print(ref_tetro);
+		// printf("add_tetrominos() >>> add block\n");
+		tetro_clear_line(ref_tl);
+		checker_block_set_arguments(t_blk);
+	}
+}
+
+int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 	char *line;
   t_line temp_line;
 	t_tetro_line *tl;
 	tl = NULL;
-	
+
   checker_line_init(&temp_line);
 	checker_block_init(t_blk);
   
 	while (get_next_line(fd, &line) > 0) {
 		checker_line_set(&temp_line, line);
 		checker_block_set(t_blk, &temp_line, line);
+		if(temp_line.valid == 1) {
+			tetro_add_line(&tl, t_blk->row, temp_line.content);
+		}
+		add_tetrominos(t_blk, *ref_tetro, &tl);
 		free(line);
 	}
 	get_next_line(fd, &line);

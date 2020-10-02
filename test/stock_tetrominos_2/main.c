@@ -23,7 +23,7 @@ void clear_tetro_line(t_tetro_line **ref) {
 	*ref = NULL;
 }
 
-t_tetro *func_level_0(t_tetro *t) {
+t_tetro *func_ret(t_tetro *t) {
 	char *str = "truc";
 	t_tetro_line *tl;
 	tl = NULL;
@@ -44,11 +44,33 @@ t_tetro *func_level_0(t_tetro *t) {
 	return (t);
 }
 
+void func_pass(t_tetro **ref_t) {
+	char *str = "truc";
+	t_tetro *t = (*ref_t);
+	t_tetro_line *tl;
+	tl = NULL;
+
+	for(int i = 0 ; i < 4 ; i++) {
+		add_tetro_line(&tl, i, str);
+	}
+	add_tetro(&t, tl);
+	clear_tetro_line(&tl);
+
+	str = "machin";
+	for(int i = 0 ; i < 4 ; i++) {
+		add_tetro_line(&tl, i, str);
+	}
+	add_tetro(&t, tl);
+	clear_tetro_line(&tl);
+	(*ref_t) = t;
+}
+
 
 int main() {
 	t_tetro *t;
 	t = NULL;
-	t = func_level_0(t);
+	// t = func_ret(t);
+	func_pass(&t);
 	print_tetro(t);
 	return(0);
 }

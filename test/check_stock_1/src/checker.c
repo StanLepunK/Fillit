@@ -18,13 +18,13 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 	if(t_ln->valid == 1) {
 		t_blk->p_line.content = ft_strdup(t_ln->content);
 		t_blk->row += 1;
-	} 
+	}
+	// t_blk->row += 1;
 		
 	if(t_blk->row == t_blk->row_max 
       && t_blk->brick == t_blk->brick_max 
       && t_ln->state < t_ln->threshold 
       && t_ln->valid == 1) {
-		// printf("void checker_block_set(): add block like tetrominos\n");
 		t_blk->valid = 1;
 	}
 	
@@ -33,18 +33,12 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 	}
 }
 
-
-
-
 void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_tetro_line **ref_tl) {
-	if(t_blk->valid) {
 		t_tetro *temp = (*ref_tetro);
 		tetro_add(&temp, *ref_tl);
-		// tetro_print(temp);
 		tetro_clear_line(ref_tl);
 		checker_block_set_arguments(t_blk);
 		(*ref_tetro) = temp;
-	}
 }
 
 int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
@@ -59,17 +53,33 @@ int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 	checker_block_init(t_blk);
   
 	while (get_next_line(fd, &line) > 0) {
+		if(t_blk->valid && ft_strlen(line) == 0) {
+			t_blk->ready_to_add = 1;
+		}
+				// add
+		if(t_blk->ready_to_add && t_blk->row == t_blk->row_max) {
+			printf("je suis ready\n");
+			add_tetrominos(t_blk, &temp_tetro, &tl);
+		} else {
+			// checker_block_set_arguments(t_blk);
+		}
 		// check part
 		checker_line_set(&temp_line, line);
 		checker_block_set(t_blk, &temp_line, line);
 		//tetrominos part
+		// if(ft_strlen(line) == 0) {
+		// 	printf("ft_strlen(line) == 0\n");
+		// }
+		printf("row: %i\n",t_blk->row);
+
+
 		if(temp_line.valid) {
+		// if(ft_strlen(line) == 0 || temp_line.valid) {
 			tetro_add_line(&tl, t_blk->row, temp_line.content);
-			add_tetrominos(t_blk, &temp_tetro, &tl);
-			// add_tetrominos(t_blk, ref_tetro, &tl);
 		} else {
 			tetro_clear_line(&tl);
 		}
+
 		// free
 		free(line);
 	}

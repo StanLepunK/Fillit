@@ -1,18 +1,18 @@
 #include "../header/checker.h"
 // line
-void checker_line_set_arguments(t_line *temp_line) {
-  temp_line->state = 0;
-  temp_line->valid = 0;
-  temp_line->a = '#';
-	temp_line->b = '.';
-  temp_line->threshold = 3; // can be used like a failed
-  temp_line->brick = 0;
-  temp_line->col_max = 4;
+void checker_line_set_arguments(t_line *ln) {
+  ln->state = 0;
+  ln->valid = 0;
+  ln->a = '#';
+	ln->b = '.';
+  ln->threshold = 3; // can be used like a failed
+  ln->brick = 0;
+  ln->col_max = 4;
 }
 
-int checker_line_init(t_line *temp_line) {
-  checker_line_set_arguments(temp_line);
-  if (!(temp_line->content = (char*)malloc(sizeof(char) *temp_line->col_max)))
+int checker_line_init(t_line *ln) {
+  checker_line_set_arguments(ln);
+  if (!(ln->content = (char*)malloc(sizeof(char) *ln->col_max)))
 		return (0);
   return(1);
 }
@@ -20,6 +20,7 @@ int checker_line_init(t_line *temp_line) {
 // block
 void checker_block_set_arguments(t_block *blk) {
   blk->valid = 0;
+  blk->ready_to_add = 0;
   blk->row = 0;
 	blk->brick = 0;
   blk->brick_max = 4;
@@ -27,9 +28,9 @@ void checker_block_set_arguments(t_block *blk) {
 	blk->col_max = 4;
 }
 
-int checker_block_init(t_block *temp_block) {
-  checker_block_set_arguments(temp_block);
-  if (!(temp_block->p_line.content = (char*)malloc(sizeof(char) *temp_block->col_max)))
+int checker_block_init(t_block *blk) {
+  checker_block_set_arguments(blk);
+  if (!(blk->p_line.content = (char*)malloc(sizeof(char) *blk->col_max)))
 		return (0);
   return(1);
 }

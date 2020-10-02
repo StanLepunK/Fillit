@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/02 13:49:11 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/02 20:18:59 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "../header/checker.h"
 #include "../header/tetro.h"
 
-
+// https://github.com/JemCopeCodes/42-Fillit  nice for displacement grid concept
 
 
 // clang src/*.c header/*.h -I ./ -I./libft -L ./libft/ -lft && ./a.out "./import/sample_0.fillit"

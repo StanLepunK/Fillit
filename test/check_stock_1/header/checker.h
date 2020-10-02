@@ -31,6 +31,7 @@ typedef struct s_block t_block;
 struct s_block {
   int id;
 	int valid;
+	int ready_to_add;
 
 	t_line p_line;
 

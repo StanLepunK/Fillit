@@ -38,8 +38,6 @@ int tetro_add(t_tetro **ref, t_tetro_line *tl) {
 	return(ret);
 }
 
-
-
 void tetro_print(t_tetro *t) {
   printf("ALL TETROMINOS\n");
   while(t) {

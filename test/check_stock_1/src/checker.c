@@ -41,6 +41,23 @@ void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_tetro_line **ref_tl) 
 		(*ref_tetro) = temp;
 }
 
+void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_tetro_line **ref_tl, int length) {
+	t_tetro *temp_tetro = (*ref_tetro);
+	t_tetro_line *temp_tl = (*ref_tl);
+	
+	if(t_blk->valid && length == 0) {
+		t_blk->ready_to_add = 1;
+	}
+
+	if(t_blk->ready_to_add && t_blk->row == t_blk->row_max) {
+		add_tetrominos(t_blk, &temp_tetro, &temp_tl);
+	}
+
+	(*ref_tetro) = temp_tetro;
+	(*ref_tl) = temp_tl;
+}
+
+
 int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 	char *line;
   t_line temp_line;
@@ -53,16 +70,14 @@ int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 	checker_block_init(t_blk);
   
 	while (get_next_line(fd, &line) > 0) {
-		if(t_blk->valid && ft_strlen(line) == 0) {
-			t_blk->ready_to_add = 1;
-		}
-				// add
-		if(t_blk->ready_to_add && t_blk->row == t_blk->row_max) {
-			printf("je suis ready\n");
-			add_tetrominos(t_blk, &temp_tetro, &tl);
-		} else {
-			// checker_block_set_arguments(t_blk);
-		}
+		build_dict_tetrominos(t_blk, &temp_tetro, &tl, ft_strlen(line));
+		// if(t_blk->valid && ft_strlen(line) == 0) {
+		// 	t_blk->ready_to_add = 1;
+		// }
+
+		// if(t_blk->ready_to_add && t_blk->row == t_blk->row_max) {
+		// 	add_tetrominos(t_blk, &temp_tetro, &tl);
+		// }
 		// check part
 		checker_line_set(&temp_line, line);
 		checker_block_set(t_blk, &temp_line, line);
@@ -89,6 +104,56 @@ int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 	(*ref_tetro) = temp_tetro;
 	return (1);
 }
+
+
+
+
+// int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
+// 	char *line;
+//   t_line temp_line;
+// 	t_tetro_line *tl;
+// 	t_tetro *temp_tetro = (*ref_tetro);
+
+// 	tl = NULL;
+
+//   checker_line_init(&temp_line);
+// 	checker_block_init(t_blk);
+  
+// 	while (get_next_line(fd, &line) > 0) {
+// 		build_dict_tetrominos(t_blk, &temp_tetro, &tl, ft_strlen(line));
+// 		// if(t_blk->valid && ft_strlen(line) == 0) {
+// 		// 	t_blk->ready_to_add = 1;
+// 		// }
+
+// 		// if(t_blk->ready_to_add && t_blk->row == t_blk->row_max) {
+// 		// 	add_tetrominos(t_blk, &temp_tetro, &tl);
+// 		// }
+// 		// check part
+// 		checker_line_set(&temp_line, line);
+// 		checker_block_set(t_blk, &temp_line, line);
+// 		//tetrominos part
+// 		// if(ft_strlen(line) == 0) {
+// 		// 	printf("ft_strlen(line) == 0\n");
+// 		// }
+// 		printf("row: %i\n",t_blk->row);
+
+
+// 		if(temp_line.valid) {
+// 		// if(ft_strlen(line) == 0 || temp_line.valid) {
+// 			tetro_add_line(&tl, t_blk->row, temp_line.content);
+// 		} else {
+// 			tetro_clear_line(&tl);
+// 		}
+
+// 		// free
+// 		free(line);
+// 	}
+// 	get_next_line(fd, &line);
+// 	free(line);
+// 	close(fd);
+// 	(*ref_tetro) = temp_tetro;
+// 	return (1);
+// }
 
 
 

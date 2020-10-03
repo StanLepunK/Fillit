@@ -7,20 +7,7 @@
 #include "libft.h"
 #include "get_next_line.h"
 
-typedef struct s_tetro_line t_tetro_line;
-struct s_tetro_line {
-	char *str;
-	int id;
-	t_tetro_line *next;
-};
 
-typedef struct s_tetro t_tetro;
-struct s_tetro {
-	int offset_x;
-	int offset_y;
-	t_tetro_line *tetro_line;
-	t_tetro *next;
-};
 
 
 typedef struct s_line t_line;
@@ -42,6 +29,7 @@ struct s_line {
 	int brick;
 	int col;
 	int col_max;
+	t_line *next;
 };
 
 typedef struct s_block t_block;
@@ -63,6 +51,17 @@ struct s_block {
 	int brick_max;
 };
 
+
+typedef struct s_tetro t_tetro;
+struct s_tetro {
+	int offset_x;
+	int offset_y;
+	t_line *tetro_line;
+	t_tetro *next;
+};
+
+
+
 int checker(const int fd, t_block *temp_block, t_tetro **ref_tetro);
 
 void checker_line_set_arguments(t_line *temp_line);
@@ -80,10 +79,10 @@ void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 
 
 // int tetro_add_line(t_tetro_line **ref, int rank, t_line *t_ln);
-int tetro_add_line(t_tetro_line **ref, int rank, char *str);
-int tetro_line_dup(t_tetro_line **ref, t_tetro_line *src);
-int tetro_add(t_tetro **ref, t_tetro_line *src);
-void tetro_clear_line(t_tetro_line **ref);
+int tetro_add_line(t_line **ref, int rank, char *str);
+int tetro_line_dup(t_line **ref, t_line *src);
+int tetro_add(t_tetro **ref, t_line *src);
+void tetro_clear_line(t_line **ref);
 void tetro_print(t_tetro *t);
 
 #endif

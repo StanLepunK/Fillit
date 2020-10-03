@@ -33,7 +33,7 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 	}
 }
 
-void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_tetro_line **ref_tl) {
+void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_line **ref_tl) {
 		t_tetro *temp = (*ref_tetro);
 		tetro_add(&temp, *ref_tl);
 		tetro_clear_line(ref_tl);
@@ -41,9 +41,9 @@ void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_tetro_line **ref_tl) 
 		(*ref_tetro) = temp;
 }
 
-void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_tetro_line **ref_tl, int length) {
+void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length) {
 	t_tetro *temp_tetro = (*ref_tetro);
-	t_tetro_line *temp_tl = (*ref_tl);
+	t_line *temp_tl = (*ref_tl);
 
 	if(t_blk->valid && length == 0) {
 		t_blk->ready_to_add = 1;
@@ -59,20 +59,19 @@ void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_tetro_line **
 
 int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 	char *line;
-  t_line temp_line;
-	t_tetro_line *tl;
+  t_line buffer;
+	t_line *tl;
 	t_tetro *temp_tetro = (*ref_tetro);
 
 	tl = NULL;
-  checker_line_init(&temp_line);
+  checker_line_init(&buffer);
 	checker_block_init(t_blk);
 	while (get_next_line(fd, &line) > 0) {
 		build_dict_tetrominos(t_blk, &temp_tetro, &tl, ft_strlen(line));
-		checker_line_set(&temp_line, line);
-		checker_block_set(t_blk, &temp_line, line);
-		if(temp_line.valid) {
-			// tetro_add_line(&tl, t_blk->row, &temp_line);
-			tetro_add_line(&tl, t_blk->row, temp_line.content);
+		checker_line_set(&buffer, line);
+		checker_block_set(t_blk, &buffer, line);
+		if(buffer.valid) {
+			tetro_add_line(&tl, t_blk->row, buffer.content);
 		} else {
 			tetro_clear_line(&tl);
 		}

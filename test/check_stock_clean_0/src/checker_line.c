@@ -53,7 +53,7 @@ void checker_compare_lines(t_block *t_blk, t_line *t_ln) {
 	int index;
 
 	index = 0;
-	if(t_blk->p_line.empty == 1) {
+	if(t_blk->p_line.empty == 0) {
 		while(index < t_ln->col_max) {
 			if(t_ln->content[index] == t_ln->a && t_ln->content[index] == t_blk->p_line.content[index]) {
 				t_ln->valid = 1;

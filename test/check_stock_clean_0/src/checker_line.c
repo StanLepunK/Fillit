@@ -1,4 +1,4 @@
-#include "../header/checker.h"
+#include "../header/tetro.h"
 
 void info_line(char elem, char previous, t_line *t_ln) {
 	if(elem == t_ln->a) {
@@ -21,7 +21,6 @@ void checker_line(t_line *t_ln, char *line) {
 	if(t_ln->length == t_ln->col_max) {
 		t_ln->state = 0;
 		previous = 0;
-    // need to pass line, to use to read it, without use an index argument... to keep line under 25 norminette suck
     while((c = *line++) !=  '\0') {
 			if(c == t_ln->b || c == t_ln->a) {
 				info_line(c, previous, t_ln);
@@ -43,6 +42,8 @@ void checker_line_set(t_line *t_ln, char *line) {
 	t_ln->brick = 0;
 	t_ln->state = 0;
 	t_ln->valid = 0;
+	t_ln->empty = 1;
+	t_ln->offset = 0;
 	t_ln->content = ft_strcpy(t_ln->content, line);
   t_ln->length = ft_strlen(t_ln->content);
 }

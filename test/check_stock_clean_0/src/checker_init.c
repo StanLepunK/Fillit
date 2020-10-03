@@ -1,4 +1,4 @@
-#include "../header/checker.h"
+#include "../header/tetro.h"
 // line
 void checker_line_set_arguments(t_line *ln) {
   ln->state = 0;

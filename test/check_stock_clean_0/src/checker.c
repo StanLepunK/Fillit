@@ -1,4 +1,4 @@
-#include "../header/checker.h"
+
 #include "../header/tetro.h"
 
 
@@ -71,6 +71,7 @@ int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 		checker_line_set(&temp_line, line);
 		checker_block_set(t_blk, &temp_line, line);
 		if(temp_line.valid) {
+			// tetro_add_line(&tl, t_blk->row, &temp_line);
 			tetro_add_line(&tl, t_blk->row, temp_line.content);
 		} else {
 			tetro_clear_line(&tl);

@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/03 13:19:49 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/03 16:25:38 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <unistd.h>
 #include "../header/get_next_line.h"
 #include "libft.h"
-#include "../header/checker.h"
 #include "../header/tetro.h"
 
 // https://github.com/JemCopeCodes/42-Fillit  nice for displacement grid concept

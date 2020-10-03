@@ -12,6 +12,18 @@ int tetro_add_line(t_tetro_line **ref, int rank, char *str) {
 	return(1);
 }
 
+// int tetro_add_line(t_tetro_line **ref, int rank, t_line *t_ln) {
+// 	t_tetro_line *temp;
+// 	temp = NULL;
+// 	if(!(temp = (t_tetro_line*)malloc(sizeof(t_tetro_line))))
+// 		return (0);
+// 	temp->id = rank;
+// 	temp->str = ft_strdup(t_ln->content);
+// 	temp->next = (*ref);
+// 	(*ref) = temp;
+// 	return(1);
+// }
+
 int tetro_line_dup(t_tetro_line **ref, t_tetro_line *src) {
 	int rank = 0;
 	int ret = 0;

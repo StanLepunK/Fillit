@@ -1,34 +1,35 @@
 #include "../header/tetro.h"
 
-int tetro_add_line(t_line **ref, int rank, char *str) {
-	t_line *temp;
-	temp = NULL;
-	if(!(temp = (t_line*)malloc(sizeof(t_line))))
-		return (0);
-	temp->id = rank;
-	temp->content = ft_strdup(str);
-	temp->next = (*ref);
-	(*ref) = temp;
-	return(1);
-}
-
-// int tetro_add_line(t_tetro_line **ref, int rank, t_line *t_ln) {
-// 	t_tetro_line *temp;
+// int tetro_add_line(t_line **ref, int rank, char *str) {
+// 	t_line *temp;
 // 	temp = NULL;
-// 	if(!(temp = (t_tetro_line*)malloc(sizeof(t_tetro_line))))
+// 	if(!(temp = (t_line*)malloc(sizeof(t_line))))
 // 		return (0);
 // 	temp->id = rank;
-// 	temp->str = ft_strdup(t_ln->content);
+// 	temp->content = ft_strdup(str);
 // 	temp->next = (*ref);
 // 	(*ref) = temp;
 // 	return(1);
 // }
 
+int tetro_add_line(t_line **ref, int rank, t_line *t_ln) {
+	t_line *temp;
+	temp = NULL;
+	if(!(temp = (t_line*)malloc(sizeof(t_line))))
+		return (0);
+	temp->id = rank;
+	temp->content = ft_strdup(t_ln->content);
+	temp->next = (*ref);
+	(*ref) = temp;
+	return(1);
+}
+
 int tetro_line_dup(t_line **ref, t_line *src) {
 	int rank = 0;
 	int ret = 0;
   while(src) {
-		ret = tetro_add_line(ref, rank, src->content);
+		ret = tetro_add_line(ref, rank, src);
+		// ret = tetro_add_line(ref, rank, src->content);
 		if(!ret)
 			break;
 		rank++;

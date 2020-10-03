@@ -8,8 +8,6 @@
 #include "get_next_line.h"
 
 
-
-
 typedef struct s_line t_line;
 struct s_line {
 	int id;
@@ -63,23 +61,15 @@ struct s_tetro {
 
 
 int checker(const int fd, t_block *temp_block, t_tetro **ref_tetro);
-
 void checker_line_set_arguments(t_line *temp_line);
 int checker_line_init(t_line *temp_line);
 void checker_line_set(t_line *temp_line, char *line);
 void checker_line(t_line *temp_line, char *line);
-
 void checker_block_set_arguments(t_block *temp_block);
 int checker_block_init(t_block *temp_block);
-// void checker_block_set(t_block *temp_block, t_line *temp_line, char *line);
-
 void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 
-
-
-
-// int tetro_add_line(t_tetro_line **ref, int rank, t_line *t_ln);
-int tetro_add_line(t_line **ref, int rank, char *str);
+int tetro_add_line(t_line **ref, int rank, t_line *t_ln);
 int tetro_line_dup(t_line **ref, t_line *src);
 int tetro_add(t_tetro **ref, t_line *src);
 void tetro_clear_line(t_line **ref);

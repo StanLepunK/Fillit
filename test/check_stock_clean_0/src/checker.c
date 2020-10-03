@@ -9,10 +9,8 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 	t_blk->brick += t_ln->brick;
 	if(t_ln->valid == 1 && t_blk->row > 0 && t_blk->brick < t_blk->brick_max) {
 		t_ln->valid = 0;
-		printf("t_ln->valid: %i\n",t_ln->valid);
 		if(ft_strlen(t_blk->p_line.content) == t_blk->col_max) { 
       checker_compare_lines(t_blk, t_ln);
-			printf("t_ln->valid: %i\n",t_ln->valid);
 			free(t_blk->p_line.content);
     }
 	}
@@ -73,7 +71,8 @@ int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 		checker_line_set(&buffer, line);
 		checker_block_set(t_blk, &buffer, line);
 		if(buffer.valid) {
-			tetro_add_line(&tl, t_blk->row, buffer.content);
+			tetro_add_line(&tl, t_blk->row, &buffer);
+			// tetro_add_line(&tl, t_blk->row, buffer.content);
 		} else {
 			tetro_clear_line(&tl);
 		}

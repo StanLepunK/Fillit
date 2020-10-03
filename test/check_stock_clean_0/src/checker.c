@@ -17,10 +17,10 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 
 	if(t_ln->valid == 1) {
 		t_blk->p_line.content = ft_strdup(t_ln->content);
+		t_blk->p_line.empty = t_ln->empty;
 		t_blk->row += 1;
 	}
-	// t_blk->row += 1;
-		
+	
 	if(t_blk->row == t_blk->row_max 
       && t_blk->brick == t_blk->brick_max 
       && t_ln->state < t_ln->threshold 

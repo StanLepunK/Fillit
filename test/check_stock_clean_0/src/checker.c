@@ -34,11 +34,11 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 }
 
 void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_line **ref_tl) {
-		t_tetro *temp = (*ref_tetro);
-		tetro_add(&temp, *ref_tl);
-		tetro_clear_line(ref_tl);
-		checker_block_set_arguments(t_blk);
-		(*ref_tetro) = temp;
+	t_tetro *temp = (*ref_tetro);
+	tetro_add(&temp, *ref_tl);
+	tetro_clear_line(ref_tl);
+	checker_block_set_arguments(t_blk);
+	(*ref_tetro) = temp;
 }
 
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length) {
@@ -72,7 +72,6 @@ int checker(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 		checker_block_set(t_blk, &buffer, line);
 		if(buffer.valid) {
 			tetro_add_line(&tl, t_blk->row, &buffer);
-			// tetro_add_line(&tl, t_blk->row, buffer.content);
 		} else {
 			tetro_clear_line(&tl);
 		}

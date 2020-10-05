@@ -74,5 +74,6 @@ int tetro_line_dup(t_line **ref, t_line *src);
 int tetro_add(t_tetro **ref, t_line *src);
 void tetro_clear_line(t_line **ref);
 void tetro_print(t_tetro *t);
+void tetro_clean(t_tetro *t);
 
 #endif

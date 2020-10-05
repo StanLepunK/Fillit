@@ -65,3 +65,39 @@ void tetro_clear_line(t_line **ref) {
   }
   *ref = NULL;
 }
+
+
+void tetro_clean(t_tetro *t) {
+  printf("CLEAN TETROMINOS\n");
+	t_line tl;
+
+	checker_line_set_arguments(&tl);
+	int lock_x;
+	int lock_y;
+
+  while(t) {
+    printf("next tetromino\n");
+		lock_x = 0;
+		lock_y = 0;
+    while(t->tetro_line) {
+			if(!t->tetro_line->empty) {
+				lock_y = 1;
+			}
+			if(t->tetro_line->empty && !lock_y) {
+				t->offset_y++;
+			}
+			if(t->offset_x <= t->tetro_line->offset && !lock_x) {
+				t->offset_x = t->tetro_line->offset;
+				lock_x = 1;
+			} else if(t->tetro_line->offset < t->offset_x) {
+				t->offset_x = t->tetro_line->offset;
+			}
+      printf("%s\n",t->tetro_line->content);
+      t->tetro_line = t->tetro_line->next;
+    }
+		printf("offset x: %i \n",t->offset_x);
+		printf("offset y: %i \n",t->offset_y);
+    t = t->next;
+  }
+	
+}

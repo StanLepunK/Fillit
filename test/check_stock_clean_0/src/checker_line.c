@@ -5,11 +5,11 @@ void info_line(char elem, char previous, t_line *t_ln) {
 		t_ln->empty = 0;
 		t_ln->brick++;
 	}
-	if(elem == t_ln->b && t_ln->state < 1) {
-		t_ln->offset++;
-	}
 	if(previous != 0 && previous != elem) {
 		t_ln->state++;
+	}
+	if(elem == t_ln->b && t_ln->state < 1) {
+		t_ln->offset++;
 	}
 }
 

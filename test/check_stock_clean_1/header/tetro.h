@@ -72,7 +72,7 @@ void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 int tetro_add_line(t_line **ref, int rank, t_line *t_ln);
 int tetro_line_dup(t_line **ref, t_line *src);
 int tetro_add(t_tetro **ref, t_line *src);
-void tetro_clear_line(t_line **ref);
+void tetro_line_free(t_line **ref);
 void tetro_print(t_tetro *t);
 void tetro_clean(t_tetro *t);
 

@@ -42,19 +42,8 @@ int tetro_add(t_tetro **ref, t_line *tl) {
 	return(ret);
 }
 
-void tetro_print(t_tetro *t) {
-  printf("ALL TETROMINOS\n");
-  while(t) {
-    printf("next tetromino\n");
-    while(t->tetro_line) {
-      printf("str: %s, empty: %i, offset: %i\n",t->tetro_line->content, t->tetro_line->empty, t->tetro_line->offset);
-      t->tetro_line = t->tetro_line->next;
-    }
-    t = t->next;
-  }
-}
 
-void tetro_clear_line(t_line **ref) {
+void tetro_line_free(t_line **ref) {
   t_line *current = *ref;
   t_line *next;
   while(current) {
@@ -67,37 +56,54 @@ void tetro_clear_line(t_line **ref) {
 }
 
 
+
+void tetro_line_print(t_line *ln) {
+	while(ln) {
+		printf("str: %s\n",ln->content);
+		ln = ln->next;
+  }
+}
+
+void tetro_print(t_tetro *t) {
+  printf("PRINT ALL TETROMINOS\n");
+  while(t) {
+    printf("print next tetromino\n");
+		tetro_line_print(t->tetro_line);
+		printf("offset x: %i \n",t->offset_x);
+		printf("offset y: %i \n",t->offset_y);
+    t = t->next;
+  }
+}
+
+
+void tetro_line_clean(t_tetro *t, t_line *ln) {
+	int lock_x = 0;
+	int lock_y = 0;
+	while(ln) {
+		if(!ln->empty) {
+			lock_y = 1;
+		}
+		if(ln->empty && !lock_y) {
+			t->offset_y++;
+		}
+		if(t->offset_x <= ln->offset && !lock_x) {
+			t->offset_x = ln->offset;
+			lock_x = 1;
+		} else if(ln->offset < t->offset_x) {
+			t->offset_x = ln->offset;
+		}
+		ln = ln->next;
+	}
+}
+
 void tetro_clean(t_tetro *t) {
   printf("CLEAN TETROMINOS\n");
 	t_line tl;
 
 	checker_line_set_arguments(&tl);
-	int lock_x;
-	int lock_y;
-
   while(t) {
-    printf("next tetromino\n");
-		lock_x = 0;
-		lock_y = 0;
-    while(t->tetro_line) {
-			if(!t->tetro_line->empty) {
-				lock_y = 1;
-			}
-			if(t->tetro_line->empty && !lock_y) {
-				t->offset_y++;
-			}
-			if(t->offset_x <= t->tetro_line->offset && !lock_x) {
-				t->offset_x = t->tetro_line->offset;
-				lock_x = 1;
-			} else if(t->tetro_line->offset < t->offset_x) {
-				t->offset_x = t->tetro_line->offset;
-			}
-      printf("%s\n",t->tetro_line->content);
-      t->tetro_line = t->tetro_line->next;
-    }
-		printf("offset x: %i \n",t->offset_x);
-		printf("offset y: %i \n",t->offset_y);
+    printf("clean next tetromino\n");
+		tetro_line_clean(t, t->tetro_line);
     t = t->next;
   }
-	
 }

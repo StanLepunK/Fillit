@@ -52,6 +52,8 @@ struct s_block {
 
 typedef struct s_tetro t_tetro;
 struct s_tetro {
+	int id;
+	char name;
 	int offset_x;
 	int offset_y;
 	t_line *tetro_line;
@@ -74,6 +76,6 @@ int tetro_line_dup(t_line **ref, t_line *src);
 int tetro_add(t_tetro **ref, t_line *src);
 void tetro_line_free(t_line **ref);
 void tetro_print(t_tetro *t);
-void tetro_clean(t_tetro *t);
+void tetro_clean_and_format(t_tetro *t);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/05 15:21:34 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/06 10:20:47 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int main(int num, char **arg) {
 		int fd = open(arg[1], O_RDONLY);
 		checker(fd, &checker_block, &tetrominos);
 	}
-	tetro_clean(tetrominos);
-	// need to reboot the linked list to the first arguments.
-
+	tetro_clean_and_format(tetrominos);
 	tetro_print(tetrominos);
 
 	return (0);

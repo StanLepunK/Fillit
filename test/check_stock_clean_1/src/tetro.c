@@ -67,8 +67,10 @@ void tetro_line_print(t_line *ln) {
 void tetro_print(t_tetro *t) {
   printf("PRINT ALL TETROMINOS\n");
   while(t) {
-    printf("print next tetromino\n");
+    printf("\nprint next tetromino\n");
 		tetro_line_print(t->tetro_line);
+		printf("name: %c \n",t->name);
+		printf("id: %i \n",t->id);
 		printf("offset x: %i \n",t->offset_x);
 		printf("offset y: %i \n",t->offset_y);
     t = t->next;
@@ -96,14 +98,20 @@ void tetro_line_clean(t_tetro *t, t_line *ln) {
 	}
 }
 
-void tetro_clean(t_tetro *t) {
-  printf("CLEAN TETROMINOS\n");
+void tetro_clean_and_format(t_tetro *t) {
+  printf("CLEAN and FORMAT TETROMINOS\n");
 	t_line tl;
+	char name;
+	int id;
 
+	name = 'A';
+	id = 0;
 	checker_line_set_arguments(&tl);
   while(t) {
-    printf("clean next tetromino\n");
+    printf("cleaning and formating next tetromino\n");
 		tetro_line_clean(t, t->tetro_line);
+		t->name = (name++);
+		t->id = (id++);
     t = t->next;
   }
 }

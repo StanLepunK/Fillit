@@ -3,39 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <sgirard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/09/14 11:15:59 by sgirard          ###   ########.fr       */
+/*   Updated: 2020/10/06 17:57:45 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include<fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "../includes/get_next_line.h"
+#include "libft.h"
+#include "../includes/tetro.h"
 
-int main(int argc, char **argv)
-{
-	(void)argc;
+// https://github.com/JemCopeCodes/42-Fillit  nice for displacement grid concept
 
-	int fd = open(argv[1], O_RDONLY);
-	int count = 0;
-	char *line;
-	// int ret;
 
-	line = NULL;
-	
-	printf("lTest %s\n", argv[1]);
 
-	while (get_next_line(fd, &line) > 0)
-	{
-		printf("ligne %i %s\n", count, line);
-		free(line);
-		count++;
+// clang src/*.c header/*.h -I ./ -I./libft -L ./libft/ -lft && ./a.out "./import/sample_0.fillit"
+int main(int num, char **arg) {
+	t_block checker_block;
+	t_tetro *tetrominos;
+	tetrominos = NULL;
+
+	if(num > 0) {
+		int fd = open(arg[1], O_RDONLY);
+		checker(fd, &checker_block, &tetrominos);
 	}
-	printf("---------------\n");
-	// printf("fd=%d\n", fd);
-	// ret = get_next_line(fd, &line);
-	// printf("ret=%d\n", ret);
-	// free(line);
-	close(fd);
+	tetro_clean_and_format(tetrominos);
+	tetro_print(tetrominos);
+	puzzle(tetrominos);
+
 	return (0);
 }

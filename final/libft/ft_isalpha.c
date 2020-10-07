@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/09 17:14:38 by sgirard           #+#    #+#             */
-/*   Updated: 2020/01/09 17:31:58 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/14 09:42:28 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/14 09:42:33 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_isalpha(int c)
 {
-	if (((c >= 65) && (c <= 90)) || ((c >= 97) && (c <= 122)))
-		return (1);
+	if (r_upper_is(c) || r_lower_is(c))
+		return (TRUE);
 	else
-		return (0);
+		return (FALSE);
 }

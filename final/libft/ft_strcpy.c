@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/03 16:13:36 by sgirard           #+#    #+#             */
-/*   Updated: 2019/12/06 15:56:01 by sgirard          ###   ########.fr       */
+/*   Created: 2019/09/04 19:29:56 by smarcais          #+#    #+#             */
+/*   Updated: 2019/09/04 19:30:12 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
 
 char	*ft_strcpy(char *dest, const char *src)
 {

@@ -3,60 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/23 09:55:23 by sgirard           #+#    #+#             */
-/*   Updated: 2020/01/24 19:13:31 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/24 10:15:50 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/28 16:53:31 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-long	ft_len_nombre(long n)
+static int	str_len_nbr(long nbr)
 {
-	long		i;
+	int count;
 
-	i = 0;
-	if (n == 0)
-		i = 1;
-	if (n < 0)
+	count = 0;
+	if (nbr == 0)
+		return (1);
+	if (nbr < 0)
+		nbr *= -1;
+	while (nbr > 0)
 	{
-		i = i + 1;
-		n = (-1) * n;
+		count++;
+		nbr /= 10;
 	}
-	while (n > 0)
-	{
-		n = n / 10;
-		i++;
-	}
-	return (i);
+	return (count);
 }
 
-char	*ft_itoa(int n)
+static int	len_start(long nbr)
 {
-	char	*str;
-	long	len;
-	long	j;
+	int start;
 
-	j = n;
-	len = ft_len_nombre(j);
-	str = (char*)malloc(sizeof(char) * (len + 1));
-	if (!str)
+	start = 0;
+	if (nbr < 0)
+	{
+		nbr *= -1;
+		start = 1;
+	}
+	return (start);
+}
+
+char		*ft_itoa(int nbr)
+{
+	int		len;
+	char	*result;
+	long	buf_nbr;
+
+	buf_nbr = nbr;
+	len = len_start(buf_nbr);
+	if (buf_nbr < 0)
+		buf_nbr *= -1;
+	len += str_len_nbr(buf_nbr);
+	result = ft_memalloc(sizeof(char) * (len + 1));
+	if (!result)
 		return (NULL);
-	str[len] = '\0';
-	if (j == 0)
-		str[0] = '0';
-	if (j < 0)
+	if (buf_nbr == 0)
+		result[0] = '0';
+	else
 	{
-		str[0] = '-';
-		j = (-1) * j;
+		while (len-- > 0 && buf_nbr > 0)
+		{
+			result[len] = buf_nbr % 10 + '0';
+			buf_nbr /= 10;
+		}
+		if (len == 0)
+			result[len] = '-';
 	}
-	len = len - 1;
-	while (j > 0)
-	{
-		str[len] = (j % 10) + 48;
-		j = j / 10;
-		len--;
-	}
-	return (str);
+	return (result);
 }

@@ -3,17 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/22 13:36:57 by sgirard           #+#    #+#             */
-/*   Updated: 2020/01/22 15:59:11 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/24 10:14:13 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/24 14:44:50 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <unistd.h>
 
-void	ft_putendl(char const *s)
+void	ft_putendl(char const *str)
 {
-	ft_putstr(s);
-	write(1, "\n", 1);
+	char c;
+
+	if (str)
+	{
+		ft_putstr(str);
+		c = '\n';
+		write(1, &c, 1);
+	}
 }

@@ -3,25 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <sgirard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarcais <smarcais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/20 14:23:36 by sgirard           #+#    #+#             */
-/*   Updated: 2020/09/10 08:19:34 by sgirard          ###   ########.fr       */
+/*   Created: 2020/03/10 10:25:05 by smarcais          #+#    #+#             */
+/*   Updated: 2020/03/10 17:59:16 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include "libft.h"
-# include <fcntl.h>
-# include <stdio.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
+# define BUFF_SIZE 1
 
-# define BUFF_SIZE 1024
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <unistd.h>
 
-int		get_next_line(const int fd, char **line);
+int	get_next_line(const int fd, char **line);
+
+
+typedef struct		s_fd_content 
+{
+	int		fd;
+	char	*content;
+
+}									t_fd_content;
 
 #endif

@@ -3,26 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/14 12:24:25 by sgirard           #+#    #+#             */
-/*   Updated: 2020/02/03 17:26:27 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/14 16:19:25 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/28 17:07:52 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strclr(char *s)
+void	ft_strclr(char *src)
 {
-	int len;
+	size_t len;
 
-	len = ft_strlen(s);
-	if (s == 0)
-		return ;
-	else
-		while (len >= 0)
-		{
-			s[len] = '\0';
-			len--;
-		}
+	if (src != NULL)
+	{
+		len = ft_strlen(src);
+		ft_bzero((void *)src, len);
+	}
 }

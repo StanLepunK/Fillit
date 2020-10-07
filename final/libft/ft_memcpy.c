@@ -3,28 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/07 15:43:36 by sgirard           #+#    #+#             */
-/*   Updated: 2020/01/07 15:44:36 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/13 17:09:37 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/29 08:28:30 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t len)
 {
-	unsigned char *tmp1;
-	unsigned char *tmp2;
+	size_t			index;
+	unsigned char	*buf_src;
+	unsigned char	*buf_dst;
 
-	tmp1 = (unsigned char*)src;
-	tmp2 = (unsigned char*)dst;
-	if (n == 0 || dst == src)
-		return (dst);
-	while (n > 0)
+	if (!dst && !src && len > 0)
+		return (NULL);
+	if (len < 0)
+		return ((void*)src);
+	buf_src = (unsigned char *)src;
+	buf_dst = (unsigned char *)dst;
+	index = len;
+	while (index > 0)
 	{
-		*tmp2++ = *tmp1++;
-		n--;
+		*buf_dst++ = *buf_src++;
+		index--;
 	}
 	return (dst);
 }

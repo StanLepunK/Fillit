@@ -3,82 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <sgirard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/07 14:50:30 by sgirard           #+#    #+#             */
-/*   Updated: 2020/08/20 16:20:03 by sgirard          ###   ########.fr       */
+/*   Created: 2020/03/10 09:48:53 by smarcais          #+#    #+#             */
+/*   Updated: 2020/10/06 14:50:39 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include "stdlib.h"
+#include "libft.h"
+#include "../includes/get_next_line.h"
+#include <stdio.h>
 
-int		ft_traitement(char **str, int fd, char *buf, int *eof)
+static size_t	get_index(char *str, int *p_eol, char *target)
 {
-	int		nb_read;
-	char	*result;
+	char	*ptr;
+	size_t	index;
 
-	while (1)
+	index = -1;
+	ptr = ft_strstr(str, target);
+	if (ptr)
 	{
-		if (ft_strchr(*str, '\n'))
-			break ;
-		if (!((nb_read = read(fd, buf, BUFF_SIZE)) > 0))
-		{
-			if (nb_read == -1)
-				return (-1);
-			*eof = 1;
-			break ;
-		}
-		buf[nb_read] = '\0';
-		if (*str == NULL)
-			*str = ft_strdup(buf);
-		else
-		{
-			result = ft_strjoin(*str, buf);
-			ft_strdel(str);
-			*str = result;
-		}
+		index = (ptr - str);
+		*p_eol = 1;
 	}
-	return (*eof);
+	return (index);
 }
 
-void	ft_make_line(char **line, char **str)
+static int		set_line(char **line, char *bridge, int *p_eol, int *p_eof)
 {
-	int		i;
-	char	*tmp;
+	int		index;
+	int		length;
+	char	*temp;
+	char	*rest;
 
-	i = ft_strchr(*str, '\n') - *str;
-	*line = ft_strsub(*str, 0, i);
-	tmp = ft_strdup(*str + i + 1);
-	ft_strdel(str);
-	*str = tmp;
+	index = get_index(bridge, p_eol, "\n");
+	if (index == -1)
+		index = ft_strlen(bridge);
+	length = ft_strlen(bridge);
+	rest = ft_strsub(bridge, 0, index);
+	if (index >= length)
+		ft_memmove(bridge, bridge + index, length);
+	else
+		ft_memmove(bridge, bridge + index + 1, length);
+	temp = *line;
+	*line = ft_strjoin(temp, rest);
+	free(rest);
+	free(temp);
+	if (index < BUFF_SIZE && *p_eol == 0 && *p_eof == 0)
+		return (0);
+	return (1);
 }
 
-int		get_next_line(const int fd, char **line)
+int				get_next_line(const int fd, char **line)
 {
-	int				ret;
-	int				eof;
-	char			buf[BUFF_SIZE + 1];
-	static char		*str;
+	static t_fd_content *bridge;
+	int			is;
+	int			eol;
+	int			eof;
 
-	eof = 0;
-	ret = 0;
-	if (fd < 0 || !line || BUFF_SIZE <= 0)
-		return (-1);
-	eof = ft_traitement(&str, fd, buf, &eof);
-	if (eof == -1)
-		return (-1);
-	if (ft_strchr(str, '\n') || ((eof == 1) && (ft_strlen(str)) > 0))
+	is = -1;
+	eof = BUFF_SIZE;
+	if(!bridge) {
+		bridge = (t_fd_content*)ft_memalloc(sizeof(t_fd_content));
+		bridge->content = ft_memalloc(BUFF_SIZE + 1);
+		eof = read(fd, bridge->content, BUFF_SIZE);
+		bridge->fd = fd;
+	}
+	if (fd < 0 || fd != bridge->fd || BUFF_SIZE < 1 || read(fd, bridge->content, 0) < 0)
+		return (is);
+	eol = 0;
+	*line = ft_memalloc(1);
+	while (eol == 0 && is != 0)
 	{
-		if (eof)
+		if (!bridge->content)
 		{
-			*line = ft_strdup(str);
-			ft_strdel(&str);
+			bridge->content = ft_memalloc(BUFF_SIZE + 1);
+			eof = read(fd, bridge->content, BUFF_SIZE);
 		}
-		else
-			ft_make_line(line, &str);
+		is = set_line(line, bridge->content, &eol, &eof);
+		if (bridge->content[0] == '\0')
+			ft_strdel(&bridge->content);
+	}
+	if(ft_strlen(*line) > 0 && eof == 0)
 		return (1);
-	}
-	ft_strdel(&str);
-	return (0);
+	return (is);
 }

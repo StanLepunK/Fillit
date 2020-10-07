@@ -3,33 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/14 15:25:23 by sgirard           #+#    #+#             */
-/*   Updated: 2020/01/14 16:09:32 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/15 07:49:20 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/28 17:09:12 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-char	*ft_strmap(char const *s, char (*f)(char))
+char	*ft_strmap(char const *src, char (*f)(char))
 {
-	char	*str;
+	int		index;
+	char	*result;
 	int		len;
-	int		i;
 
-	len = ft_strlen(s);
-	if (s == 0)
-		return (0);
-	str = (char*)malloc((sizeof(char)) * (len + 1));
-	if (str == 0)
-		return (0);
-	i = 0;
-	while (s[i] != '\0')
+	if (src)
 	{
-		str[i] = f(s[i]);
-		i++;
+		len = ft_strlen(src);
+		if (!(result = malloc(sizeof(char) * (len + 1))))
+			return (NULL);
+		{
+			index = 0;
+			while (src[index] != '\0')
+			{
+				result[index] = f(src[index]);
+				index++;
+			}
+			result[index] = '\0';
+			return (result);
+		}
 	}
-	str[i] = '\0';
-	return (str);
+	else
+		return (NULL);
 }

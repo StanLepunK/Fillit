@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/06 14:57:59 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/06 17:57:45 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int main(int num, char **arg) {
 	}
 	tetro_clean_and_format(tetrominos);
 	tetro_print(tetrominos);
+	puzzle(tetrominos);
 
 	return (0);
 }

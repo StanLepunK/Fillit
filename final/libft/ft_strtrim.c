@@ -3,41 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 17:58:55 by sgirard           #+#    #+#             */
-/*   Updated: 2020/01/24 19:30:24 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/15 15:39:50 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/28 17:17:46 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-int		ft_space(char c)
+char	*ft_strtrim(char const *src)
 {
-	if (c == ' ' || c == '\n' || c == '\t')
-		return (1);
-	else
-		return (0);
-}
+	size_t	index;
+	size_t	len;
 
-char	*ft_strtrim(char const *s)
-{
-	int len;
-	int i;
-
-	if (!s)
-		return (NULL);
-	i = 0;
-	while (ft_space(s[i]) == 1)
+	if (src)
 	{
-		i++;
-		if (s[i] == '\0')
-			return (ft_strdup(""));
+		index = 0;
+		while (src[index] != '\0' && r_space_is((int)src[index]) == TRUE)
+			index++;
+		len = ft_strlen(src);
+		while (index < len && r_space_is((int)src[len - 1]) == TRUE)
+			len--;
+		if (index == len)
+			return (ft_strnew(1));
+		len -= index;
+		return (ft_strsub(src, index, len));
 	}
-	len = ft_strlen((char*)s);
-	if (s[len] == '\0')
-		len = (len - 1);
-	while (ft_space(s[len]) == 1)
-		len--;
-	return (ft_strsub(s, i, len - i + 1));
+	else
+		return (NULL);
 }

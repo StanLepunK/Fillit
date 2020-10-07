@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strqu.c                                         :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/14 17:58:13 by sgirard           #+#    #+#             */
-/*   Updated: 2020/01/29 10:02:28 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/24 12:39:33 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/24 12:39:40 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strequ(char const *s1, char const *s2)
+void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	int i;
-	int j;
-
-	if (s1 == 0)
-		return (0);
-	if (s2 == 0)
-		return (0);
-	i = 0;
-	j = 0;
-	while (s1[i] == s2[j] && s1[i] != '\0' && s2[j] != '\0')
+	if (lst && f)
 	{
-		i++;
-		j++;
+		while (lst)
+		{
+			f(lst);
+			lst = lst->next;
+		}
 	}
-	if ((s1[i] - s2[j]) == 0)
-		return (1);
-	else
-		return (0);
 }

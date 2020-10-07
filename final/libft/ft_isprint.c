@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/13 11:53:26 by sgirard           #+#    #+#             */
-/*   Updated: 2020/01/13 12:27:57 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/14 10:16:21 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/14 10:16:24 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_isprint(int c)
 {
-	if (c >= 32 && c < 127)
-		return (1);
+	if (c >= ' ' && c <= '~')
+		return (TRUE);
 	else
-		return (0);
+		return (FALSE);
 }

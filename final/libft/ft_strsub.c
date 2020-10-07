@@ -3,30 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/14 18:59:02 by sgirard           #+#    #+#             */
-/*   Updated: 2020/01/28 11:44:01 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/15 09:49:16 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/28 17:14:43 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+char	*ft_strsub(char const *src, unsigned int start, size_t len)
 {
-	char			*str;
-	unsigned int	i;
+	size_t			index;
+	int				len_src;
+	char			*result;
 
-	str = (char*)ft_memalloc(sizeof(char) * (len + 1));
-	if (str == NULL || s == NULL)
+	if (!(result = malloc(sizeof(char) * (len + 1))))
 		return (NULL);
-	i = 0;
-	while (i < len)
+	if (src)
 	{
-		str[i] = s[start];
-		i++;
-		start++;
+		index = start;
+		len_src = ft_strlen(src);
+		if (start >= (unsigned int)len_src)
+			return (NULL);
+		while (src[index] != '\0' && index < len + start)
+		{
+			result[index - start] = src[index];
+			index++;
+		}
+		result[index - start] = '\0';
+		return (result);
 	}
-	str[i] = '\0';
-	return (str);
+	else
+		return (NULL);
 }

@@ -3,80 +3,109 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgirard <sgirard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarcais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/20 18:28:15 by sgirard           #+#    #+#             */
-/*   Updated: 2020/07/20 15:26:47 by sgirard          ###   ########.fr       */
+/*   Created: 2019/11/19 10:33:22 by smarcais          #+#    #+#             */
+/*   Updated: 2019/11/29 15:07:58 by smarcais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-int		ft_nbr_mots(const char *str, char c)
+static int		elem_count(char const *src, char c)
 {
-	int		mots;
-	int		i;
+	int count;
+	int index;
+	int is;
 
-	mots = 0;
-	i = 0;
-	if (str[0] != c)
-		mots++;
-	while (str[++i] != '\0')
+	count = 0;
+	index = 0;
+	is = TRUE;
+	while (src[index] != '\0')
 	{
-		if (str[i] == c && str[i + 1] != c && str[i + 1] != '\0')
-			mots++;
+		if (!is && src[index] == c)
+			is = TRUE;
+		else if (src[index] != c)
+		{
+			if (is)
+				count++;
+			is = FALSE;
+		}
+		index++;
 	}
-	return (mots);
+	return (count);
 }
 
-int		ft_len_mots(char const *str, char c)
+static int		str_len(char const *src, unsigned int start, char c)
 {
-	int		i;
-	int		len;
+	int	count;
 
-	i = 0;
-	len = 0;
-	while (str[i] == c && str[i] != '\0')
-		i++;
-	while (str[i] != c && str[i] != '\0')
+	if (src)
 	{
-		i++;
-		len++;
+		count = 0;
+		while (src[start] != '\0' && src[start] != c)
+		{
+			start++;
+			count++;
+		}
+		return (count);
 	}
-	return (len);
+	else
+		return (0);
 }
 
-void	init(int *i, int *j)
+static char		*str_from(char *elem, const char *src, int start, char c)
 {
-	*i = -1;
-	*j = 0;
-}
+	int		index;
 
-char	**ft_strsplit(char const *s, char c)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	**tab;
-	int		nb;
-
-	nb = ft_nbr_mots(s, c);
-	tab = (char**)malloc(sizeof(char*) * (nb + 1));
-	if (!s || !tab)
+	if (src)
+	{
+		index = 0;
+		while (src[start] != '\0' && src[start] != c)
+		{
+			elem[index] = src[start];
+			start++;
+			index++;
+		}
+		elem[index] = '\0';
+		return (elem);
+	}
+	else
 		return (NULL);
-	init(&i, &j);
-	while (++i < nb)
+}
+
+static void		free_tab(char **tabs, size_t index)
+{
+	while (index--)
+		ft_strdel(&(tabs[index]));
+	free(*tabs);
+}
+
+char			**ft_strsplit(char const *src, char c)
+{
+	char	**tab;
+	int		ix;
+	int		ix_tab;
+
+	if (!src || !(tab = (char**)malloc(8 * (elem_count(src, c) + 1))))
+		return (NULL);
+	ix = 0;
+	ix_tab = 0;
+	while (src[ix] != '\0')
 	{
-		k = 0;
-		tab[i] = ft_strnew(ft_len_mots(&s[j], c) + 1);
-		if (!tab[i])
-			tab[i] = NULL;
-		while (s[j] == c && s[j] != '\0')
-			j++;
-		while (s[j] != c && s[j] != '\0')
-			tab[i][k++] = s[j++];
-		tab[i][k] = '\0';
+		if (src[ix] != c)
+		{
+			if (!(tab[ix_tab] = (char*)malloc(8 * (str_len(src, ix, c) + 1))))
+			{
+				free_tab(tab, ix_tab);
+				return (NULL);
+			}
+			ix += ft_strlen(str_from(tab[ix_tab++], (char*)src, ix, c));
+		}
+		else
+			ix++;
 	}
-	tab[i] = 0;
+	tab[ix_tab] = NULL;
 	return (tab);
 }

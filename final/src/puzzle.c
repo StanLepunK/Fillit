@@ -1,7 +1,23 @@
 #include "../includes/tetro.h"
 
-void add_line_puzzle() {
+char	*r_copy_from_to(const char *src, int start, int end)
+{
+	char	*copy;
+	int		index;
+  int len;
 
+	index = 0;
+	len = end - start;
+	copy = (char *)malloc(sizeof(char) * len + 1);
+	if (copy == (char *)NULL)
+		return (NULL);
+	while (src[start + index] != '\0' && index < end)
+	{
+		copy[index] = src[start + index];
+		index++;
+	}
+	copy[len] = '\0';
+	return (copy);
 }
 
 
@@ -14,7 +30,8 @@ void puzzle_line_solve(t_puzzle **ref_pzl, t_tetro *t) {
 	while(iter_y < t->size.y + t->offset.y) {
     if(iter_y >= t->offset.y) {
       char *res;
-      res = r_copy_from_index(t->tetro_line->content, t->offset.x, t->tetro_line->length);
+      int end = t->size.x + t->offset.x;
+      res = r_copy_from_to(t->tetro_line->content, t->offset.x, end);
       printf("str format: %s\n",res);
     }
 		t->tetro_line = t->tetro_line->next;

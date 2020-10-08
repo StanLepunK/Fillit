@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/06 17:57:45 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/08 14:47:39 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,32 @@
 #include "../includes/tetro.h"
 
 // https://github.com/JemCopeCodes/42-Fillit  nice for displacement grid concept
+int builder(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
+	char *line;
+  t_line buffer;
+	t_line *tl;
+	t_tetro *temp_tetro = (*ref_tetro);
 
+	tl = NULL;
+  checker_line_init(&buffer);
+	checker_block_init(t_blk);
+	while (get_next_line(fd, &line) > 0) {
+		build_dict_tetrominos(t_blk, &temp_tetro, &tl, ft_strlen(line));
+		checker_line_set(&buffer, line);
+		checker_block_set(t_blk, &buffer, line);
+		if(buffer.valid) {
+			tetro_add_line(&tl, t_blk->row, &buffer);
+		} else {
+			tetro_line_free(&tl);
+		}
+		free(line);
+	}
+	get_next_line(fd, &line);
+	free(line);
+	close(fd);
+	(*ref_tetro) = temp_tetro;
+	return (1);
+}
 
 
 // clang src/*.c header/*.h -I ./ -I./libft -L ./libft/ -lft && ./a.out "./import/sample_0.fillit"
@@ -27,14 +52,18 @@ int main(int num, char **arg) {
 	t_block checker_block;
 	t_tetro *tetrominos;
 	tetrominos = NULL;
+	int print_info_is = 0;
 
 	if(num > 0) {
 		int fd = open(arg[1], O_RDONLY);
-		checker(fd, &checker_block, &tetrominos);
+		builder(fd, &checker_block, &tetrominos);
 	}
-	tetro_clean_and_format(tetrominos);
-	tetro_print(tetrominos);
-	puzzle(tetrominos);
+	tetro_clean_and_format(tetrominos, print_info_is);
+	if(print_info_is) {
+		tetro_print(tetrominos);
+	}
+	print_info_is = 1;
+	puzzle(tetrominos, print_info_is);
 
 	return (0);
 }

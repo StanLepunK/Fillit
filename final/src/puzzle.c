@@ -27,15 +27,17 @@ void puzzle_line_solve(t_puzzle **ref_pzl, t_tetro *t) {
   (*ref_pzl) = temp;
 }
 
-int puzzle(t_tetro *t) {
-  printf("PRINT PUZZLE\n");
+int puzzle(t_tetro *t, int print_info_is) {
+  if(print_info_is)
+    printf("PRINT PUZZLE\n");
   t_puzzle *pzl;
   pzl = NULL;
   if(!(pzl = (t_puzzle*)malloc(sizeof(t_puzzle))))
 		return (0);
 
   while(t) {
-    printf("\nnext piece to solve puzzle\n");
+    if(print_info_is)
+      printf("\nnext piece to solve puzzle\n");
     puzzle_line_solve(&pzl, t);
 
     t = t->next;

@@ -75,9 +75,7 @@ struct s_tetro {
 	t_tetro *next;
 };
 
-
-
-int checker(const int fd, t_block *temp_block, t_tetro **ref_tetro);
+void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
 void checker_line_set_arguments(t_line *temp_line);
 int checker_line_init(t_line *temp_line);
 void checker_line_set(t_line *temp_line, char *line);
@@ -86,13 +84,15 @@ void checker_block_set_arguments(t_block *temp_block);
 int checker_block_init(t_block *temp_block);
 void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 
+void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
 int tetro_add_line(t_line **ref, int rank, t_line *t_ln);
 int tetro_line_dup(t_line **ref, t_line *src);
 int tetro_add(t_tetro **ref, t_line *src);
 void tetro_line_free(t_line **ref);
-void tetro_print(t_tetro *t);
-void tetro_clean_and_format(t_tetro *t);
 
-int puzzle(t_tetro *t);
+void tetro_print(t_tetro *t);
+void tetro_clean_and_format(t_tetro *t, int print_info_is);
+
+int puzzle(t_tetro *t, int print_info_is);
 
 #endif

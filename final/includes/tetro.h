@@ -93,6 +93,6 @@ void tetro_line_free(t_line **ref);
 void tetro_print(t_tetro *t);
 void tetro_clean_and_format(t_tetro *t);
 
-void puzzle(t_tetro *t);
+int puzzle(t_tetro *t);
 
 #endif

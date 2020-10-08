@@ -1,11 +1,12 @@
 #include "../includes/tetro.h"
 
-int tetro_add(t_tetro **ref, t_line *tl) {
+int tetro_add(t_tetro **ref, t_line *tl, int id) {
 	t_tetro *temp;
 	int ret = 0;
 	temp = NULL;
 	if(!(temp = (t_tetro*)malloc(sizeof(t_tetro))))
 		return (0);
+	temp->id = (++id);
 	temp->tetro_line = NULL;
 	temp->offset.x = 0;
 	temp->offset.y = 0;
@@ -17,7 +18,11 @@ int tetro_add(t_tetro **ref, t_line *tl) {
 
 void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_line **ref_tl) {
 	t_tetro *temp = (*ref_tetro);
-	tetro_add(&temp, *ref_tl);
+	if(temp) {
+		tetro_add(&temp, *ref_tl, temp->id);
+	} else {
+		tetro_add(&temp, *ref_tl, -1);
+	}
 	tetro_line_free(ref_tl);
 	checker_block_set_arguments(t_blk);
 	(*ref_tetro) = temp;
@@ -46,6 +51,7 @@ int tetro_add_line(t_line **ref, int rank, t_line *t_ln) {
 		return (0);
 	temp->id = rank;
 	temp->content = ft_strdup(t_ln->content);
+	temp->length = t_ln->length;
 	temp->empty = t_ln->empty;
 	temp->offset = t_ln->offset;
 	temp->brick = t_ln->brick;

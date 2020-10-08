@@ -3,26 +3,22 @@
 void add_line_puzzle() {
 
 }
-void add_to_puzzle(t_line *ln_dst, t_line *ln_src, ivec2 offset) {
-  // t_puzzle *temp = (*ref_pzl);
-  printf("offset: %i, %i\n",offset.x, offset.y);
-	while(ln_src) {
-		printf("str: %s\n",ln_src->content);
-		ln_src = ln_src->next;
-  }
-  // (*ref_pzl) = temp;
-}
+
 
 
 void puzzle_line_solve(t_puzzle **ref_pzl, t_tetro *t) {
   t_puzzle *temp = (*ref_pzl);
-  printf("offset: %i, %i\n",t->offset.x, t->offset.y);
-  int iter = t->offset.y;
-  // add_to_puzzle(temp->tetro_line, t->tetro_line, t->offset);
-	while(iter < t->size.y + t->offset.y) {
-		printf("str: %s\n",t->tetro_line->content);
+  printf("piece of puzzle\n");
+  int iter_x = 0;
+  int iter_y = 0;
+	while(iter_y < t->size.y + t->offset.y) {
+    if(iter_y >= t->offset.y) {
+      char *res;
+      res = r_copy_from_index(t->tetro_line->content, t->offset.x, t->tetro_line->length);
+      printf("str format: %s\n",res);
+    }
 		t->tetro_line = t->tetro_line->next;
-    iter++;
+    iter_y++;
   }
   (*ref_pzl) = temp;
 }

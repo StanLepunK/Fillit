@@ -7,6 +7,7 @@
 #include "libft.h"
 #include "get_next_line.h"
 
+
 typedef struct s_ivec2 ivec2;
 struct  s_ivec2 {
 	int x;
@@ -37,13 +38,6 @@ struct s_line {
 	t_line *next;
 };
 
-typedef struct s_puzzle t_puzzle;
-struct s_puzzle {
-	t_line *tetro_line;
-	t_puzzle *next;
-
-};
-
 typedef struct s_block t_block;
 struct s_block {
   int id;
@@ -64,6 +58,20 @@ struct s_block {
 };
 
 
+
+typedef struct s_puzzle t_puzzle;
+struct s_puzzle {
+	int id;
+	int brick;
+	int space;
+
+	ivec2 size;
+
+	t_line *tetro_line;
+	t_puzzle *next;
+
+};
+
 typedef struct s_tetro t_tetro;
 struct s_tetro {
 	int id;
@@ -75,6 +83,10 @@ struct s_tetro {
 	t_tetro *next;
 };
 
+
+// utils
+int add_line(t_line **ref, int rank, t_line *t_ln);
+// checker
 void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
 void checker_line_set_arguments(t_line *temp_line);
 int checker_line_init(t_line *temp_line);
@@ -83,15 +95,13 @@ void checker_line(t_line *temp_line, char *line);
 void checker_block_set_arguments(t_block *temp_block);
 int checker_block_init(t_block *temp_block);
 void checker_compare_lines(t_block *temp_block, t_line *temp_line);
-
+// tetro
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
-int tetro_add_line(t_line **ref, int rank, t_line *t_ln);
 int tetro_line_dup(t_line **ref, t_line *src);
 void tetro_line_free(t_line **ref);
-
 void tetro_print(t_tetro *t);
 void tetro_clean_and_format(t_tetro *t, int print_info_is);
-
+// puzzle
 int puzzle(t_tetro *t, int print_info_is);
 
 #endif

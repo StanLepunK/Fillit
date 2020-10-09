@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/08 15:38:56 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/09 12:06:06 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int builder(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 		checker_line_set(&buffer, line);
 		checker_block_set(t_blk, &buffer, line);
 		if(buffer.valid) {
-			tetro_add_line(&tl, t_blk->row, &buffer);
+			add_line(&tl, t_blk->row, &buffer);
 		} else {
 			tetro_line_free(&tl);
 		}

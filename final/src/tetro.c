@@ -44,19 +44,21 @@ void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl
 	(*ref_tl) = temp_tl;
 }
 
-int tetro_add_line(t_line **ref, int rank, t_line *t_ln) {
-	t_line *temp;
-	temp = NULL;
-	if(!(temp = (t_line*)malloc(sizeof(t_line))))
+int add_line(t_line **ref, int rank, t_line *src) {
+	t_line *temp_ln;
+	temp_ln = NULL;
+	if(!(temp_ln = (t_line*)malloc(sizeof(t_line))))
 		return (0);
-	temp->id = rank;
-	temp->content = ft_strdup(t_ln->content);
-	temp->length = t_ln->length;
-	temp->empty = t_ln->empty;
-	temp->offset = t_ln->offset;
-	temp->brick = t_ln->brick;
-	temp->next = (*ref);
-	(*ref) = temp;
+	temp_ln->id = rank;
+	temp_ln->content = ft_strdup(src->content);
+	temp_ln->a = src->a;
+	temp_ln->b = src->b;
+	temp_ln->length = src->length;
+	temp_ln->empty = src->empty;
+	temp_ln->offset = src->offset;
+	temp_ln->brick = src->brick;
+	temp_ln->next = (*ref);
+	(*ref) = temp_ln;
 	return(1);
 }
 
@@ -64,7 +66,7 @@ int tetro_line_dup(t_line **ref, t_line *src) {
 	int rank = 0;
 	int ret = 0;
   while(src) {
-		ret = tetro_add_line(ref, rank, src);
+		ret = add_line(ref, rank, src);
 		if(!ret)
 			break;
 		rank++;

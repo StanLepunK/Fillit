@@ -78,6 +78,8 @@ struct s_tetro {
 	char name;
 	ivec2 offset;
 	ivec2 size;
+	ivec2 start;
+	ivec2 end;
 
 	t_line *tetro_line;
 	t_tetro *next;
@@ -86,6 +88,8 @@ struct s_tetro {
 
 // utils
 int add_line(t_line **ref, int rank, t_line *t_ln);
+char	*strcpy_from_to(const char *src, int start, int end);
+void copy_t_line_struct(t_line *dst, const t_line *src);
 // checker
 void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
 void checker_line_set_arguments(t_line *temp_line);

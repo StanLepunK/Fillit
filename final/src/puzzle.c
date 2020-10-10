@@ -1,29 +1,5 @@
 #include "../includes/tetro.h"
 
-char	*strcpy_from_to(const char *src, int start, int end)
-{
-	char	*copy;
-	int		index;
-  int len;
-
-	index = 0;
-	len = end - start;
-	copy = (char *)malloc(sizeof(char) * len + 1);
-	if (copy == (char *)NULL)
-		return (NULL);
-	while (src[start + index] != '\0' && index < end)
-	{
-		copy[index] = src[start + index];
-		index++;
-	}
-	copy[len] = '\0';
-	return (copy);
-}
-
-void puzzle_add_line(t_puzzle **ref_pzl) {
-
-}
-
 int init_temp_puzzle_line(t_line **ref_ln, int len) {
   t_line *ln = (*ref_ln);
   if (!(ln = (t_line*)malloc(sizeof(t_line))))
@@ -41,7 +17,6 @@ void brick_switch(char *line, char target_char, char new_char) {
   index = 0;
   while(index < ft_strlen(line)) {
     if(line[index] == target_char) {
-      printf("switch");
       line[index] = new_char;
     }
     index++;
@@ -53,14 +28,7 @@ int add_line_puzzle(t_line **ref, char name, t_line *src) {
 	temp_ln = NULL;
 	if(!(temp_ln = (t_line*)malloc(sizeof(t_line))))
 		return (0);
-	// temp_ln->id = rank;
-	temp_ln->content = ft_strdup(src->content);
-	temp_ln->a = src->a;
-	temp_ln->b = src->b;
-	temp_ln->length = src->length;
-	temp_ln->empty = src->empty;
-	temp_ln->offset = src->offset;
-	temp_ln->brick = src->brick;
+  copy_t_line_struct(temp_ln, src);
 	temp_ln->next = (*ref);
 	(*ref) = temp_ln;
 	return(1);
@@ -78,6 +46,7 @@ int puzzle_add(t_puzzle **ref_pzl, t_tetro *t) {
       t_line *res;
       init_temp_puzzle_line(&res, t->tetro_line->col_max * 26);
       int end = t->size.x + t->offset.x;
+      printf("size.x: %i + offset.x: %i = end: %i\n", t->size.x, t->offset.x, end);
       res->content = strcpy_from_to(t->tetro_line->content, t->offset.x, end);
       printf("str format: %s\n",res->content);
       add_line_puzzle(&temp_pzl->tetro_line, t->name, res);

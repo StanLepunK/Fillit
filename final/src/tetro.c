@@ -1,18 +1,22 @@
 #include "../includes/tetro.h"
 
 int tetro_add(t_tetro **ref, t_line *tl, int id) {
-	t_tetro *temp;
+	t_tetro *temp_tetro;
 	int ret = 0;
-	temp = NULL;
-	if(!(temp = (t_tetro*)malloc(sizeof(t_tetro))))
+	temp_tetro = NULL;
+	if(!(temp_tetro = (t_tetro*)malloc(sizeof(t_tetro))))
 		return (0);
-	temp->id = (++id);
-	temp->tetro_line = NULL;
-	temp->offset.x = 0;
-	temp->offset.y = 0;
-	ret = tetro_line_dup(&temp->tetro_line, tl);
-	temp->next = (*ref);
-  (*ref) = temp;
+	temp_tetro->id = (++id);
+	temp_tetro->tetro_line = NULL;
+	temp_tetro->offset.x = 0;
+	temp_tetro->offset.y = 0;
+	temp_tetro->start.x = 0;
+	temp_tetro->start.y = 0;
+	temp_tetro->end.x = 0;
+	temp_tetro->end.y = 0;
+	ret = tetro_line_dup(&temp_tetro->tetro_line, tl);
+	temp_tetro->next = (*ref);
+  (*ref) = temp_tetro;
 	return(ret);
 }
 
@@ -44,23 +48,7 @@ void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl
 	(*ref_tl) = temp_tl;
 }
 
-int add_line(t_line **ref, int rank, t_line *src) {
-	t_line *temp_ln;
-	temp_ln = NULL;
-	if(!(temp_ln = (t_line*)malloc(sizeof(t_line))))
-		return (0);
-	temp_ln->id = rank;
-	temp_ln->content = ft_strdup(src->content);
-	temp_ln->a = src->a;
-	temp_ln->b = src->b;
-	temp_ln->length = src->length;
-	temp_ln->empty = src->empty;
-	temp_ln->offset = src->offset;
-	temp_ln->brick = src->brick;
-	temp_ln->next = (*ref);
-	(*ref) = temp_ln;
-	return(1);
-}
+
 
 int tetro_line_dup(t_line **ref, t_line *src) {
 	int rank = 0;
@@ -110,8 +98,33 @@ void tetro_print(t_tetro *t) {
 		printf("offset y: %i \n",t->offset.y);
 		printf("size x: %i \n",t->size.x);
 		printf("size y: %i \n",t->size.y);
+		printf("start.x: %i\n", t->start.x);
+		printf("end.x: %i\n", t->end.x);
     t = t->next;
   }
+}
+
+// void calc_size_x(t_tetro *t, t_line *ln) {
+// 	if(ln->brick > t->size.x) {
+// 		t->size.x = ln->brick;
+// 	}
+// }
+void calc_size_x(t_tetro *t, t_line *ln) {
+	int index;
+	char c;
+
+	index  = 0;
+	while(ln->content[index]) {
+		c = ln->content[index];
+		if(c == ln->a) {
+			if(!t->start.x || t->start.x > index)
+				t->start.x = index;	
+		}
+		if(t->start.x && c == ln->b) {
+			t->end.x = index;
+		}
+		index++;
+	}
 }
 
 
@@ -129,17 +142,19 @@ void tetro_line_clean(t_tetro *t, t_line *ln) {
 		if(ln->empty && !lock_y) {
 			t->offset.y++;
 		}
+
 		if(t->offset.x <= ln->offset && !lock_x) {
 			t->offset.x = ln->offset;
 			lock_x = 1;
 		} else if(ln->offset < t->offset.x) {
 			t->offset.x = ln->offset;
 		}
-		if(ln->brick > t->size.x) {
-			t->size.x = ln->brick;
-		}
+
+		calc_size_x(t, ln);
 		ln = ln->next;
 	}
+	t->size.x = t->end.x - t->start.x + 1;
+
 }
 
 void tetro_clean_and_format(t_tetro *t, int print_info_is) {

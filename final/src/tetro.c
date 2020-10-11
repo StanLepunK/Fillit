@@ -6,14 +6,9 @@ int tetro_add(t_tetro **ref, t_line *tl, int id) {
 	temp_tetro = NULL;
 	if(!(temp_tetro = (t_tetro*)malloc(sizeof(t_tetro))))
 		return (0);
+	
+	tetro_init(temp_tetro);
 	temp_tetro->id = (++id);
-	temp_tetro->tetro_line = NULL;
-	temp_tetro->offset.x = 0;
-	temp_tetro->offset.y = 0;
-	temp_tetro->start.x = 0;
-	temp_tetro->start.y = 0;
-	temp_tetro->end.x = 0;
-	temp_tetro->end.y = 0;
 	ret = tetro_line_dup(&temp_tetro->tetro_line, tl);
 	temp_tetro->next = (*ref);
   (*ref) = temp_tetro;
@@ -54,7 +49,7 @@ int tetro_line_dup(t_line **ref, t_line *src) {
 	int rank = 0;
 	int ret = 0;
   while(src) {
-		ret = add_line(ref, rank, src);
+		ret = add_t_line(ref, rank, src);
 		if(!ret)
 			break;
 		rank++;
@@ -87,28 +82,25 @@ void tetro_line_print(t_line *ln) {
   }
 }
 
-void tetro_print(t_tetro *t) {
+void tetro_print(t_tetro *t, int print_info_is) {
 	printf("PRINT ALL TETROMINOS\n");
   while(t) {
     printf("\nprint next tetromino\n");
 		tetro_line_print(t->tetro_line);
-		printf("name: %c \n",t->name);
-		printf("id: %i \n",t->id);
-		printf("offset x: %i \n",t->offset.x);
-		printf("offset y: %i \n",t->offset.y);
-		printf("size x: %i \n",t->size.x);
-		printf("size y: %i \n",t->size.y);
-		printf("start.x: %i\n", t->start.x);
-		printf("end.x: %i\n", t->end.x);
+		if(print_info_is) {
+			printf("name: %c \n",t->name);
+			printf("id: %i \n",t->id);
+			printf("offset x: %i \n",t->offset.x);
+			printf("offset y: %i \n",t->offset.y);
+			printf("size x: %i \n",t->size.x);
+			printf("size y: %i \n",t->size.y);
+			printf("start.x: %i\n", t->start.x);
+			printf("end.x: %i\n", t->end.x);
+		}
     t = t->next;
   }
 }
 
-// void calc_size_x(t_tetro *t, t_line *ln) {
-// 	if(ln->brick > t->size.x) {
-// 		t->size.x = ln->brick;
-// 	}
-// }
 void calc_size_x(t_tetro *t, t_line *ln) {
 	int index;
 	char c;
@@ -117,11 +109,10 @@ void calc_size_x(t_tetro *t, t_line *ln) {
 	while(ln->content[index]) {
 		c = ln->content[index];
 		if(c == ln->a) {
-			if(!t->start.x || t->start.x > index)
-				t->start.x = index;	
-		}
-		if(t->start.x && c == ln->b) {
-			t->end.x = index;
+			if(t->start.x < 0 || t->start.x > index)
+				t->start.x = index;
+			if(t->end.x < index)
+				t->end.x = index;
 		}
 		index++;
 	}

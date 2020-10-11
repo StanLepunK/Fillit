@@ -87,7 +87,8 @@ struct s_tetro {
 
 
 // utils
-int add_line(t_line **ref, int rank, t_line *t_ln);
+void reverse_t_line(t_line **ref);
+int add_t_line(t_line **ref, int rank, t_line *t_ln);
 char	*strcpy_from_to(const char *src, int start, int end);
 void copy_t_line_struct(t_line *dst, const t_line *src);
 // checker
@@ -103,7 +104,7 @@ void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
 int tetro_line_dup(t_line **ref, t_line *src);
 void tetro_line_free(t_line **ref);
-void tetro_print(t_tetro *t);
+void tetro_print(t_tetro *t, int print_info_is);
 void tetro_clean_and_format(t_tetro *t, int print_info_is);
 // puzzle
 int puzzle(t_tetro *t, int print_info_is);

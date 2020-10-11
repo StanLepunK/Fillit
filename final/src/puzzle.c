@@ -35,10 +35,12 @@ int add_line_puzzle(t_line **ref, char name, t_line *src) {
 }
 
 
+
+
 int puzzle_add(t_puzzle **ref_pzl, t_tetro *t) {
   t_puzzle *temp_pzl = (*ref_pzl);
 
-  printf("piece of puzzle\n");
+  printf("\npiece of puzzle: %c\n", t->name);
   int iter_x = 0;
   int iter_y = 0;
 	while(iter_y < t->size.y + t->offset.y) {
@@ -46,14 +48,11 @@ int puzzle_add(t_puzzle **ref_pzl, t_tetro *t) {
       t_line *res;
       init_temp_puzzle_line(&res, t->tetro_line->col_max * 26);
       int end = t->size.x + t->offset.x;
-      printf("size.x: %i + offset.x: %i = end: %i\n", t->size.x, t->offset.x, end);
       res->content = strcpy_from_to(t->tetro_line->content, t->offset.x, end);
       printf("str format: %s\n",res->content);
       add_line_puzzle(&temp_pzl->tetro_line, t->name, res);
       brick_switch(temp_pzl->tetro_line->content, t->tetro_line->a, t->name);
     }
-    
-    // temp_pzl->tetro_line = temp_pzl->tetro_line->next;
 		t->tetro_line = t->tetro_line->next;
     iter_y++;
   }
@@ -86,6 +85,8 @@ int puzzle(t_tetro *t, int print_info_is) {
   while(t) {
     if(print_info_is)
       printf("\nnext piece to solve puzzle\n");
+    // if(t->size.y > 1 && t->size.y != t->size.x)
+    //   reverse_t_line(&t->tetro_line);
     puzzle_add(&pzl, t);
     t = t->next;
   }

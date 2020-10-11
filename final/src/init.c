@@ -1,4 +1,18 @@
 #include "../includes/tetro.h"
+// tetro
+void tetro_init(t_tetro *t) {
+  t->id = 0;
+  t->name = 0;
+  t->tetro_line = NULL;
+  t->size.x = 0;
+  t->size.y = 0;
+	t->offset.x = 0;
+	t->offset.y = 0;
+  t->start.x = -1;
+	t->start.y = -1;
+	t->end.x = -1;
+	t->end.y = -1;
+}
 
 // line
 void checker_line_set_arguments(t_line *ln) {
@@ -39,11 +53,3 @@ int checker_block_init(t_block *blk) {
 		return (0);
   return(1);
 }
-
-// puzzle
-// int puzzle_init(t_puzzle *pzl) {
-//   int len = 26 * 4;
-//   if(!(pzl->tetro_line.content = (char*)malloc(sizeof(char) *len)))
-//     return (0);
-//   return(1);
-// }

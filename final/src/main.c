@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/10 17:29:26 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/11 11:36:44 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int builder(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 		checker_line_set(&buffer, line);
 		checker_block_set(t_blk, &buffer, line);
 		if(buffer.valid) {
-			add_line(&tl, t_blk->row, &buffer);
+			add_t_line(&tl, t_blk->row, &buffer);
 		} else {
 			tetro_line_free(&tl);
 		}
@@ -58,10 +58,12 @@ int main(int num, char **arg) {
 		int fd = open(arg[1], O_RDONLY);
 		builder(fd, &checker_block, &tetrominos);
 	}
+	// print_info_is = 0;
 	tetro_clean_and_format(tetrominos, print_info_is);
-	if(print_info_is) {
-		tetro_print(tetrominos);
-	}
+
+	// print_info_is = 1;
+	tetro_print(tetrominos, print_info_is);
+
 	// print_info_is = 1;
 	puzzle(tetrominos, print_info_is);
 

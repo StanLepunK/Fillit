@@ -40,9 +40,21 @@ void copy_t_line_struct(t_line *dst, const t_line *src) {
   dst->col_max = src->col_max;
 }
 
+void reverse_t_line(t_line **ref) {
+	t_line *prev = NULL;
+	t_line *current = *ref;
+	t_line *next = NULL;
 
+	while(current) {
+		next = current->next;
+		current->next = prev; // reverse currnt ptr
+		prev = current; // move ptr to ahead
+		current = next;
+	}
+	(*ref) = prev;
+}
 
-int add_line(t_line **ref, int rank, t_line *src) {
+int add_t_line(t_line **ref, int rank, t_line *src) {
 	t_line *temp_ln;
 	temp_ln = NULL;
 	if(!(temp_ln = (t_line*)malloc(sizeof(t_line))))

@@ -88,7 +88,6 @@ struct s_tetro {
 
 
 // utils
-int map_int(int arg, int in_0, int in_1, int out_0, int out_1);
 void reverse_t_line(t_line **ref);
 int add_t_line(t_line **ref, int rank, t_line *t_ln);
 char	*strcpy_from_to(const char *src, int start, int end);

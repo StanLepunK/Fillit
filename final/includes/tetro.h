@@ -78,6 +78,7 @@ struct s_tetro {
 	char name;
 	ivec2 offset;
 	ivec2 size;
+	ivec2 canvas;
 	ivec2 start;
 	ivec2 end;
 
@@ -87,6 +88,7 @@ struct s_tetro {
 
 
 // utils
+int map_int(int arg, int in_0, int in_1, int out_0, int out_1);
 void reverse_t_line(t_line **ref);
 int add_t_line(t_line **ref, int rank, t_line *t_ln);
 char	*strcpy_from_to(const char *src, int start, int end);
@@ -101,6 +103,7 @@ void checker_block_set_arguments(t_block *temp_block);
 int checker_block_init(t_block *temp_block);
 void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 // tetro
+void tetro_init(t_tetro *t);
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
 int tetro_line_dup(t_line **ref, t_line *src);
 void tetro_line_free(t_line **ref);

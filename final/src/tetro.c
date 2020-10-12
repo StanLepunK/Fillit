@@ -22,6 +22,8 @@ void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_line **ref_tl) {
 	} else {
 		tetro_add(&temp, *ref_tl, -1);
 	}
+	temp->canvas.x = t_blk->row_max;
+	temp->canvas.y = t_blk->col_max;
 	tetro_line_free(ref_tl);
 	checker_block_set_arguments(t_blk);
 	(*ref_tetro) = temp;

@@ -1,5 +1,25 @@
 #include "../includes/tetro.h"
 
+double map(double arg, double in_0, double in_1, double out_0, double out_1) {
+	double output;
+	double e2;
+	double e3;
+	double e4;
+
+	e2 = out_1 - out_0;
+	e3 = arg - in_0;
+	e4 = in_1 - in_0;
+	output = out_0 + e2 * (e3 / e4);
+	return (output);
+}
+
+int map_int(int arg, int in_0, int in_1, int out_0, int out_1) {
+	double res;
+
+	res = map((double)arg,(double)in_0,(double)in_1,(double)out_0,(double)out_1);
+	return ((int)res);
+}
+
 char	*strcpy_from_to(const char *src, int start, int end)
 {
 	char	*copy;
@@ -39,6 +59,21 @@ void copy_t_line_struct(t_line *dst, const t_line *src) {
   dst->col = src->col;
   dst->col_max = src->col_max;
 }
+
+// t_line *get_t_line(t_line *list, unsigned int index) {
+// 	int count;
+
+// 	t_line *current = list;
+// 	count = 0; 
+// 	while (current) {
+// 		printf("count: %i current->content: %s\n",count, current->content);
+// 		if (count == index) 
+// 			return(current); 
+//     count++; 
+// 		current = current->next; 
+// 	}
+// 	return (0);
+// }
 
 void reverse_t_line(t_line **ref) {
 	t_line *prev = NULL;

@@ -4,6 +4,8 @@ void tetro_init(t_tetro *t) {
   t->id = 0;
   t->name = 0;
   t->tetro_line = NULL;
+  t->canvas.x = 0;
+  t->canvas.y = 0;
   t->size.x = 0;
   t->size.y = 0;
 	t->offset.x = 0;

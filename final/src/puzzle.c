@@ -1,7 +1,9 @@
 #include "../includes/tetro.h"
 
 int init_temp_puzzle_line(t_line **ref_ln, int len) {
-  t_line *ln = (*ref_ln);
+  t_line *ln;
+
+  ln = (*ref_ln);
   if (!(ln = (t_line*)malloc(sizeof(t_line))))
     return(0);
   ln->col_max = len;
@@ -25,6 +27,7 @@ void brick_switch(char *line, char target_char, char new_char) {
 
 int add_line_puzzle(t_line **ref, char name, t_line *src) {
 	t_line *temp_ln;
+
 	temp_ln = NULL;
 	if(!(temp_ln = (t_line*)malloc(sizeof(t_line))))
 		return (0);
@@ -35,19 +38,19 @@ int add_line_puzzle(t_line **ref, char name, t_line *src) {
 }
 
 int puzzle_add(t_puzzle **ref_pzl, t_tetro *t) {
-  int max;
   int count;
-  t_puzzle *temp_pzl = (*ref_pzl);
-  reverse_t_line(&t->tetro_line);
+  int end;
+  t_puzzle *temp_pzl;
+  t_line *res;
+  
   printf("\npiece of puzzle: %c\n", t->name);
-
-  max = t->canvas.y;
+  temp_pzl = (*ref_pzl);
+  reverse_t_line(&t->tetro_line);
   count = 0;
-  while(count < max) {
+  while(count < t->canvas.y) {
     if(!t->tetro_line->empty) {
-      t_line *res;
       init_temp_puzzle_line(&res, t->tetro_line->col_max * 26);
-      int end = t->size.x + t->offset.x;
+      end = t->size.x + t->offset.x;
       res->content = strcpy_from_to(t->tetro_line->content, t->offset.x, end);
       printf("str format: %s\n",res->content);
       add_line_puzzle(&temp_pzl->tetro_line, t->name, res);
@@ -71,22 +74,20 @@ void puzzle_print(t_puzzle *pzl) {
 
 
 int puzzle(t_tetro *t, int print_info_is) {
+  t_puzzle *pzl;
+
+  pzl = NULL;
   if(print_info_is)
     printf("PRINT PUZZLE\n");
-  t_puzzle *pzl;
-  pzl = NULL;
   if(!(pzl = (t_puzzle*)malloc(sizeof(t_puzzle))))
 		return (0);
   pzl->id = 0;
   pzl->tetro_line = NULL;
   pzl->size.x = 0;
   pzl->size.y = 0;
-  
   while(t) {
     if(print_info_is)
       printf("\nnext piece to solve puzzle\n");
-    // if(t->size.y > 1 && t->size.y != t->size.x)
-    //   reverse_t_line(&t->tetro_line);
     puzzle_add(&pzl, t);
     t = t->next;
   }

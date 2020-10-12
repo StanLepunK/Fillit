@@ -2,7 +2,9 @@
 
 int tetro_add(t_tetro **ref, t_line *tl, int id) {
 	t_tetro *temp_tetro;
-	int ret = 0;
+	int ret;
+
+	ret = 0;
 	temp_tetro = NULL;
 	if(!(temp_tetro = (t_tetro*)malloc(sizeof(t_tetro))))
 		return (0);
@@ -16,7 +18,9 @@ int tetro_add(t_tetro **ref, t_line *tl, int id) {
 }
 
 void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_line **ref_tl) {
-	t_tetro *temp = (*ref_tetro);
+	t_tetro *temp;
+
+	temp = (*ref_tetro);
 	if(temp) {
 		tetro_add(&temp, *ref_tl, temp->id);
 	} else {
@@ -31,9 +35,11 @@ void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_line **ref_tl) {
 
 
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length) {
-	t_tetro *temp_tetro = (*ref_tetro);
-	t_line *temp_tl = (*ref_tl);
+	t_tetro *temp_tetro;
+	t_line *temp_tl;
 
+	temp_tetro = (*ref_tetro);
+	temp_tl = (*ref_tl);
 	if(t_blk->valid && length == 0) {
 		t_blk->ready_to_add = 1;
 	}
@@ -48,8 +54,11 @@ void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl
 
 
 int tetro_line_dup(t_line **ref, t_line *src) {
-	int rank = 0;
-	int ret = 0;
+	int rank;
+	int ret;
+
+	rank = 0;
+	ret = 0;
   while(src) {
 		ret = add_t_line(ref, rank, src);
 		if(!ret)
@@ -64,8 +73,10 @@ int tetro_line_dup(t_line **ref, t_line *src) {
 
 
 void tetro_line_free(t_line **ref) {
-  t_line *current = *ref;
+  t_line *current;
   t_line *next;
+
+	current = *ref;
   while(current) {
     next = current->next;
     free(current->content);
@@ -151,12 +162,12 @@ void tetro_line_clean(t_tetro *t, t_line *ln) {
 }
 
 void tetro_clean_and_format(t_tetro *t, int print_info_is) {
-	if(print_info_is)
-  	printf("CLEAN and FORMAT TETROMINOS\n");
 	t_line tl;
 	char name;
 	int id;
-
+	
+	if(print_info_is)
+  	printf("CLEAN and FORMAT TETROMINOS\n");
 	name = 'A';
 	id = 0;
 	checker_line_set_arguments(&tl);

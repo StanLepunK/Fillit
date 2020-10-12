@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/11 18:58:20 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/12 19:25:15 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ int builder(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 	char *line;
   t_line buffer;
 	t_line *tl;
-	t_tetro *temp_tetro = (*ref_tetro);
+	t_tetro *temp_tetro;
 
+	temp_tetro = (*ref_tetro);
 	tl = NULL;
   checker_line_init(&buffer);
 	checker_block_init(t_blk);

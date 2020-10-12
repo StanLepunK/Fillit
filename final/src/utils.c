@@ -40,30 +40,18 @@ void copy_t_line_struct(t_line *dst, const t_line *src) {
   dst->col_max = src->col_max;
 }
 
-// t_line *get_t_line(t_line *list, unsigned int index) {
-// 	int count;
-
-// 	t_line *current = list;
-// 	count = 0; 
-// 	while (current) {
-// 		printf("count: %i current->content: %s\n",count, current->content);
-// 		if (count == index) 
-// 			return(current); 
-//     count++; 
-// 		current = current->next; 
-// 	}
-// 	return (0);
-// }
-
 void reverse_t_line(t_line **ref) {
-	t_line *prev = NULL;
-	t_line *current = *ref;
-	t_line *next = NULL;
+	t_line *prev;
+	t_line *current;
+	t_line *next;
 
+	prev = NULL;
+	current = *ref;
+	next = NULL;
 	while(current) {
 		next = current->next;
-		current->next = prev; // reverse currnt ptr
-		prev = current; // move ptr to ahead
+		current->next = prev;
+		prev = current;
 		current = next;
 	}
 	(*ref) = prev;
@@ -71,6 +59,7 @@ void reverse_t_line(t_line **ref) {
 
 int add_t_line(t_line **ref, int rank, t_line *src) {
 	t_line *temp_ln;
+
 	temp_ln = NULL;
 	if(!(temp_ln = (t_line*)malloc(sizeof(t_line))))
 		return (0);

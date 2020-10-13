@@ -92,6 +92,7 @@ void reverse_t_line(t_line **ref);
 int add_t_line(t_line **ref, int rank, t_line *t_ln);
 char	*strcpy_from_to(const char *src, int start, int end);
 void copy_t_line_struct(t_line *dst, const t_line *src);
+void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src);
 // checker
 void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
 void checker_line_set_arguments(t_line *temp_line);
@@ -109,6 +110,8 @@ void tetro_line_free(t_line **ref);
 void tetro_print(t_tetro *t, int print_info_is);
 void tetro_clean_and_format(t_tetro *t, int print_info_is);
 // puzzle
+void puzzle_init(t_puzzle *pzl);
 int puzzle(t_tetro *t, int print_info_is);
+void puzzle_print(t_puzzle *pzl);
 
 #endif

@@ -20,6 +20,22 @@ char	*strcpy_from_to(const char *src, int start, int end)
 	return (copy);
 }
 
+
+void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src) {
+  dst->id = src->id;
+  
+	while(src->tetro_line) {
+		src->tetro_line = src->tetro_line->next;
+	}
+  // copy_t_line_struct(dst->tetro_line, src->tetro_line);
+  dst->size.x = src->size.x;
+	dst->size.y = src->size.y;
+
+	dst->brick = src->brick;
+	dst->space = src->space;
+}
+
+
 void copy_t_line_struct(t_line *dst, const t_line *src) {
   dst->id = src->id;
   

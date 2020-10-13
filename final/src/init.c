@@ -1,4 +1,14 @@
 #include "../includes/tetro.h"
+// puzzle
+void puzzle_init(t_puzzle *pzl) {
+  pzl->id = 0;
+  pzl->tetro_line = NULL;
+  pzl->size.x = 0;
+  pzl->size.y = 0;
+  pzl->brick = 0;
+  pzl->space = 0;
+}
+
 // tetro
 void tetro_init(t_tetro *t) {
   t->id = 0;

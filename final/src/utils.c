@@ -20,14 +20,22 @@ char	*strcpy_from_to(const char *src, int start, int end)
 	return (copy);
 }
 
+void dup_tetro_line_list(t_line **ref_dst, t_line *src) {
+	int rank;
+
+	rank = 0;
+	while(src) {
+		printf("rank: %i\n",rank);
+		add_t_line(ref_dst, rank, src);
+		rank++;
+		src = src->next;
+	}
+}
 
 void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src) {
   dst->id = src->id;
   
-	while(src->tetro_line) {
-		src->tetro_line = src->tetro_line->next;
-	}
-  // copy_t_line_struct(dst->tetro_line, src->tetro_line);
+	dup_tetro_line_list(&dst->tetro_line, src->tetro_line);
   dst->size.x = src->size.x;
 	dst->size.y = src->size.y;
 

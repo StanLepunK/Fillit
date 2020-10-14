@@ -74,6 +74,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
   printf("je suis là pour compléter le puzzle\n");
   while(temp_pzl->tetro_line) {
     printf("brick: %i\n",temp_pzl->tetro_line->brick);
+    printf("brick: %s\n",temp_pzl->tetro_line->content);
     temp_pzl->tetro_line = temp_pzl->tetro_line->next;
   }
   // while((*ref_pzl)->tetro_line) {
@@ -94,7 +95,7 @@ int puzzle_build(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
   if(!(buffer = (t_puzzle*)malloc(sizeof(t_puzzle))))
 		return (0);
   puzzle_init(buffer);
-  copy_t_puzzle_struct(buffer, (*ref_pzl)); // problem in the navigation of linked list.
+  copy_t_puzzle_struct(buffer, (*ref_pzl)); 
 
   if(print_info_is)
     printf("\npiece of puzzle: %c", t->name);

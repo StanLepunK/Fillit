@@ -33,6 +33,7 @@ struct s_line {
 	int threshold;
 
 	int brick;
+	int space;
 	int col;
 	int col_max;
 	t_line *next;
@@ -88,6 +89,8 @@ struct s_tetro {
 
 
 // utils
+int fill_line(char **ref, char c, size_t len);
+int fill_t_line(t_line **ref, char c, size_t len);
 void reverse_t_line(t_line **ref);
 int add_t_line(t_line **ref, int rank, t_line *t_ln);
 char	*strcpy_from_to(const char *src, int start, int end);

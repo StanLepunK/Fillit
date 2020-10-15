@@ -37,6 +37,7 @@ void checker_line_set_arguments(t_line *ln) {
   ln->threshold = 3; // can be used like a failed
   ln->brick = 0;
   ln->col_max = 4;
+  ln->space = ln->col_max;
 }
 
 int checker_line_init(t_line *ln) {

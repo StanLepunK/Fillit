@@ -25,7 +25,6 @@ void dup_tetro_line_list(t_line **ref_dst, t_line *src) {
 
 	rank = 0;
 	while(src) {
-		printf("rank: %i\n",rank);
 		add_t_line(ref_dst, rank, src);
 		rank++;
 		src = src->next;
@@ -60,6 +59,7 @@ void copy_t_line_struct(t_line *dst, const t_line *src) {
 	dst->threshold = src->threshold;
 
 	dst->brick = src->brick;
+	dst->space = src->space;
   dst->col = src->col;
   dst->col_max = src->col_max;
 }
@@ -92,4 +92,29 @@ int add_t_line(t_line **ref, int rank, t_line *src) {
 	temp_ln->next = (*ref);
 	(*ref) = temp_ln;
 	return(1);
+}
+
+
+int fill_line(char **ref, char c, size_t len) {
+  int index;
+
+  index = 0;
+  if(!((*ref) = (char*)malloc(sizeof(char) * (len + 1))))
+    return (0);
+  while (index < len) {
+    (*ref)[index] = c;
+    index++;
+  }
+  (*ref)[index] = '\0';
+  return (1);
+}
+
+int fill_t_line(t_line **ref, char c, size_t len) {
+  if(!((*ref) = (t_line*)malloc(sizeof(t_line))))
+    return (0);
+	
+	(*ref)->length = len;
+	(*ref)->col_max = len;
+  fill_line(&(*ref)->content, c, len);
+  return(1);
 }

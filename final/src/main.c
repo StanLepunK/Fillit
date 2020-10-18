@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/17 16:48:56 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/18 17:02:28 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int main(int num, char **arg) {
 	t_block checker_block;
 	t_tetro *tetrominos;
 	tetrominos = NULL;
-	int print_info_is = 1;
+	int print_info_is = 0;
 
 	if(num > 0) {
 		int fd = open(arg[1], O_RDONLY);
@@ -63,7 +63,7 @@ int main(int num, char **arg) {
 	tetro_clean_and_format(tetrominos, print_info_is);
 
 	// print_info_is = 1;
-	tetro_print(tetrominos, print_info_is);
+	print_all_tetro(tetrominos, print_info_is);
 
 	// print_info_is = 1;
 	puzzle(tetrominos, print_info_is);

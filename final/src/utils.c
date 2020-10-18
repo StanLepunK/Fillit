@@ -112,7 +112,6 @@ int fill_line(char **ref, char c, size_t len) {
 int fill_t_line(t_line **ref, char c, size_t len) {
   if(!((*ref) = (t_line*)malloc(sizeof(t_line))))
     return (0);
-	
 	(*ref)->length = len;
 	(*ref)->col_max = len;
   fill_line(&(*ref)->content, c, len);

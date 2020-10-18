@@ -110,7 +110,8 @@ void tetro_init(t_tetro *t);
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
 int tetro_line_dup(t_line **ref, t_line *src);
 void tetro_line_free(t_line **ref);
-void tetro_print(t_tetro *t, int print_info_is);
+void print_tetro(t_tetro *t, int print_info_is);
+void print_all_tetro(t_tetro *t, int print_info_is);
 void tetro_clean_and_format(t_tetro *t, int print_info_is);
 // puzzle
 void puzzle_init(t_puzzle *pzl);

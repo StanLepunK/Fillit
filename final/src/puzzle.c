@@ -27,58 +27,62 @@ void brick_switch(char *line, char target_char, char new_char) {
 
 
 
-void complete_line_try(t_line *dst, t_line *src_list) {
-  int index;
-  t_line *buffer;
+int complete_line_try(t_line *dst_pzl_ln, t_line *src_tetro_ln, t_tetro *t, int offset_try) {
+  int ix; // index
+  int ox; // offset
+  int ot; // offset try
+  int succes;
 
-  while(src_list) {
-    if(dst->space >= src_list->brick) {
-      add_t_line(&buffer,0,dst);
-      printf("before buffer->content: %s\n", buffer->content);
-      printf("before src_list->content: %s\n", src_list->content);
-      index = 0;
-      while(index < dst->length) {
-        if(buffer->content[index] == buffer->b) {
-          // printf("before src_list->content: %s\n", src_list->content);
-          buffer->content[index] = src_list->content[index + src_list->offset];
+  succes = -1;
+  ox = t->offset.x;
+  ot = offset_try;
+  while(src_tetro_ln && dst_pzl_ln) {
+    if(!src_tetro_ln->empty) {
+      ix = 0;
+      if(dst_pzl_ln->space >= src_tetro_ln->brick) {
+        while(ix + ox < src_tetro_ln->length) {
+          if(src_tetro_ln->content[ix + ox] == src_tetro_ln->a) {
+            if(dst_pzl_ln->content[ix + ot] == src_tetro_ln->b) {
+              dst_pzl_ln->content[ix + ot] = src_tetro_ln->a;
+              succes = 1;
+            } else {
+              succes = 0;
+            }
+          }
+          ix++;
         }
-        index++;
       }
-      printf("after buffer->content: %s\n\n", buffer->content);
-      // printf("try to add piece %s in the existing line %s\n", src_list->content, dst->content);
+      dst_pzl_ln = dst_pzl_ln->next;
     }
-    if(!src_list->empty) {
-      printf("je suis plein aux as %s\n", src_list->content);
-      break;
-
-    }
-      
-    src_list = src_list->next;
+    src_tetro_ln = src_tetro_ln->next;
   }
+  return (succes);
 }
+
+
+
+
+
 
 int complete_puzzle(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
   int res;
   t_puzzle *pzl;
+  int succes = 0;
 
   pzl = (*ref_pzl);
-  while(pzl->tetro_line) {
-    
-    // printf("brick: %i\n", pzl->tetro_line->brick);
-    // printf("length: %i\n", pzl->tetro_line->length);
-    // printf("space: %i\n", pzl->tetro_line->space);
-    if(pzl->tetro_line->space) {
-    // if(pzl->tetro_line->brick < pzl->tetro_line->length) {
-      complete_line_try(pzl->tetro_line, t->tetro_line);
-      // while(t->tetro_line) {
-      //   printf("try to add piece %s in the existing line %s\n", t->tetro_line->content, pzl->tetro_line->content);
-      //   t->tetro_line = t->tetro_line->next;
-      // }
+  int offset_try = 0;
+  reverse_t_line(&t->tetro_line);
+  succes = complete_line_try(pzl->tetro_line, t->tetro_line, t, offset_try);
+  printf("succes: %i\n", succes);
 
-    }
-    pzl->tetro_line = pzl->tetro_line->next;
-  }
-
+  // for the future
+  // int offset_try = 0;
+  // int max_try = pzl->size.x - t->size.x;
+  // while(offset_try < max_try) {
+  //   complete_line_try(pzl->tetro_line, t->tetro_line, t->offset.x, offset_try);
+  //   offset_try++;
+  // }
+  (*ref_pzl) = pzl;
   res = 0;
   return (res);
 }
@@ -95,11 +99,12 @@ int puzzle_build(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
   copy_t_puzzle_struct(buffer, (*ref_pzl)); 
 
   if(print_info_is)
-    printf("\npiece of puzzle: %c", t->name);
+    printf("\npiece of puzzle: %c\n", t->name);
   
   reverse_t_line(&t->tetro_line);
   complete_puzzle(&buffer, t, print_info_is);
-  printf("puzzle size: %i, %i\n", (*ref_pzl)->size.x, (*ref_pzl)->size.y);
+  (*ref_pzl) = buffer;
+  // printf("puzzle size: %i, %i\n", (*ref_pzl)->size.x, (*ref_pzl)->size.y);
   return (1);
 }
 
@@ -159,45 +164,3 @@ int puzzle(t_tetro *t, int print_info_is) {
 
 
 
-// int add_line_puzzle(t_line **ref, char name, t_line *src) {
-//   int length;
-
-//   length = 0;
-// 	t_line *temp_ln;
-// 	temp_ln = NULL;
-// 	if(!(temp_ln = (t_line*)malloc(sizeof(t_line))))
-// 		return (0);
-//   copy_t_line_struct(temp_ln, src);
-// 	temp_ln->next = (*ref);
-//   length = (ft_strlen(temp_ln->content));
-// 	(*ref) = temp_ln;
-// 	return(length);
-// }
-
-// int add_new_line_puzzle(t_puzzle **ref_pzl, t_tetro *t) {
-//   int length;
-//   int end;
-//   t_puzzle *temp_pzl; // can be remove, replace after temp_pzl by (*ref_pzl)
-//   t_line *piece;
-  
-//   temp_pzl = (*ref_pzl); // can be remove
-//   while(t->tetro_line) {
-//     if(!t->tetro_line->empty) {
-//       init_temp_puzzle_line(&piece, t->tetro_line->col_max * 26);
-//       add_t_line(&piece,0,t->tetro_line);
-//       end = t->size.x + t->offset.x;
-//       piece->content = strcpy_from_to(t->tetro_line->content, t->offset.x, end);
-//       piece->length = ft_strlen(piece->content);
-//       piece->space = (piece->length - piece->brick);
-//       length = add_line_puzzle(&temp_pzl->tetro_line, t->name, piece);
-//       if(length > temp_pzl->size.x) {
-//         temp_pzl->size.x = length;
-//       }
-//       temp_pzl->size.y++;
-//       brick_switch(temp_pzl->tetro_line->content, t->tetro_line->a, t->name);
-//     }
-// 		t->tetro_line = t->tetro_line->next;
-//   }
-//   (*ref_pzl) = temp_pzl; // can be remove
-//   return (1);
-// }

@@ -116,17 +116,6 @@ void print_all_tetro(t_tetro *t, int print_info_is) {
   while(t) {
     printf("\nprint next tetromino\n");
 		print_tetro(t, print_info_is);
-		// tetro_line_print(t->tetro_line);
-		// if(print_info_is) {
-		// 	printf("name: %c \n",t->name);
-		// 	printf("id: %i \n",t->id);
-		// 	printf("offset x: %i \n",t->offset.x);
-		// 	printf("offset y: %i \n",t->offset.y);
-		// 	printf("size x: %i \n",t->size.x);
-		// 	printf("size y: %i \n",t->size.y);
-		// 	printf("start.x: %i\n", t->start.x);
-		// 	printf("end.x: %i\n", t->end.x);
-		// }
     t = t->next;
   }
 }

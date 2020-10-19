@@ -106,6 +106,7 @@ void checker_block_set_arguments(t_block *temp_block);
 int checker_block_init(t_block *temp_block);
 void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 // tetro
+t_tetro *tetro_dup(t_tetro **ref);
 void tetro_init(t_tetro *t);
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
 int tetro_line_dup(t_line **ref, t_line *src);

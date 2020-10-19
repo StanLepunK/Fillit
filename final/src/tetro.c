@@ -1,5 +1,26 @@
 #include "../includes/tetro.h"
 
+t_tetro *tetro_dup(t_tetro **ref) {
+	t_tetro *buffer;
+
+	buffer = NULL;
+	if(!(buffer = (t_tetro*)malloc(sizeof(t_tetro))))
+		return (0);
+	tetro_init(buffer);
+	buffer->id = (*ref)->id;
+	buffer->name = (*ref)->name;
+	buffer->offset.x = (*ref)->offset.x;
+	buffer->offset.y = (*ref)->offset.y;
+	buffer->size.x = (*ref)->size.x;
+	buffer->size.y = (*ref)->size.y;
+	buffer->canvas.x = (*ref)->canvas.x;
+	buffer->canvas.y = (*ref)->canvas.y;
+	buffer->start = (*ref)->start;
+	buffer->end = (*ref)->end;
+	tetro_line_dup(&buffer->tetro_line, (*ref)->tetro_line);
+	return (buffer);
+}
+
 int tetro_add(t_tetro **ref, t_line *tl, int id) {
 	t_tetro *temp_tetro;
 	int ret;
@@ -8,7 +29,6 @@ int tetro_add(t_tetro **ref, t_line *tl, int id) {
 	temp_tetro = NULL;
 	if(!(temp_tetro = (t_tetro*)malloc(sizeof(t_tetro))))
 		return (0);
-	
 	tetro_init(temp_tetro);
 	temp_tetro->id = (++id);
 	ret = tetro_line_dup(&temp_tetro->tetro_line, tl);
@@ -114,7 +134,7 @@ void print_tetro(t_tetro *t, int print_info_is) {
 void print_all_tetro(t_tetro *t, int print_info_is) {
 	printf("PRINT ALL TETROMINOS\n");
   while(t) {
-    printf("\nprint next tetromino\n");
+    printf("\nprint tetromino %c\n", t->name);
 		print_tetro(t, print_info_is);
     t = t->next;
   }

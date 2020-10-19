@@ -64,7 +64,6 @@ void checker_line(t_line *t_ln, char *line) {
 			}
 		}
 		t_ln->space = t_ln->length - t_ln->brick;
-
 	}
 
   t_ln->valid = 0;

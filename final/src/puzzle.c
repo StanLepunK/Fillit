@@ -56,13 +56,13 @@ void brick_switch(char *line, char target_char, char new_char) {
 
 
 
-int complete_line_try(t_line *dst_pzl_ln, t_tetro *t, int offset_try) {
+int complete_line_try(t_line *dst_pzl_ln, t_tetro *t, int try) {
   int ix; // index
   int ox; // offset
   int ot; // offset try
 
   ox = t->offset.x;
-  ot = offset_try;
+  ot = try;
   while(t->tetro_line && dst_pzl_ln) {
     // printf("pzl line id %i\n",dst_pzl_ln->id);
     if(!t->tetro_line->empty) {
@@ -117,7 +117,8 @@ t_puzzle *dup_puzzle(t_puzzle **ref_pzl) {
 
 
 int complete_puzzle(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
-  int try;
+  ivec3 try;
+  // int try;
   int max_try;
   t_puzzle *pzl;
   t_tetro *tetro;
@@ -125,10 +126,11 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
   reverse_t_line(&t->tetro_line);
   tetro = tetro_dup(&t);
   pzl = dup_puzzle(ref_pzl);
-  try = 0;
+  // try = 0;
+  ivec3_init(&try);
   max_try = (pzl->size.x * pzl->size.y) - (t->size.x * t->size.y);
-  while(try <= max_try) {
-    if(complete_line_try(pzl->tetro_line, tetro, try)) {
+  while(try.z <= max_try) {
+    if(complete_line_try(pzl->tetro_line, tetro, try.z)) {
       break;
     }
     
@@ -136,7 +138,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
     tetro = tetro_dup(&t);
     free(pzl); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
     pzl = dup_puzzle(ref_pzl);
-    try++;
+    try.z++;
   }
   (*ref_pzl) = pzl;
   return (1);

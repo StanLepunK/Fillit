@@ -3,8 +3,7 @@
 void puzzle_init(t_puzzle *pzl) {
   pzl->id = 0;
   pzl->tetro_line = NULL;
-  pzl->size.x = 0;
-  pzl->size.y = 0;
+  ivec3_init(&pzl->size);
   pzl->brick = 0;
   pzl->space = 0;
 }
@@ -14,16 +13,13 @@ void tetro_init(t_tetro *t) {
   t->id = 0;
   t->name = 0;
   t->tetro_line = NULL;
-  t->canvas.x = 0;
-  t->canvas.y = 0;
-  t->size.x = 0;
-  t->size.y = 0;
-	t->offset.x = 0;
-	t->offset.y = 0;
-  t->start.x = -1;
-	t->start.y = -1;
-	t->end.x = -1;
-	t->end.y = -1;
+  ivec2_init(&t->canvas);
+  ivec2_init(&t->size);
+  ivec2_init(&t->offset);
+  ivec2_init(&t->start);
+  t->start.set(&t->start,-1,-1);
+  ivec2_init(&t->end);
+  t->end.set(&t->end,-1,-1);
 }
 
 // line
@@ -49,8 +45,7 @@ int checker_line_init(t_line *ln) {
 
 // block
 void checker_block_set_arguments(t_block *blk) {
-  blk->offset.x = 0;
-	blk->offset.y = 0;
+  ivec2_init(&blk->offset);
   blk->valid = 0;
   blk->ready_to_add = 0;
   blk->row = 0;

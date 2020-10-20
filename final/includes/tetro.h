@@ -61,7 +61,7 @@ struct s_puzzle {
 	int brick;
 	int space;
 
-	ivec2 size;
+	ivec3 size;
 
 	t_line *tetro_line;
 	t_puzzle *next;

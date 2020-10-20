@@ -6,14 +6,9 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "get_next_line.h"
+#include "vec.h"
 
 
-typedef struct s_ivec2 ivec2;
-struct  s_ivec2 {
-	int x;
-	int y;
-	ivec2 *next;
-};
 
 
 typedef struct s_line t_line;

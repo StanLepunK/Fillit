@@ -9,12 +9,12 @@ t_tetro *tetro_dup(t_tetro **ref) {
 	tetro_init(buffer);
 	buffer->id = (*ref)->id;
 	buffer->name = (*ref)->name;
-	buffer->offset.x = (*ref)->offset.x;
-	buffer->offset.y = (*ref)->offset.y;
-	buffer->size.x = (*ref)->size.x;
-	buffer->size.y = (*ref)->size.y;
-	buffer->canvas.x = (*ref)->canvas.x;
-	buffer->canvas.y = (*ref)->canvas.y;
+	ivec2_set_functions(&buffer->offset);
+	ivec2_set_functions(&buffer->size);
+	ivec2_set_functions(&buffer->canvas);
+	buffer->offset.set(&buffer->offset,&(*ref)->offset);
+	buffer->canvas.set(&buffer->canvas,&(*ref)->canvas);
+	buffer->size.set(&buffer->size,&(*ref)->size);
 	buffer->start = (*ref)->start;
 	buffer->end = (*ref)->end;
 	tetro_line_dup(&buffer->tetro_line, (*ref)->tetro_line);

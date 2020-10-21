@@ -1,5 +1,22 @@
 #include "../includes/tetro.h"
 
+int sqrt_ceil(float value) {
+  int arg;
+  int max;
+
+	arg = 0;
+  max = 46341; // max for the int value
+  if(value < 0) {
+    return(0);
+  }
+
+  while(arg * arg < value && arg * arg < max) {
+    arg++;
+  }
+  return arg;
+}
+
+
 char	*strcpy_from_to(const char *src, int start, int end)
 {
 	char	*copy;
@@ -92,6 +109,19 @@ int add_t_line(t_line **ref, int rank, t_line *src) {
 	temp_ln->next = (*ref);
 	(*ref) = temp_ln;
 	return(1);
+}
+
+t_line *get_t_line(t_line *ln, int index) {
+	printf("get_t_line() index: %i\n", index);
+	while(ln) {
+		printf("get_t_line() id: %i\n", ln->id);
+		if(ln->id == index) {
+			return ln;
+		}
+		ln = ln->next;
+	}
+	printf("un échec");
+	return (0);
 }
 
 

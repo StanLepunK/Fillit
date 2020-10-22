@@ -42,7 +42,7 @@ struct s_block {
 
 	t_line p_line;
 
-	ivec2 offset;
+	t_ivec2 offset;
 
 	int row;
 	int row_max;
@@ -61,7 +61,7 @@ struct s_puzzle {
 	int brick;
 	int space;
 
-	ivec3 size;
+	t_ivec3 size;
 
 	t_line *line;
 	t_puzzle *next;
@@ -72,11 +72,11 @@ typedef struct s_tetro t_tetro;
 struct s_tetro {
 	int id;
 	char name;
-	ivec2 offset;
-	ivec2 size;
-	ivec2 canvas;
-	ivec2 start;
-	ivec2 end;
+	t_ivec2 offset;
+	t_ivec2 size;
+	t_ivec2 canvas;
+	t_ivec2 start;
+	t_ivec2 end;
 
 	t_line *line;
 	t_tetro *next;

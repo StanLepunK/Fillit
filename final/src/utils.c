@@ -112,15 +112,14 @@ int add_t_line(t_line **ref, int rank, t_line *src) {
 }
 
 t_line *get_t_line(t_line *ln, int index) {
-	printf("get_t_line() index: %i\n", index);
+	// printf("get_t_line() index: %i\n", index);
 	while(ln) {
-		printf("get_t_line() id: %i\n", ln->id);
+		// printf("get_t_line() id: %i\n", ln->id);
 		if(ln->id == index) {
 			return ln;
 		}
 		ln = ln->next;
 	}
-	printf("un échec");
 	return (0);
 }
 

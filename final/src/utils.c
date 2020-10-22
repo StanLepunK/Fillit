@@ -51,7 +51,7 @@ void dup_tetro_line_list(t_line **ref_dst, t_line *src) {
 void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src) {
   dst->id = src->id;
   
-	dup_tetro_line_list(&dst->tetro_line, src->tetro_line);
+	dup_tetro_line_list(&dst->line, src->line);
   dst->size.x = src->size.x;
 	dst->size.y = src->size.y;
 

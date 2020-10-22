@@ -17,7 +17,7 @@ t_tetro *tetro_dup(t_tetro **ref) {
 	buffer->size.copy(&buffer->size,&(*ref)->size);
 	buffer->start = (*ref)->start;
 	buffer->end = (*ref)->end;
-	tetro_line_dup(&buffer->tetro_line, (*ref)->tetro_line);
+	tetro_line_dup(&buffer->line, (*ref)->line);
 	return (buffer);
 }
 
@@ -31,7 +31,7 @@ int tetro_add(t_tetro **ref, t_line *tl, int id) {
 		return (0);
 	tetro_init(temp_tetro);
 	temp_tetro->id = (++id);
-	ret = tetro_line_dup(&temp_tetro->tetro_line, tl);
+	ret = tetro_line_dup(&temp_tetro->line, tl);
 	temp_tetro->next = (*ref);
   (*ref) = temp_tetro;
 	return(ret);
@@ -116,7 +116,7 @@ void tetro_line_print(t_line *ln) {
 }
 
 void print_tetro(t_tetro *t, int print_info_is) {
-	tetro_line_print(t->tetro_line);
+	tetro_line_print(t->line);
 		if(print_info_is) {
 			printf("name: %c \n",t->name);
 			printf("id: %i \n",t->id);
@@ -200,7 +200,7 @@ void tetro_clean_and_format(t_tetro *t, int print_info_is) {
   while(t) {
 		if(print_info_is)
     	printf("cleaning and formating next tetromino\n");
-		tetro_line_clean(t, t->tetro_line);
+		tetro_line_clean(t, t->line);
 		t->name = (name++);
 		t->id = (id++);
     t = t->next;

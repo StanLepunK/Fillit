@@ -2,7 +2,7 @@
 // puzzle
 void puzzle_init(t_puzzle *pzl) {
   pzl->id = 0;
-  pzl->tetro_line = NULL;
+  pzl->line = NULL;
   ivec3_init(&pzl->size);
   pzl->brick = 0;
   pzl->space = 0;
@@ -12,7 +12,7 @@ void puzzle_init(t_puzzle *pzl) {
 void tetro_init(t_tetro *t) {
   t->id = 0;
   t->name = 0;
-  t->tetro_line = NULL;
+  t->line = NULL;
   ivec2_init(&t->canvas);
   ivec2_init(&t->size);
   ivec2_init(&t->offset);

@@ -18,7 +18,7 @@ int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *t) {
   int index;
   t_line *t_line;
   
-  c = t->tetro_line->b;
+  c = t->line->b;
   while(t) {
     (*ref_pzl)->size.z +=(t->size.x + t->size.y);
     t = t->next;
@@ -35,7 +35,7 @@ int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *t) {
 
   index = 0;
   while (index < (*ref_pzl)->size.y) {
-    add_t_line(&(*ref_pzl)->tetro_line, index, t_line);
+    add_t_line(&(*ref_pzl)->line, index, t_line);
     index++;
   }
   return (1);
@@ -69,10 +69,7 @@ char get_cell(t_line *src, int x, int y) {
 void set_cell(t_line *dst, int x, int y, char c) {
   while(dst) {
     if(dst->id == y) {
-      // printf("set cell x: %i, y %i >>>  %c <> %c \n",x, y, src->content[x], c);
       dst->content[x] = c; // dangerous, because there is no out bound exception
-      // printf("xy %i, %i\n",x, y);
-      // printf("name %c\n",dst->content[x]);
       break;
     }
     dst = dst->next;
@@ -80,34 +77,54 @@ void set_cell(t_line *dst, int x, int y, char c) {
 }
 
 
+// new coord to start a new try
+void set_try(ivec3 *try, ivec3 *size_pzl, ivec2 *size_tetro) {
+  int len;
+  int sx;
+  int sy;
+
+  len = try->z;
+  sx = size_pzl->x - size_tetro->x;
+  sy = size_pzl->y - size_tetro->y;
+  try->x = len % sx;
+  try->y = len / sx;
+}
+
+
+
+
+
 
 int complete_line_try(t_line *dst_pzl_ln, t_tetro *t, ivec3 *try) {
   int ix; // index
   int ox; // offset
-
-  ox = t->offset.x;
-  while(t->tetro_line) {
-    if(!t->tetro_line->empty) {
-      ix = 0;
-      if(get_t_line(dst_pzl_ln, try->y)->space >= t->tetro_line->brick) {
-        // printf("je suis passé\n");
-      // if(dst_pzl_ln->space >= t->tetro_line->brick) {
-        while(ix + ox < t->tetro_line->length) {
-          if(t->tetro_line->content[ix + ox] == t->tetro_line->a) {
-            if(get_cell(dst_pzl_ln, try->x, try->y) == t->tetro_line->b) {
-              set_cell(dst_pzl_ln, try->x, try->y, t->name);
-              printf("get_cell(): %c\n",get_cell(dst_pzl_ln, try->x, try->y));
-            } else {
-              return (0);
-            }
-          }
-          ix++;
-        }
-      }
-      // printf("je suis out\n");
-    }
-    t->tetro_line = t->tetro_line->next;
+  while(t->line) {
+    t->line = t->line->next;
   }
+
+  // ox = t->offset.x;
+  // while(t->tetro_line) {
+  //   if(!t->tetro_line->empty) {
+  //     ix = 0;
+  //     if(get_t_line(dst_pzl_ln, try->y)->space >= t->tetro_line->brick) {
+  //       // printf("je suis passé\n");
+  //     // if(dst_pzl_ln->space >= t->tetro_line->brick) {
+  //       while(ix + ox < t->tetro_line->length) {
+  //         if(t->tetro_line->content[ix + ox] == t->tetro_line->a) {
+  //           if(get_cell(dst_pzl_ln, try->x, try->y) == t->tetro_line->b) {
+  //             set_cell(dst_pzl_ln, try->x, try->y, t->name);
+  //             printf("get_cell(): %c\n",get_cell(dst_pzl_ln, try->x, try->y));
+  //           } else {
+  //             return (0);
+  //           }
+  //         }
+  //         ix++;
+  //       }
+  //     }
+  //     // printf("je suis out\n");
+  //   }
+  //   t->tetro_line = t->tetro_line->next;
+  // }
   return (1);
 }
 
@@ -127,20 +144,7 @@ t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
   return (buffer);
 }
 
-void set_try(ivec3 *try, ivec3 *size_pzl, ivec2 *size_tetro) {
-  int len;
-  int sx;
-  int sy;
 
-  len = try->z;
-  sx = size_pzl->x - size_tetro->x;
-  sy = size_pzl->y - size_tetro->y;
-  try->x = len % sx;
-  try->y = len / sx;
-  printf("len %i\n", len);
-  printf("sx: %i\n", sx);
-  printf("try->y: %i\n", try->y);
-}
 
 
 
@@ -150,7 +154,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
   t_puzzle *pzl;
   t_tetro *tetro;
 
-  reverse_t_line(&t->tetro_line);
+  reverse_t_line(&t->line);
   tetro = tetro_dup(&t);
   pzl = puzzle_dup(ref_pzl);
   ivec3_init(try);
@@ -158,7 +162,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
   printf("max try %i\n", max_try);
   while(try->z < max_try) {
     set_try(try, &pzl->size, &t->size);
-    if(complete_line_try(pzl->tetro_line, tetro, try)) {
+    if(complete_line_try(pzl->line, tetro, try)) {
       break;
     }
     

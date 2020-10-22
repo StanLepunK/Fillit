@@ -63,7 +63,7 @@ struct s_puzzle {
 
 	ivec3 size;
 
-	t_line *tetro_line;
+	t_line *line;
 	t_puzzle *next;
 
 };
@@ -78,7 +78,7 @@ struct s_tetro {
 	ivec2 start;
 	ivec2 end;
 
-	t_line *tetro_line;
+	t_line *line;
 	t_tetro *next;
 };
 

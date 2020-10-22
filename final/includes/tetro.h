@@ -83,16 +83,27 @@ struct s_tetro {
 };
 
 
+typedef struct s_try t_try;
+struct  s_try {
+	int ix; // index x
+	int iy; // index y
+  int mx; // max x
+	int my; // max y
+	int num;
+};
+
 // utils
 int sqrt_ceil(float value);
 char	*strcpy_from_to(const char *src, int start, int end);
 // line
 t_line *get_t_line(t_line *ln, int index);
+int copy_t_line_at(t_line *dst, const t_line *src, int index);
+void copy_t_line(t_line *dst, const t_line *src);
 int fill_line(char **ref, char c, size_t len);
 int fill_t_line(t_line **ref, char c, size_t len);
 void reverse_t_line(t_line **ref);
 int add_t_line(t_line **ref, int rank, t_line *t_ln);
-void copy_t_line_struct(t_line *dst, const t_line *src);
+
 
 // checker
 void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);

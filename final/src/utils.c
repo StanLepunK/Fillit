@@ -59,8 +59,21 @@ void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src) {
 	dst->space = src->space;
 }
 
+int copy_t_line_at(t_line *dst, const t_line *src, int index) {
+	// printf("copy at %i\n",index);
+	while(src) {
+		// printf("copy src->id %i\n",src->id);
+		if(src->id == index) {
+			// printf("copy\n");
+			copy_t_line(dst, src);
+			return (1);
+		}
+		src = src->next;
+	}
+	return (0);
+}
 
-void copy_t_line_struct(t_line *dst, const t_line *src) {
+void copy_t_line(t_line *dst, const t_line *src) {
   dst->id = src->id;
   
   dst->content = ft_strdup(src->content);
@@ -104,7 +117,7 @@ int add_t_line(t_line **ref, int rank, t_line *src) {
 	temp_ln = NULL;
 	if(!(temp_ln = (t_line*)malloc(sizeof(t_line))))
 		return (0);
-  copy_t_line_struct(temp_ln, src);
+  copy_t_line(temp_ln, src);
 	temp_ln->id = rank;
 	temp_ln->next = (*ref);
 	(*ref) = temp_ln;
@@ -112,9 +125,8 @@ int add_t_line(t_line **ref, int rank, t_line *src) {
 }
 
 t_line *get_t_line(t_line *ln, int index) {
-	// printf("get_t_line() index: %i\n", index);
 	while(ln) {
-		// printf("get_t_line() id: %i\n", ln->id);
+		// printf("get src->id %i\n",ln->id);
 		if(ln->id == index) {
 			return ln;
 		}

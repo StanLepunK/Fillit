@@ -13,23 +13,26 @@ int init_temp_puzzle_line(t_line **ref_ln, int len) {
   return (1);
 }
 
+void set_grid_size(t_puzzle *pzl, t_tetro *tetro) {
+  if(size_t_tetro(tetro) > 1) {
+    while(tetro) {
+      pzl->size.z +=(tetro->size.x + tetro->size.y);
+      tetro = tetro->next;
+    }
+    pzl->size.x = sqrt_ceil(pzl->size.z);
+    pzl->size.y = pzl->size.x;
+  } else {
+    pzl->size.x = tetro->size.x;
+    pzl->size.y = tetro->size.y;
+  }
+}
+
 int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *t) {
   char c;
   int index;
   t_line *t_line;
   
-  
-  if(size_t_tetro(t) > 1) {
-    while(t) {
-      (*ref_pzl)->size.z +=(t->size.x + t->size.y);
-      t = t->next;
-    }
-    (*ref_pzl)->size.x = sqrt_ceil((*ref_pzl)->size.z);
-    (*ref_pzl)->size.y = (*ref_pzl)->size.x;
-  } else {
-    (*ref_pzl)->size.x = t->size.x;
-    (*ref_pzl)->size.y = t->size.y;
-  }
+  set_grid_size(*ref_pzl, t);
 
   c = t->line->b;
   fill_t_line(&t_line, c, (*ref_pzl)->size.x);
@@ -85,16 +88,19 @@ void set_cell(t_line *dst, int x, int y, char c) {
 void set_try(t_try *try, t_ivec3 *size_pzl, t_ivec2 *size_tetro) {
   try->ix = 0;
   try->iy = 0;
-  try->mx = size_pzl->x - size_tetro->x;
-  try->my = size_pzl->y - size_tetro->y;
+  try->mox = size_pzl->x - size_tetro->x;
+  try->moy = size_pzl->y - size_tetro->y;
   try->num = 0;
+  try->max = (size_pzl->x * size_pzl->y) - (size_tetro->x * size_tetro->y) - 1;
+  if(try->max < 1)
+    try->max = 1;
 }
 
 int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
   int index;
 
   index = 0;
-  while(index < tetro->size.x && try->ix <= try->mx) {
+  while(index < tetro->size.x && try->ix <= try->mox) {
     if(tetro->line->content[index + tetro->offset.x] == tetro->line->a) {
       if(buf_pzl->content[index + try->ix] == tetro->line->b) {
         buf_pzl->content[index + try->ix] = tetro->name;
@@ -113,12 +119,14 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
 
   index_t_ln = 0;
   while(tetro->line) {
-    if(index_t_ln > try->my) {
+    if(index_t_ln > try->moy) {
       return (0);
     }
     if(!tetro->line->empty) {
-      while(try->iy <= try->my + index_t_ln) {
-        printf("tetro name %c iy: %i my: %i index_t_ln: %i\n", tetro->name, try->iy, try->my, index_t_ln);
+      printf("je suis là 0\n");
+      printf("tetro name %c iy: %i moy: %i index_t_ln: %i\n", tetro->name, try->iy, try->moy, index_t_ln);
+      while(try->iy <= try->moy + index_t_ln) {
+        printf("je suis là 1\n");
         try->ix = 0;
         buf_pzl = get_t_line(dst_pzl_ln, try->iy);
         if(buf_pzl->space >= tetro->line->brick) {
@@ -127,13 +135,13 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
             copy_t_line_at(dst_pzl_ln,buf_pzl,try->iy);
             break;
           } else {
-            printf("PERDU\n");
             return(0);
           }
-        }    
+        }
+        // index_t_ln++; // work for one verticale on 4 piece
       }
+      index_t_ln++; // works for all except verticval one and single tetro
     }
-    index_t_ln++;
     tetro->line = tetro->line->next;
   }
   return (1);
@@ -161,24 +169,22 @@ t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
 
 
 
-int complete_puzzle(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
+int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int print_info_is) {
   t_try *try;
-  int max_try;
   t_puzzle *pzl;
-  t_tetro *tetro;
+  t_tetro *buf_tetro;
 
-  tetro = tetro_dup(&t);
+  buf_tetro = tetro_dup(&tetro);
   pzl = puzzle_dup(ref_pzl);
-  set_try(try, &pzl->size, &t->size);
-  max_try = (pzl->size.x * pzl->size.y) - (t->size.x * t->size.y) - 1;
-  while(try->num < max_try) {
-    if(complete_line_try(pzl->line, tetro, try)) {
+  set_try(try, &pzl->size, &tetro->size);
+  while(try->num < try->max) {
+    if(complete_line_try(pzl->line, buf_tetro, try)) {
       break;
     } else {
       try->num++;
     }
-    free(tetro); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
-    tetro = tetro_dup(&t);
+    free(buf_tetro); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
+    buf_tetro = tetro_dup(&tetro);
     free(pzl); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
     pzl = puzzle_dup(ref_pzl);
   }

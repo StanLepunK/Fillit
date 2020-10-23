@@ -87,9 +87,10 @@ typedef struct s_try t_try;
 struct  s_try {
 	int ix; // index x
 	int iy; // index y
-  int mx; // max x
-	int my; // max y
+  int mox; // max offset x
+	int moy; // max offset y
 	int num;
+	int max;
 };
 
 // utils

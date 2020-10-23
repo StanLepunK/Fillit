@@ -107,10 +107,8 @@ int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
 }
 
 int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
-  int res;
   t_line *buf_pzl;
 
-  res = 1;
   while(tetro->line) {
     if(!tetro->line->empty) {
       while(try->iy <= try->my) {
@@ -119,19 +117,17 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
         if(buf_pzl->space >= tetro->line->brick) {
           ++try->iy;
           if(resolution(buf_pzl, tetro, try)) {
-            res = 1;
             copy_t_line_at(dst_pzl_ln,buf_pzl,try->iy);
             break;
           } else {
-            res = 0;
-            break;
+            return(0);
           }
         }    
       }
     }
     tetro->line = tetro->line->next;
   }
-  return (res);
+  return (1);
 }
 
 
@@ -162,7 +158,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
   t_puzzle *pzl;
   t_tetro *tetro;
 
-  reverse_t_line(&t->line);
+  // reverse_t_line(&t->line);
   tetro = tetro_dup(&t);
   pzl = puzzle_dup(ref_pzl);
   set_try(try, &pzl->size, &t->size);
@@ -221,38 +217,3 @@ int puzzle(t_tetro *t, int print_info_is) {
   return (1);
 }
 
-
-
-
-
-
-
-
-
-int completement_pourrie_try(t_line *dst_pzl_ln, t_tetro *tetro, t_ivec3 *try) {
-  int ix;
-  int ox;
-  int ot;
-   while(tetro->line && dst_pzl_ln) {
-    // printf("pzl line id %i\n",dst_pzl_ln->id);
-    if(!tetro->line->empty) {
-      ix = 0;
-      if(dst_pzl_ln->space >= tetro->line->brick) {
-        while(ix + ox < tetro->line->length) {
-          if(tetro->line->content[ix + ox] == tetro->line->a) {
-            if(dst_pzl_ln->content[ix + ot] == tetro->line->b) {
-              // printf("SUCCES\n");
-              dst_pzl_ln->content[ix + ot] = tetro->name;
-            } else {
-              return (0);
-            }
-          }
-          ix++;
-        }
-      }
-      dst_pzl_ln = dst_pzl_ln->next;
-    }
-    tetro->line = tetro->line->next;
-  }
-  return (1);
-}

@@ -107,11 +107,14 @@ int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
 }
 
 int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
+  int index_t_ln;
   t_line *buf_pzl;
 
+  index_t_ln = 0;
   while(tetro->line) {
     if(!tetro->line->empty) {
-      while(try->iy <= try->my) {
+      while(try->iy <= try->my + index_t_ln) {
+        printf("tetro name iy my %c %i %i\n", tetro->name, try->iy, try->my);
         try->ix = 0;
         buf_pzl = get_t_line(dst_pzl_ln, try->iy);
         if(buf_pzl->space >= tetro->line->brick) {
@@ -125,6 +128,7 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
         }    
       }
     }
+    index_t_ln++;
     tetro->line = tetro->line->next;
   }
   return (1);
@@ -164,7 +168,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
   set_try(try, &pzl->size, &t->size);
   max_try = (pzl->size.x * pzl->size.y) - (t->size.x * t->size.y) - 1;
   while(try->num < max_try) {
-    try->iy = 0;
+    // try->iy = 0;
     if(complete_line_try(pzl->line, tetro, try)) {
       break;
     } else {

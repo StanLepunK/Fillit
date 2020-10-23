@@ -53,6 +53,17 @@ void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_line **ref_tl) {
 	(*ref_tetro) = temp;
 }
 
+int size_t_tetro(t_tetro *tetro) {
+	int size;
+
+	size = 0;
+	while(tetro) {
+		size++;
+		tetro = tetro->next;
+	}
+	return (size);
+}
+
 
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length) {
 	t_tetro *temp_tetro;

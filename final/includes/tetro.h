@@ -85,8 +85,8 @@ struct s_tetro {
 
 typedef struct s_try t_try;
 struct  s_try {
-	int ix; // index x
-	int iy; // index y
+	int pzl_ix; // index x
+	int pzl_iy; // index y
   int mox; // max offset x
 	int moy; // max offset y
 	int num;

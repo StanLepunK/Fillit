@@ -62,9 +62,10 @@ void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src) {
 int copy_t_line_at(t_line *dst, const t_line *src, int index) {
 	// printf("copy at %i\n",index);
 	while(src) {
-		// printf("copy src->id %i\n",src->id);
+		
 		if(src->id == index) {
-			// printf("copy\n");
+			printf("copy src->id %i\n",src->id);
+			printf("copy\n");
 			copy_t_line(dst, src);
 			return (1);
 		}

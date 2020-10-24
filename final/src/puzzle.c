@@ -86,8 +86,8 @@ void set_cell(t_line *dst, int x, int y, char c) {
 }
 
 void set_try(t_try *try, t_ivec3 *size_pzl, t_ivec2 *size_tetro) {
-  try->ix = 0;
-  try->iy = 0;
+  try->pzl_ix = 0;
+  try->pzl_iy = 0;
   try->mox = size_pzl->x - size_tetro->x;
   try->moy = size_pzl->y - size_tetro->y;
   try->num = 0;
@@ -100,10 +100,10 @@ int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
   int index;
 
   index = 0;
-  while(index < tetro->size.x && try->ix <= try->mox) {
+  while(index < tetro->size.x && try->pzl_ix <= try->mox) {
     if(tetro->line->content[index + tetro->offset.x] == tetro->line->a) {
-      if(buf_pzl->content[index + try->ix] == tetro->line->b) {
-        buf_pzl->content[index + try->ix] = tetro->name;
+      if(buf_pzl->content[index + try->pzl_ix] == tetro->line->b) {
+        buf_pzl->content[index + try->pzl_ix] = tetro->name;
       } else {
         return (0);
       }
@@ -119,28 +119,25 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
 
   index_t_ln = 0;
   while(tetro->line) {
-    if(index_t_ln > try->moy) {
+    if(index_t_ln > tetro->size.y) {
       return (0);
     }
+    printf("1 %s\n",tetro->line->content);
     if(!tetro->line->empty) {
-      printf("je suis là 0\n");
-      printf("tetro name %c iy: %i moy: %i index_t_ln: %i\n", tetro->name, try->iy, try->moy, index_t_ln);
-      while(try->iy <= try->moy + index_t_ln) {
-        printf("je suis là 1\n");
-        try->ix = 0;
-        buf_pzl = get_t_line(dst_pzl_ln, try->iy);
+      // printf("tetro name %c iy: %i moy: %i index_t_ln: %i\n", tetro->name, try->iy, try->moy, index_t_ln);
+      while(try->pzl_iy <= try->moy + index_t_ln) {
+        try->pzl_ix = 0;
+        buf_pzl = get_t_line(dst_pzl_ln, try->pzl_iy);
         if(buf_pzl->space >= tetro->line->brick) {
-          ++try->iy;
+          try->pzl_iy++;
           if(resolution(buf_pzl, tetro, try)) {
-            copy_t_line_at(dst_pzl_ln,buf_pzl,try->iy);
             break;
           } else {
             return(0);
           }
         }
-        // index_t_ln++; // work for one verticale on 4 piece
       }
-      index_t_ln++; // works for all except verticval one and single tetro
+      index_t_ln++;
     }
     tetro->line = tetro->line->next;
   }

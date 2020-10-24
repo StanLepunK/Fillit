@@ -50,6 +50,17 @@ int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *t) {
   return (1);
 }
 
+t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
+  t_puzzle *buffer;
+
+  buffer = NULL;
+  if(!(buffer = (t_puzzle*)malloc(sizeof(t_puzzle))))
+		return (0);
+  puzzle_init(buffer);
+  copy_t_puzzle_struct(buffer, (*ref_pzl));
+  return (buffer);
+}
+
 
 void brick_switch(char *line, char target_char, char new_char) {
   int index;
@@ -88,9 +99,10 @@ void set_cell(t_line *dst, int x, int y, char c) {
 void set_try(t_try *try, t_ivec3 *size_pzl, t_ivec2 *size_tetro) {
   try->pzl_ix = 0;
   try->pzl_iy = 0;
-  try->mox = size_pzl->x - size_tetro->x;
-  try->moy = size_pzl->y - size_tetro->y;
+  try->pzl_mox = size_pzl->x - size_tetro->x;
+  try->pzl_moy = size_pzl->y - size_tetro->y;
   try->num = 0;
+  try->put = 0;
   try->max = (size_pzl->x * size_pzl->y) - (size_tetro->x * size_tetro->y) - 1;
   if(try->max < 1)
     try->max = 1;
@@ -100,10 +112,11 @@ int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
   int index;
 
   index = 0;
-  while(index < tetro->size.x && try->pzl_ix <= try->mox) {
+  while(index < tetro->size.x && try->pzl_ix <= try->pzl_mox) {
     if(tetro->line->content[index + tetro->offset.x] == tetro->line->a) {
       if(buf_pzl->content[index + try->pzl_ix] == tetro->line->b) {
         buf_pzl->content[index + try->pzl_ix] = tetro->name;
+        try->put++;
       } else {
         return (0);
       }
@@ -111,6 +124,11 @@ int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
     index++;
   }
   return (1);
+}
+
+void reset_for_vertical_fill(t_try *try) {
+  try->pzl_iy = 0;
+  try->pzl_ix++;
 }
 
 int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
@@ -122,11 +140,9 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
     if(index_t_ln > tetro->size.y) {
       return (0);
     }
-    printf("1 %s\n",tetro->line->content);
     if(!tetro->line->empty) {
-      // printf("tetro name %c iy: %i moy: %i index_t_ln: %i\n", tetro->name, try->iy, try->moy, index_t_ln);
-      while(try->pzl_iy <= try->moy + index_t_ln) {
-        try->pzl_ix = 0;
+      // printf("tetro name %c pzl_iy: %i pzl_moy: %i index_t_ln: %i\n", tetro->name, try->pzl_iy, try->pzl_moy, index_t_ln);
+      while(try->pzl_iy <= try->pzl_moy + index_t_ln) {
         buf_pzl = get_t_line(dst_pzl_ln, try->pzl_iy);
         if(buf_pzl->space >= tetro->line->brick) {
           try->pzl_iy++;
@@ -146,26 +162,6 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
 
 
 
-
-
-
-
-
-t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
-  t_puzzle *buffer;
-
-  buffer = NULL;
-  if(!(buffer = (t_puzzle*)malloc(sizeof(t_puzzle))))
-		return (0);
-  puzzle_init(buffer);
-  copy_t_puzzle_struct(buffer, (*ref_pzl));
-  return (buffer);
-}
-
-
-
-
-
 int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int print_info_is) {
   t_try *try;
   t_puzzle *pzl;
@@ -178,6 +174,9 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int print_info_is) {
     if(complete_line_try(pzl->line, buf_tetro, try)) {
       break;
     } else {
+      if(try->num%2) {
+        reset_for_vertical_fill(try);
+      }
       try->num++;
     }
     free(buf_tetro); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
@@ -185,6 +184,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int print_info_is) {
     free(pzl); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
     pzl = puzzle_dup(ref_pzl);
   }
+  printf("%c put: %i\n", buf_tetro->name, try->put);
   (*ref_pzl) = pzl;
   return (1);
 }

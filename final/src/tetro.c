@@ -91,6 +91,7 @@ int tetro_line_dup(t_line **ref, t_line *src) {
 	rank = 0;
 	ret = 0;
   while(src) {
+		// printf("tetro_line_dup %i %s\n", rank, src->content);
 		ret = add_t_line(ref, rank, src);
 		if(!ret)
 			break;

@@ -141,7 +141,8 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
       return (0);
     }
     if(!tetro->line->empty) {
-      // printf("tetro name %c pzl_iy: %i pzl_moy: %i index_t_ln: %i\n", tetro->name, try->pzl_iy, try->pzl_moy, index_t_ln);
+      if(try->pzl_iy > try->pzl_moy + index_t_ln)
+        return(0);
       while(try->pzl_iy <= try->pzl_moy + index_t_ln) {
         buf_pzl = get_t_line(dst_pzl_ln, try->pzl_iy);
         if(buf_pzl->space >= tetro->line->brick) {
@@ -161,6 +162,12 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
 }
 
 
+
+
+t_line *header_t_line(t_line *ptr) {
+	t_line *header = ptr;
+	return (header);
+}
 
 int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int print_info_is) {
   t_try *try;
@@ -184,7 +191,6 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int print_info_is) {
     free(pzl); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
     pzl = puzzle_dup(ref_pzl);
   }
-  printf("%c put: %i\n", buf_tetro->name, try->put);
   (*ref_pzl) = pzl;
   return (1);
 }

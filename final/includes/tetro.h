@@ -99,6 +99,11 @@ struct  s_try {
 // utils
 int sqrt_ceil(float value);
 char	*strcpy_from_to(const char *src, int start, int end);
+// free
+void free_tetro(t_tetro *tetro);
+void free_puzzle(t_puzzle *pzl);
+void free_line(t_line *line);
+void free_block(t_block *blk);
 // line
 t_line *get_t_line(t_line *ln, int index);
 int copy_t_line_at(t_line *dst, const t_line *src, int index);

@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/26 12:29:06 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/26 17:30:07 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int builder(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 		free(line);
 	}
 	get_next_line(fd, &line);
+	free_line(&buffer);
+	free_block(t_blk);
 	free(line);
 	close(fd);
 	(*ref_tetro) = temp_tetro;

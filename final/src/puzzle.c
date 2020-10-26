@@ -47,6 +47,7 @@ int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
   index = 0;
   while (index < (*ref_pzl)->size.y) {
     add_t_line(&(*ref_pzl)->line, index, t_line);
+    // free(t_line);
     index++;
   }
   return (1);
@@ -196,9 +197,9 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int var_unused) {
       }
       try->num++;
     }
-    free(buf_tetro); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
+    free_tetro(buf_tetro);    // free(buf_tetro); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
     buf_tetro = tetro_dup(&tetro);
-    free(pzl); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
+    free_puzzle(pzl); // sure this one is not totaly free, because there is something in sine like tetro_line has not been released
     pzl = puzzle_dup(ref_pzl);
   }
   (*ref_pzl) = pzl;
@@ -220,6 +221,7 @@ int puzzle_build(t_puzzle **ref_pzl, t_tetro *t) {
   // complete_puzzle(&buffer, t); // cause a segfault for unknow reason
   // complete_puzzle(&(*ref_pzl), t, 1); // cause a segfault for unknow reason
   complete_puzzle(&buffer, t, 1);
+  
   (*ref_pzl) = buffer;
   return (1);
 }
@@ -240,5 +242,6 @@ int puzzle(t_tetro *t, int print_info_is) {
     t = t->next;
   }
   puzzle_print(pzl, print_info_is);
+  free_puzzle(pzl);
   return (1);
 }

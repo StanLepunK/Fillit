@@ -60,13 +60,15 @@ struct s_puzzle {
 	int id;
 	int brick;
 	int space;
+	int tetro_num;
+	int tetro_used;
 
 	t_ivec3 size;
 
 	t_line *line;
 	t_puzzle *next;
-
 };
+
 
 typedef struct s_tetro t_tetro;
 struct s_tetro {

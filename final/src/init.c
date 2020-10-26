@@ -6,6 +6,8 @@ void puzzle_init(t_puzzle *pzl) {
   ivec3_init(&pzl->size);
   pzl->brick = 0;
   pzl->space = 0;
+  pzl->tetro_num = 0;
+  pzl->tetro_used = 0;
 }
 
 // tetro

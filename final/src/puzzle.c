@@ -16,25 +16,27 @@ int init_temp_puzzle_line(t_line **ref_ln, int len) {
 void set_grid_size(t_puzzle *pzl, t_tetro *tetro) {
   if(size_t_tetro(tetro) > 1) {
     while(tetro) {
+       pzl->tetro_num++;
       pzl->size.z +=(tetro->size.x + tetro->size.y);
       tetro = tetro->next;
     }
     pzl->size.x = sqrt_ceil(pzl->size.z);
     pzl->size.y = pzl->size.x;
   } else {
+    pzl->tetro_num = 1;
     pzl->size.x = tetro->size.x;
     pzl->size.y = tetro->size.y;
   }
 }
 
-int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *t) {
+int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
   char c;
   int index;
   t_line *t_line;
   
-  set_grid_size(*ref_pzl, t);
+  set_grid_size(*ref_pzl, tetro);
 
-  c = t->line->b;
+  c = tetro->line->b;
   fill_t_line(&t_line, c, (*ref_pzl)->size.x);
   t_line->b = c;
   t_line->empty = 1;
@@ -110,12 +112,15 @@ void set_try(t_try *try, t_ivec3 *size_pzl, t_ivec2 *size_tetro) {
 
 int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
   int index;
+  int succes;
 
   index = 0;
+  succes = 0;
   while(index < tetro->size.x && try->pzl_ix <= try->pzl_mox) {
     if(tetro->line->content[index + tetro->offset.x] == tetro->line->a) {
       if(buf_pzl->content[index + try->pzl_ix] == tetro->line->b) {
         buf_pzl->content[index + try->pzl_ix] = tetro->name;
+        succes = 1;
         try->put++;
       } else {
         return (0);
@@ -123,7 +128,7 @@ int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
     }
     index++;
   }
-  return (1);
+  return (succes);
 }
 
 void reset_for_vertical_fill(t_try *try) {
@@ -179,6 +184,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int print_info_is) {
   set_try(try, &pzl->size, &tetro->size);
   while(try->num < try->max) {
     if(complete_line_try(pzl->line, buf_tetro, try)) {
+      pzl->tetro_used++;
       break;
     } else {
       if(try->num%2) {
@@ -221,7 +227,7 @@ int puzzle(t_tetro *t, int print_info_is) {
 		return (0);
   puzzle_init(pzl);
   // try to build the smallest grid for the fist time and increqe step by step
-  build_grid_puzzle(&pzl, t); 
+  build_grid_puzzle(&pzl, t);
   
   while(t) {
     if(print_info_is)

@@ -50,10 +50,13 @@ void dup_tetro_line_list(t_line **ref_dst, t_line *src) {
 
 void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src) {
   dst->id = src->id;
+	dst->tetro_num = src->tetro_num;
+	dst->tetro_used = src->tetro_used;
   
 	dup_tetro_line_list(&dst->line, src->line);
-  dst->size.x = src->size.x;
-	dst->size.y = src->size.y;
+	copy_ivec3(&dst->size, &src->size);
+  // dst->size.x = src->size.x;
+	// dst->size.y = src->size.y;
 
 	dst->brick = src->brick;
 	dst->space = src->space;

@@ -91,7 +91,6 @@ int tetro_line_dup(t_line **ref, t_line *src) {
 	rank = 0;
 	ret = 0;
   while(src) {
-		// printf("tetro_line_dup %i %s\n", rank, src->content);
 		ret = add_t_line(ref, rank, src);
 		if(!ret)
 			break;
@@ -129,17 +128,16 @@ void tetro_line_print(t_line *ln) {
 
 void print_tetro(t_tetro *t, int print_info_is) {
 	tetro_line_print(t->line);
-		if(print_info_is) {
-			printf("name: %c \n",t->name);
-			printf("id: %i \n",t->id);
-			printf("offset x: %i \n",t->offset.x);
-			printf("offset y: %i \n",t->offset.y);
-			printf("size x: %i \n",t->size.x);
-			printf("size y: %i \n",t->size.y);
-			printf("start.x: %i\n", t->start.x);
-			printf("end.x: %i\n", t->end.x);
-		}
-
+	if(print_info_is) {
+		printf("name: %c \n",t->name);
+		printf("id: %i \n",t->id);
+		printf("offset x: %i \n",t->offset.x);
+		printf("offset y: %i \n",t->offset.y);
+		printf("size x: %i \n",t->size.x);
+		printf("size y: %i \n",t->size.y);
+		printf("start.x: %i\n", t->start.x);
+		printf("end.x: %i\n", t->end.x);
+	}
 }
 
 

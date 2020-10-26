@@ -55,17 +55,13 @@ void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src) {
   
 	dup_tetro_line_list(&dst->line, src->line);
 	copy_ivec3(&dst->size, &src->size);
-  // dst->size.x = src->size.x;
-	// dst->size.y = src->size.y;
 
 	dst->brick = src->brick;
 	dst->space = src->space;
 }
 
 int copy_t_line_at(t_line *dst, const t_line *src, int index) {
-	// printf("copy at %i\n",index);
-	while(src) {
-		
+	while(src) {	
 		if(src->id == index) {
 			printf("copy src->id %i\n",src->id);
 			printf("copy\n");

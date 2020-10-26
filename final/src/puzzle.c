@@ -174,14 +174,18 @@ t_line *header_t_line(t_line *ptr) {
 	return (header);
 }
 
-int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int print_info_is) {
+// cause a segfault for unknow reason
+// int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
+int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int var_unused) {
   t_try *try;
   t_puzzle *pzl;
   t_tetro *buf_tetro;
 
   buf_tetro = tetro_dup(&tetro);
+  printf("0 (*ref_pzl) num %i\n", (*ref_pzl)->tetro_num);
   pzl = puzzle_dup(ref_pzl);
   set_try(try, &pzl->size, &tetro->size);
+  printf("0 (*ref_pzl) num %i\n", (*ref_pzl)->tetro_num);
   while(try->num < try->max) {
     if(complete_line_try(pzl->line, buf_tetro, try)) {
       pzl->tetro_used++;
@@ -203,14 +207,19 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int print_info_is) {
 
 
 
-int puzzle_build(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
-  t_puzzle *buffer;
 
-  buffer = puzzle_dup(ref_pzl);
-  if(print_info_is)
-    printf("\npiece of puzzle: %c\n", t->name);
+
+
+
+
+int puzzle_build(t_puzzle **ref_pzl, t_tetro *t) {
+  t_puzzle *buffer;
   
-  complete_puzzle(&buffer, t, print_info_is);
+  buffer = (*ref_pzl);
+  // buffer = puzzle_dup(ref_pzl);
+  // complete_puzzle(&buffer, t); // cause a segfault for unknow reason
+  // complete_puzzle(&(*ref_pzl), t, 1); // cause a segfault for unknow reason
+  complete_puzzle(&buffer, t, 1);
   (*ref_pzl) = buffer;
   return (1);
 }
@@ -220,9 +229,6 @@ int puzzle_build(t_puzzle **ref_pzl, t_tetro *t, int print_info_is) {
 int puzzle(t_tetro *t, int print_info_is) {
   t_puzzle *pzl;
 
-  pzl = NULL;
-  if(print_info_is)
-    printf("PRINT PUZZLE\n");
   if(!(pzl = (t_puzzle*)malloc(sizeof(t_puzzle))))
 		return (0);
   puzzle_init(pzl);
@@ -230,12 +236,9 @@ int puzzle(t_tetro *t, int print_info_is) {
   build_grid_puzzle(&pzl, t);
   
   while(t) {
-    if(print_info_is)
-      printf("\nnext piece to solve puzzle\n");
-    puzzle_build(&pzl, t, print_info_is);
+    puzzle_build(&pzl, t);
     t = t->next;
   }
-  puzzle_print(pzl);
+  puzzle_print(pzl, print_info_is);
   return (1);
 }
-

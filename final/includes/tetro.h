@@ -131,7 +131,7 @@ void tetro_clean_and_format(t_tetro *t, int print_info_is);
 // puzzle
 void puzzle_init(t_puzzle *pzl);
 int puzzle(t_tetro *t, int print_info_is);
-void puzzle_print(t_puzzle *pzl);
+void puzzle_print(t_puzzle *pzl, int print_info_is);
 void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src);
 
 #endif

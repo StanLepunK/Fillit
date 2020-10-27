@@ -1,3 +1,51 @@
+==4714== HEAP SUMMARY:
+==4714== in use at exit: 31,647 bytes in 508 blocks
+==4714== total heap usage: 1,420 allocs, 912 frees, 73,027 bytes allocated
+==4714==
+==4714== LEAK SUMMARY:
+==4714== definitely lost: 3,947 bytes in 209 blocks
+==4714== indirectly lost: 4,299 bytes in 130 blocks
+==4714== possibly lost: 48 bytes in 2 blocks
+==4714== still reachable: 200 bytes in 6 blocks
+==4714== suppressed: 23,153 bytes in 161 blocks
+==4714== Rerun with --leak-check=full to see details of leaked memory
+==4714==
+==4714== Use --track-origins=yes to see where uninitialised values come from
+==4714== For lists of detected and suppressed errors, rerun with: -s
+==4714== ERROR SUMMARY: 1885 errors from 74 contexts (suppressed: 4 from 4)
+
+==4219== HEAP SUMMARY:
+==4219== in use at exit: 34,107 bytes in 553 blocks
+==4219== total heap usage: 1,420 allocs, 867 frees, 73,027 bytes allocated
+==4219==
+==4219== LEAK SUMMARY:
+==4219== definitely lost: 4,131 bytes in 210 blocks
+==4219== indirectly lost: 6,575 bytes in 174 blocks
+==4219== possibly lost: 48 bytes in 2 blocks
+==4219== still reachable: 200 bytes in 6 blocks
+==4219== suppressed: 23,153 bytes in 161 blocks
+==4219== Rerun with --leak-check=full to see details of leaked memory
+==4219==
+==4219== Use --track-origins=yes to see where uninitialised values come from
+==4219== For lists of detected and suppressed errors, rerun with: -s
+==4219== ERROR SUMMARY: 1968 errors from 74 contexts (suppressed: 4 from 4)
+
+==4000== HEAP SUMMARY:
+==4000== in use at exit: 34,107 bytes in 553 blocks
+==4000== total heap usage: 1,420 allocs, 867 frees, 73,027 bytes allocated
+==4000==
+==4000== LEAK SUMMARY:
+==4000== definitely lost: 4,131 bytes in 210 blocks
+==4000== indirectly lost: 6,575 bytes in 174 blocks
+==4000== possibly lost: 48 bytes in 2 blocks
+==4000== still reachable: 200 bytes in 6 blocks
+==4000== suppressed: 23,153 bytes in 161 blocks
+==4000== Rerun with --leak-check=full to see details of leaked memory
+==4000==
+==4000== Use --track-origins=yes to see where uninitialised values come from
+==4000== For lists of detected and suppressed errors, rerun with: -s
+==4000== ERROR SUMMARY: 1948 errors from 73 contexts (suppressed: 4 from 4)
+
 ==6992== HEAP SUMMARY:
 ==6992== in use at exit: 34,622 bytes in 656 blocks
 ==6992== total heap usage: 1,419 allocs, 763 frees, 72,955 bytes allocated

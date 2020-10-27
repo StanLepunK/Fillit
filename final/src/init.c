@@ -40,6 +40,9 @@ void checker_line_set_arguments(t_line *ln) {
 
 int checker_line_init(t_line *ln) {
   checker_line_set_arguments(ln);
+  // ln = NULL;
+  // if (!(ln = (t_line*)malloc(sizeof(t_line))))
+  //   return(0);
   if (!(ln->content = (char*)malloc(sizeof(char) *ln->col_max)))
 		return (0);
   return(1);

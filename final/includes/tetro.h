@@ -100,10 +100,16 @@ struct  s_try {
 int sqrt_ceil(float value);
 char	*strcpy_from_to(const char *src, int start, int end);
 // free
-void free_tetro(t_tetro *tetro);
 void free_puzzle(t_puzzle *pzl);
-void free_line(t_line *line);
 void free_block(t_block *blk);
+
+void free_tetro(t_tetro *tetro);
+void free_tetro_list(t_tetro **ref);
+
+void free_line(t_line *line);
+void free_line_list(t_line **ref);
+
+
 // line
 t_line *get_t_line(t_line *ln, int index);
 int copy_t_line_at(t_line *dst, const t_line *src, int index);
@@ -128,7 +134,7 @@ t_tetro *tetro_dup(t_tetro **ref);
 void tetro_init(t_tetro *t);
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
 int tetro_line_dup(t_line **ref, t_line *src);
-void tetro_line_free(t_line **ref);
+
 int size_t_tetro(t_tetro *tetro);
 void print_tetro(t_tetro *t, int print_info_is);
 void print_all_tetro(t_tetro *t, int print_info_is);

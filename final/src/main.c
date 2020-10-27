@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/26 17:30:07 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/27 10:38:36 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,32 @@
 #include "libft.h"
 #include "../includes/tetro.h"
 
-// https://github.com/JemCopeCodes/42-Fillit  nice for displacement grid concept
 int builder(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 	char *line;
-  t_line buffer;
+  t_line *buffer;
 	t_line *tl;
 	t_tetro *temp_tetro;
 
 	temp_tetro = (*ref_tetro);
 	tl = NULL;
-  checker_line_init(&buffer);
+	buffer = NULL;
+  if (!(buffer = (t_line*)malloc(sizeof(t_line))))
+    return(0);
+  checker_line_init(buffer);
 	checker_block_init(t_blk);
 	while (get_next_line(fd, &line) > 0) {
 		build_dict_tetrominos(t_blk, &temp_tetro, &tl, ft_strlen(line));
-		checker_line_set(&buffer, line);
-		checker_block_set(t_blk, &buffer, line);
-		if(buffer.valid) {
-			add_t_line(&tl, t_blk->row, &buffer);
+		checker_line_set(buffer, line);
+		checker_block_set(t_blk, buffer, line);
+		if(buffer->valid) {
+			add_t_line(&tl, t_blk->row, buffer);
 		} else {
-			tetro_line_free(&tl);
+			free_line_list(&tl);
 		}
 		free(line);
 	}
 	get_next_line(fd, &line);
-	free_line(&buffer);
+	free_line(buffer);
 	free_block(t_blk);
 	free(line);
 	close(fd);
@@ -69,6 +71,7 @@ int main(int num, char **arg) {
 
 	print_info_is = 1;
 	puzzle(tetrominos, print_info_is);
+	free_tetro_list(&tetrominos);
 
 	return (0);
 }

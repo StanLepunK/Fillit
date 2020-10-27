@@ -241,6 +241,7 @@ int puzzle(t_tetro *t, int print_info_is) {
     puzzle_build(&pzl, t);
     t = t->next;
   }
+  free_tetro_list(&t);
   puzzle_print(pzl, print_info_is);
   free_puzzle(pzl);
   return (1);

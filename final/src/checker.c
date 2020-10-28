@@ -9,15 +9,15 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 	t_blk->brick += t_ln->brick;
 	if(t_ln->valid == 1 && t_blk->row > 0 && t_blk->brick < t_blk->brick_max) {
 		t_ln->valid = 0;
-		if(ft_strlen(t_blk->p_line.content) == t_blk->col_max) { 
+		if(ft_strlen(t_blk->p_line->content) == t_blk->col_max) { 
       checker_compare_lines(t_blk, t_ln);
-			free(t_blk->p_line.content);
+			free(t_blk->p_line->content);
     }
 	}
 
 	if(t_ln->valid == 1) {
-		t_blk->p_line.content = ft_strdup(t_ln->content);
-		t_blk->p_line.empty = t_ln->empty;
+		t_blk->p_line->content = ft_strdup(t_ln->content);
+		t_blk->p_line->empty = t_ln->empty;
 		t_blk->row += 1;
 	}
 	
@@ -29,7 +29,7 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 	}
 	
 	if(t_ln->state >= t_ln->threshold) {
-		checker_block_set_arguments(t_blk);
+		block_set_arguments(t_blk);
 	}
 }
 
@@ -87,9 +87,9 @@ void checker_compare_lines(t_block *t_blk, t_line *t_ln) {
 	int index;
 
 	index = 0;
-	if(t_blk->p_line.empty == 0) {
+	if(t_blk->p_line->empty == 0) {
 		while(index < t_ln->col_max) {
-			if(t_ln->content[index] == t_ln->a && t_ln->content[index] == t_blk->p_line.content[index]) {
+			if(t_ln->content[index] == t_ln->a && t_ln->content[index] == t_blk->p_line->content[index]) {
 				t_ln->valid = 1;
 				break;
 			}

@@ -40,7 +40,7 @@ struct s_block {
 	int valid;
 	int ready_to_add;
 
-	t_line p_line;
+	t_line *p_line;
 
 	t_ivec2 offset;
 
@@ -118,16 +118,19 @@ int fill_line(char **ref, char c, size_t len);
 int fill_t_line(t_line **ref, char c, size_t len);
 void reverse_t_line(t_line **ref);
 int add_t_line(t_line **ref, int rank, t_line *t_ln);
+int line_init(t_line *temp_line);
+void line_set_arguments(t_line *temp_line);
 
 
-// checker
-void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
-void checker_line_set_arguments(t_line *temp_line);
-int checker_line_init(t_line *temp_line);
+// block
+void block_set_arguments(t_block *temp_block);
+int block_init(t_block *temp_block);
+
+
 void checker_line_set(t_line *temp_line, char *line);
 void checker_line(t_line *temp_line, char *line);
-void checker_block_set_arguments(t_block *temp_block);
-int checker_block_init(t_block *temp_block);
+void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
+
 void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 // tetro
 t_tetro *tetro_dup(t_tetro **ref);

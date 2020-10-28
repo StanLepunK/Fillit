@@ -1,3 +1,10 @@
+==14871== LEAK SUMMARY:
+==14871== definitely lost: 2,971 bytes in 48 blocks
+==14871== indirectly lost: 4,299 bytes in 130 blocks
+==14871== possibly lost: 48 bytes in 2 blocks
+==14871== still reachable: 216 bytes in 7 blocks
+==14871== suppressed: 23,153 bytes in 161 blocks
+
 ==13105== LEAK SUMMARY:
 ==13105== definitely lost: 2,971 bytes in 48 blocks
 ==13105== indirectly lost: 4,299 bytes in 130 blocks

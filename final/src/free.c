@@ -49,5 +49,5 @@ void free_puzzle(t_puzzle *pzl) {
 
 
 void free_block(t_block *blk) {
-  free(blk->p_line.content);
+  free_line(blk->p_line);
 }

@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/27 10:38:36 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/28 16:33:31 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int builder(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 	buffer = NULL;
   if (!(buffer = (t_line*)malloc(sizeof(t_line))))
     return(0);
-  checker_line_init(buffer);
-	checker_block_init(t_blk);
+  line_init(buffer);
+	block_init(t_blk);
 	while (get_next_line(fd, &line) > 0) {
 		build_dict_tetrominos(t_blk, &temp_tetro, &tl, ft_strlen(line));
 		checker_line_set(buffer, line);

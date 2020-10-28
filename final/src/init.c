@@ -25,7 +25,7 @@ void tetro_init(t_tetro *t) {
 }
 
 // line
-void checker_line_set_arguments(t_line *ln) {
+void line_set_arguments(t_line *ln) {
   ln->state = 0;
   ln->valid = 0;
   ln->empty = 1;
@@ -38,18 +38,15 @@ void checker_line_set_arguments(t_line *ln) {
   ln->space = ln->col_max;
 }
 
-int checker_line_init(t_line *ln) {
-  checker_line_set_arguments(ln);
-  // ln = NULL;
-  // if (!(ln = (t_line*)malloc(sizeof(t_line))))
-  //   return(0);
-  if (!(ln->content = (char*)malloc(sizeof(char) *ln->col_max)))
+int line_init(t_line *ln) {
+  line_set_arguments(ln);
+  if (!(ln->content = (char*)malloc(sizeof(char) *(ln->col_max + 1))))
 		return (0);
   return(1);
 }
 
 // block
-void checker_block_set_arguments(t_block *blk) {
+void block_set_arguments(t_block *blk) {
   ivec2_init(&blk->offset);
   blk->valid = 0;
   blk->ready_to_add = 0;
@@ -60,9 +57,11 @@ void checker_block_set_arguments(t_block *blk) {
 	blk->col_max = 4;
 }
 
-int checker_block_init(t_block *blk) {
-  checker_block_set_arguments(blk);
-  if (!(blk->p_line.content = (char*)malloc(sizeof(char) *blk->col_max)))
+int block_init(t_block *blk) {
+  block_set_arguments(blk);
+  if (!(blk->p_line = (t_line*)malloc(sizeof(t_line))))
+		return (0);
+  if (!(blk->p_line->content = (char*)malloc(sizeof(char) *blk->col_max)))
 		return (0);
   return(1);
 }

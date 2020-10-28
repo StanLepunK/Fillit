@@ -49,7 +49,7 @@ void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_line **ref_tl) {
 	temp->canvas.x = t_blk->row_max;
 	temp->canvas.y = t_blk->col_max;
 	free_line_list(ref_tl);
-	checker_block_set_arguments(t_blk);
+	block_set_arguments(t_blk);
 	(*ref_tetro) = temp;
 }
 
@@ -189,7 +189,7 @@ void tetro_clean_and_format(t_tetro *t, int print_info_is) {
   	printf("CLEAN and FORMAT TETROMINOS\n");
 	name = 'A';
 	id = 0;
-	checker_line_set_arguments(&tl);
+	line_set_arguments(&tl);
   while(t) {
 		if(print_info_is)
     	printf("cleaning and formating next tetromino\n");

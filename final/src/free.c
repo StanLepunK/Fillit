@@ -40,7 +40,7 @@ void free_tetro_list(t_tetro **ref) {
 
 void free_puzzle(t_puzzle *pzl) {
   while(pzl->line) {
-    free(pzl->line);
+    free_line(pzl->line);
     pzl->line = pzl->line->next;
   }
   free(pzl);

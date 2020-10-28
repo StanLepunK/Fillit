@@ -1,35 +1,3 @@
-==6329== HEAP SUMMARY:
-==6329== in use at exit: 31,647 bytes in 508 blocks
-==6329== total heap usage: 1,420 allocs, 912 frees, 73,027 bytes allocated
-==6329==
-==6329== LEAK SUMMARY:
-==6329== definitely lost: 3,931 bytes in 208 blocks
-==6329== indirectly lost: 4,299 bytes in 130 blocks
-==6329== possibly lost: 48 bytes in 2 blocks
-==6329== still reachable: 216 bytes in 7 blocks
-==6329== suppressed: 23,153 bytes in 161 blocks
-==6329== Rerun with --leak-check=full to see details of leaked memory
-==6329==
-==6329== Use --track-origins=yes to see where uninitialised values come from
-==6329== For lists of detected and suppressed errors, rerun with: -s
-==6329== ERROR SUMMARY: 1885 errors from 74 contexts (suppressed: 4 from 4)
-
-==6243== HEAP SUMMARY:
-==6243== in use at exit: 31,647 bytes in 508 blocks
-==6243== total heap usage: 1,420 allocs, 912 frees, 73,027 bytes allocated
-==6243==
-==6243== LEAK SUMMARY:
-==6243== definitely lost: 3,931 bytes in 208 blocks
-==6243== indirectly lost: 4,299 bytes in 130 blocks
-==6243== possibly lost: 48 bytes in 2 blocks
-==6243== still reachable: 216 bytes in 7 blocks
-==6243== suppressed: 23,153 bytes in 161 blocks
-==6243== Rerun with --leak-check=full to see details of leaked memory
-==6243==
-==6243== Use --track-origins=yes to see where uninitialised values come from
-==6243== For lists of detected and suppressed errors, rerun with: -s
-==6243== ERROR SUMMARY: 1885 errors from 74 contexts (suppressed: 4 from 4)
-
 ==4714== HEAP SUMMARY:
 ==4714== in use at exit: 31,647 bytes in 508 blocks
 ==4714== total heap usage: 1,420 allocs, 912 frees, 73,027 bytes allocated

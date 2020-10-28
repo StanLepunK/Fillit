@@ -47,9 +47,9 @@ int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
   index = 0;
   while (index < (*ref_pzl)->size.y) {
     add_t_line(&(*ref_pzl)->line, index, t_line);
-    // free(t_line);
     index++;
   }
+  free_line(t_line);
   return (1);
 }
 
@@ -175,18 +175,15 @@ t_line *header_t_line(t_line *ptr) {
 	return (header);
 }
 
-// cause a segfault for unknow reason
-// int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
-int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int var_unused) {
+
+int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
   t_try *try;
   t_puzzle *pzl;
   t_tetro *buf_tetro;
 
   buf_tetro = tetro_dup(&tetro);
-  printf("0 (*ref_pzl) num %i\n", (*ref_pzl)->tetro_num);
   pzl = puzzle_dup(ref_pzl);
   set_try(try, &pzl->size, &tetro->size);
-  printf("0 (*ref_pzl) num %i\n", (*ref_pzl)->tetro_num);
   while(try->num < try->max) {
     if(complete_line_try(pzl->line, buf_tetro, try)) {
       pzl->tetro_used++;
@@ -203,6 +200,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int var_unused) {
     pzl = puzzle_dup(ref_pzl);
   }
   (*ref_pzl) = pzl;
+  // free_puzzle(pzl); // cause a seg fault
   return (1);
 }
 
@@ -215,15 +213,15 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int var_unused) {
 
 int puzzle_build(t_puzzle **ref_pzl, t_tetro *t) {
   t_puzzle *buffer;
+  int res;
   
+  res = 0;
   buffer = (*ref_pzl);
   // buffer = puzzle_dup(ref_pzl);
-  // complete_puzzle(&buffer, t); // cause a segfault for unknow reason
-  // complete_puzzle(&(*ref_pzl), t, 1); // cause a segfault for unknow reason
-  complete_puzzle(&buffer, t, 1);
-  
+  res = complete_puzzle(&buffer, t);  
   (*ref_pzl) = buffer;
-  return (1);
+  // free_puzzle(buffer); // cause a seg fault
+  return (res);
 }
 
 
@@ -238,10 +236,10 @@ int puzzle(t_tetro *t, int print_info_is) {
   build_grid_puzzle(&pzl, t);
   
   while(t) {
-    puzzle_build(&pzl, t);
+    if(!puzzle_build(&pzl, t))
+      break;
     t = t->next;
   }
-  free_tetro_list(&t);
   puzzle_print(pzl, print_info_is);
   free_puzzle(pzl);
   return (1);

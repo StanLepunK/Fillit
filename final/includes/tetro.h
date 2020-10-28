@@ -126,11 +126,10 @@ void line_set_arguments(t_line *temp_line);
 void block_set_arguments(t_block *temp_block);
 int block_init(t_block *temp_block);
 
-
+// checker
 void checker_line_set(t_line *temp_line, char *line);
 void checker_line(t_line *temp_line, char *line);
 void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
-
 void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 // tetro
 t_tetro *tetro_dup(t_tetro **ref);
@@ -141,7 +140,7 @@ int tetro_line_dup(t_line **ref, t_line *src);
 int size_t_tetro(t_tetro *tetro);
 void print_tetro(t_tetro *t, int print_info_is);
 void print_all_tetro(t_tetro *t, int print_info_is);
-void tetro_clean_and_format(t_tetro *t, int print_info_is);
+void tetro_clean_and_format(t_tetro *t);
 // puzzle
 void puzzle_init(t_puzzle *pzl);
 int puzzle(t_tetro *t, int print_info_is);

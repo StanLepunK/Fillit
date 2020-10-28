@@ -180,19 +180,15 @@ void tetro_line_clean(t_tetro *t, t_line *ln) {
 
 }
 
-void tetro_clean_and_format(t_tetro *t, int print_info_is) {
+void tetro_clean_and_format(t_tetro *t) {
 	t_line tl;
 	char name;
 	int id;
 	
-	if(print_info_is)
-  	printf("CLEAN and FORMAT TETROMINOS\n");
 	name = 'A';
 	id = 0;
 	line_set_arguments(&tl);
   while(t) {
-		if(print_info_is)
-    	printf("cleaning and formating next tetromino\n");
 		tetro_line_clean(t, t->line);
 		t->name = (name++);
 		t->id = (id++);

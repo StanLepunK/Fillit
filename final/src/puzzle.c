@@ -153,6 +153,7 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
         buf_pzl = get_t_line(dst_pzl_ln, try->pzl_iy);
         if(buf_pzl->space >= tetro->line->brick) {
           try->pzl_iy++;
+          // printf("complete_line_try() name: %c %s\n",tetro->name, tetro->line->content);
           if(resolution(buf_pzl, tetro, try)) {
             break;
           } else {
@@ -213,17 +214,12 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int var_unused) {
 
 int puzzle_build(t_puzzle **ref_pzl, t_tetro *t) {
   t_puzzle *buffer;
-  
+
   buffer = (*ref_pzl);
-  // buffer = puzzle_dup(ref_pzl);
-  // complete_puzzle(&buffer, t); // cause a segfault for unknow reason
-  // complete_puzzle(&(*ref_pzl), t, 1); // cause a segfault for unknow reason
   complete_puzzle(&buffer, t, 1);
-  
   (*ref_pzl) = buffer;
   return (1);
 }
-
 
 
 int puzzle(t_tetro *t, int print_info_is) {
@@ -236,6 +232,8 @@ int puzzle(t_tetro *t, int print_info_is) {
   build_grid_puzzle(&pzl, t);
   
   while(t) {
+    printf("puzzle tetro->name: %c\n",t->name);
+    // complete_puzzle(&pzl, t);
     puzzle_build(&pzl, t);
     t = t->next;
   }

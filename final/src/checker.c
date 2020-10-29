@@ -25,7 +25,7 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 		t_ln->valid = 0;
 		if(ft_strlen(t_blk->p_line->content) == t_blk->col_max) { 
       checker_compare_lines(t_blk, t_ln);
-			//free(t_blk->p_line->content); // remove with new function block_dup();
+			// free(t_blk->p_line->content); // remove with new function block_dup();
     }
 	}
 

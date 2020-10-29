@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/10/28 18:35:23 by stan             ###   ########.fr       */
+/*   Updated: 2020/10/29 11:59:22 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int builder(const int fd, t_block *t_blk, t_tetro **ref_tetro) {
 }
 
 
+
+
 // clang src/*.c header/*.h -I ./ -I./libft -L ./libft/ -lft && ./a.out "./import/sample_0.fillit"
 int main(int num, char **arg) {
 	t_block checker_block;
@@ -68,7 +70,8 @@ int main(int num, char **arg) {
 
 	// print_info_is = 1;
 	print_all_tetro(tetrominos, print_info_is);
-
+	//print_all_tetro(tetrominos, print_info_is);
+// tetre_name(tetrominos);
 	print_info_is = 1;
 	puzzle(tetrominos, print_info_is);
 	free_tetro_list(&tetrominos);

@@ -9,6 +9,8 @@ t_tetro *tetro_dup(t_tetro **ref) {
 	tetro_init(buffer);
 	buffer->id = (*ref)->id;
 	buffer->name = (*ref)->name;
+	// printf("tetro_dup() buffer->name: %c\n",buffer->name);
+	// printf("tetro_dup() (*ref)->name: %c\n",(*ref)->name);
 	ivec2_init(&buffer->offset);
 	ivec2_init(&buffer->size);
 	ivec2_init(&buffer->canvas);
@@ -181,13 +183,11 @@ void tetro_line_clean(t_tetro *t, t_line *ln) {
 }
 
 void tetro_clean_and_format(t_tetro *t) {
-	// t_line tl;
 	char name;
 	int id;
 	
 	name = 'A';
 	id = 0;
-	// line_set_arguments(&tl);
   while(t) {
 		tetro_line_clean(t, t->line);
 		t->name = (name++);

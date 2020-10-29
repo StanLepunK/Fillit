@@ -1,8 +1,22 @@
 
 #include "../includes/tetro.h"
 
+void block_dup_old(t_block *t_blk, t_line *t_ln) {
+	t_blk->p_line->content = ft_strdup(t_ln->content);
+	t_blk->p_line->empty = t_ln->empty;
+	t_blk->row += 1;
+}
 
+void block_dup(t_block *t_blk, t_line *t_ln) {
+	char *temp_str;
 
+	temp_str = ft_strdup(t_ln->content);
+	// ft_memmove(t_blk->p_line->content,temp_str,ft_strlen(temp_str));
+	ft_strncpy(t_blk->p_line->content,temp_str,ft_strlen(temp_str));
+	t_blk->p_line->empty = t_ln->empty;
+	t_blk->row += 1;
+	free(temp_str);
+}
 
 void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
   checker_line(t_ln, line);
@@ -11,14 +25,13 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 		t_ln->valid = 0;
 		if(ft_strlen(t_blk->p_line->content) == t_blk->col_max) { 
       checker_compare_lines(t_blk, t_ln);
-			free(t_blk->p_line->content);
+			//free(t_blk->p_line->content); // remove with new function block_dup();
     }
 	}
 
 	if(t_ln->valid == 1) {
-		t_blk->p_line->content = ft_strdup(t_ln->content);
-		t_blk->p_line->empty = t_ln->empty;
-		t_blk->row += 1;
+		block_dup(t_blk, t_ln);
+		// block_dup_old(t_blk, t_ln);
 	}
 	
 	if(t_blk->row == t_blk->row_max 

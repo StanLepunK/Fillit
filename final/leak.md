@@ -1,3 +1,17 @@
+==34912== LEAK SUMMARY:
+==34912== definitely lost: 2,907 bytes in 35 blocks
+==34912== indirectly lost: 4,299 bytes in 130 blocks
+==34912== possibly lost: 48 bytes in 2 blocks
+==34912== still reachable: 216 bytes in 7 blocks
+==34912== suppressed: 23,153 bytes in 161 blocks
+
+==17035== LEAK SUMMARY:
+==17035== definitely lost: 2,971 bytes in 48 blocks
+==17035== indirectly lost: 4,299 bytes in 130 blocks
+==17035== possibly lost: 48 bytes in 2 blocks
+==17035== still reachable: 216 bytes in 7 blocks
+==17035== suppressed: 23,153 bytes in 161 blocks
+
 ==14871== LEAK SUMMARY:
 ==14871== definitely lost: 2,971 bytes in 48 blocks
 ==14871== indirectly lost: 4,299 bytes in 130 blocks

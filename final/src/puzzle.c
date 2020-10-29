@@ -183,10 +183,8 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int var_unused) {
   t_tetro *buf_tetro;
 
   buf_tetro = tetro_dup(&tetro);
-  printf("0 (*ref_pzl) num %i\n", (*ref_pzl)->tetro_num);
   pzl = puzzle_dup(ref_pzl);
   set_try(try, &pzl->size, &tetro->size);
-  printf("0 (*ref_pzl) num %i\n", (*ref_pzl)->tetro_num);
   while(try->num < try->max) {
     if(complete_line_try(pzl->line, buf_tetro, try)) {
       pzl->tetro_used++;

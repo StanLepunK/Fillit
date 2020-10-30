@@ -164,10 +164,25 @@ t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
   return (buffer);
 }
 
-t_try *set_try(t_ivec3 size_pzl, t_ivec2 size_tetro) {
-  t_try *try;
+// t_try *set_try(t_ivec3 size_pzl, t_ivec2 size_tetro) {
+//   t_try *try;
 
-  try = new_try();
+//   try = new_try();
+//   try->pzl_ix = 0;
+//   try->pzl_iy = 0;
+//   try->pzl_mox = size_pzl.x - size_tetro.x;
+//   try->pzl_moy = size_pzl.y - size_tetro.y;
+//   try->num = 0;
+//   try->put = 0;
+//   try->max = (size_pzl.x * size_pzl.y) - (size_tetro.x * size_tetro.y) - 1;
+//   if(try->max < 1)
+//     try->max = 1;
+//   return (try);
+// }
+void set_try(t_try *try, t_ivec3 size_pzl, t_ivec2 size_tetro) {
+  // t_try *try;
+
+  // try = new_try();
   try->pzl_ix = 0;
   try->pzl_iy = 0;
   try->pzl_mox = size_pzl.x - size_tetro.x;
@@ -177,17 +192,18 @@ t_try *set_try(t_ivec3 size_pzl, t_ivec2 size_tetro) {
   try->max = (size_pzl.x * size_pzl.y) - (size_tetro.x * size_tetro.y) - 1;
   if(try->max < 1)
     try->max = 1;
-  return (try);
+  // return (try);
 }
 
-int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
-  t_try *try;
+int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try) {
+  // t_try *try;
   t_puzzle *pzl;
   t_tetro *buf_tetro;
 
   buf_tetro = tetro_dup(&tetro);
   pzl = puzzle_dup(ref_pzl);
-  try = set_try(pzl->size, tetro->size);
+  // try = set_try(pzl->size, tetro->size);
+  set_try(try, pzl->size, tetro->size);
   while(try->num < try->max) {
     if(complete_line_try(pzl->line, buf_tetro, try)) {
       pzl->tetro_used++;
@@ -195,6 +211,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
     } else {
       if(try->num%2) {
         reset_for_vertical_fill(try);
+        // reverse_t_line(&tetro->line);
       }
       try->num++;
     }
@@ -205,35 +222,43 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
     
   }
   (*ref_pzl) = pzl;
-  free(try);
+  // free(try);
   return (1);
 }
 
 
-int buffer_pzl(t_puzzle **ref_pzl, t_tetro *t) {
+int buffer_pzl(t_puzzle **ref_pzl, t_tetro *t, t_try *try) {
   t_puzzle *buffer;
+  
 
   buffer = (*ref_pzl);
-  complete_puzzle(&buffer, t);
+  
+  // if(t->id%2 == 0) {
+  //   reverse_t_line(&t->line);
+  // }
+  complete_puzzle(&buffer, t, try);
   (*ref_pzl) = buffer;
   return (1);
 }
 
 int puzzle(t_tetro *t, int print_info_is) {
   t_puzzle *pzl;
+  t_try *try;
 
   if(!(pzl = (t_puzzle*)malloc(sizeof(t_puzzle))))
 		return (0);
   puzzle_init(pzl);
+  try = new_try();
   // try to build the smallest grid for the first time and increment step by step
   build_grid_puzzle(&pzl, t);
   while(t) {
-    buffer_pzl(&pzl, t);
+    buffer_pzl(&pzl, t, try);
     t = t->next;
   }
   free_tetro_list(&t);
   puzzle_print(pzl, print_info_is);
   free_puzzle(pzl);
+  free(try);
   return (1);
 }
 

@@ -96,6 +96,9 @@ struct  s_try {
 	int put;
 };
 
+// try
+t_try *new_try();
+
 // utils
 int sqrt_ceil(float value);
 char	*strcpy_from_to(const char *src, int start, int end);

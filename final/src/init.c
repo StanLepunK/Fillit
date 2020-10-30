@@ -1,4 +1,15 @@
 #include "../includes/tetro.h"
+// try
+t_try *new_try() {
+  t_try *try;
+
+  try = NULL;
+  if(!(try = (t_try*)malloc(sizeof(t_try))))
+    return (0);
+  return (try);
+}
+
+
 // puzzle
 void puzzle_init(t_puzzle *pzl) {
   pzl->id = 0;
@@ -9,6 +20,8 @@ void puzzle_init(t_puzzle *pzl) {
   pzl->tetro_num = 0;
   pzl->tetro_used = 0;
 }
+
+
 
 // tetro
 void tetro_init(t_tetro *t) {

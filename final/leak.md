@@ -1,3 +1,10 @@
+==6885== LEAK SUMMARY:
+==6885== definitely lost: 2,851 bytes in 35 blocks
+==6885== indirectly lost: 4,371 bytes in 131 blocks
+==6885== possibly lost: 48 bytes in 2 blocks
+==6885== still reachable: 200 bytes in 6 blocks
+==6885== suppressed: 23,153 bytes in 161 blocks
+
 ==34912== LEAK SUMMARY:
 ==34912== definitely lost: 2,907 bytes in 35 blocks
 ==34912== indirectly lost: 4,299 bytes in 130 blocks

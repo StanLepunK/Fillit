@@ -107,9 +107,6 @@ int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
 
   i_x = 0;
   succes = 0;
-  if(tetro->name == 'E') {
-    printf("try->pzl_ix: %i\n",try->pzl_ix);
-  }
   while(i_x < tetro->size.x && try->pzl_ix < try->pzl_mox) {
     if(tetro->line->content[i_x + tetro->offset.x] == tetro->line->a) {
       if(buf_pzl->content[i_x + try->pzl_ix] == tetro->line->b) {
@@ -234,16 +231,13 @@ int puzzle(t_tetro *t, int print_info_is) {
   try = new_try();
   // try to build the smallest grid for the first time and increment step by step
   build_grid_puzzle(&pzl, t);
-  while(t) {
-    printf("tetro %c try %i\n", t->name, try->num);
-    // if(try->num%2)
-    //   reverse_t_line(&t->line);
-    // if(t->id%2 == 0)
-    //   reverse_t_line(&t->line);
-    buffer_pzl(&pzl, t, try);
-    t = t->next;
+
+  int index_t = 0;
+  while(index_t < pzl->tetro_num) {
+    buffer_pzl(&pzl, get_t_tetro(t, index_t), try);
+    index_t++;
   }
-  free_tetro_list(&t);
+
   puzzle_print(pzl, print_info_is);
   free_puzzle(pzl);
   free(try);

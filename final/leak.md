@@ -1,3 +1,10 @@
+==6413== LEAK SUMMARY:
+==6413== definitely lost: 3,123 bytes in 38 blocks
+==6413== indirectly lost: 4,160 bytes in 129 blocks
+==6413== possibly lost: 48 bytes in 2 blocks
+==6413== still reachable: 216 bytes in 7 blocks
+==6413== suppressed: 23,153 bytes in 161 blocks
+
 ==6885== LEAK SUMMARY:
 ==6885== definitely lost: 2,851 bytes in 35 blocks
 ==6885== indirectly lost: 4,371 bytes in 131 blocks

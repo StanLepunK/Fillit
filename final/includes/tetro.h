@@ -136,10 +136,10 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
 void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 // tetro
 t_tetro *tetro_dup(t_tetro **ref);
+t_tetro *get_t_tetro(t_tetro *t, int index);
 void tetro_init(t_tetro *t);
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
 int tetro_line_dup(t_line **ref, t_line *src);
-
 int size_t_tetro(t_tetro *tetro);
 void print_tetro(t_tetro *t, int print_info_is);
 void print_all_tetro(t_tetro *t, int print_info_is);

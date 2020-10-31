@@ -1,5 +1,16 @@
 #include "../includes/tetro.h"
 
+t_tetro *get_t_tetro(t_tetro *t, int index) {
+	while(t) {
+		if(t->id == index) {
+			return t;
+		}
+		t = t->next;
+	}
+	return (0);
+}
+
+
 t_tetro *tetro_dup(t_tetro **ref) {
 	t_tetro *buffer;
 

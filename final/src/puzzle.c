@@ -101,7 +101,7 @@ void set_try(t_try *try, t_ivec3 size_pzl, t_ivec2 size_tetro) {
 
 
 
-int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
+int line_resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
   int i_x;
   int succes;
 
@@ -141,7 +141,7 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
         buf_pzl = get_t_line(dst_pzl_ln, try->pzl_iy + i_y);
         if(buf_pzl->space >= tetro->line->brick) {
           i_y++;
-          if(resolution(buf_pzl, tetro, try)) {
+          if(line_resolution(buf_pzl, tetro, try)) {
             break;
           } else {
             return(0);
@@ -193,7 +193,6 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try) {
 
   buf_tetro = tetro_dup(&tetro);
   pzl = puzzle_dup(ref_pzl);
-  set_try(try, pzl->size, tetro->size);
   while(try->num < try->max) {
     if(complete_line_try(pzl->line, buf_tetro, try)) {
       pzl->tetro_used++;
@@ -221,26 +220,81 @@ int buffer_pzl(t_puzzle **ref_pzl, t_tetro *t, t_try *try) {
   return (1);
 }
 
+
+
+
+
+
+
+
+
+
+int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *t, t_try *try_pzl) {
+  int index_t;
+  int res;
+  t_try *try_piece;
+
+  try_piece = new_try();
+  index_t = 0;
+  res = 1;
+  
+  while(index_t < (*ref_pzl)->tetro_num) {
+    printf("tetro: %c try piece: %i\n",get_t_tetro(t, index_t)->name,try_piece->num);
+    set_try(try_piece, (*ref_pzl)->size, t->size);
+    if(index_t == 0) {
+      try_piece->pzl_ix = try_pzl->pzl_ix;
+      try_piece->pzl_iy = try_pzl->pzl_iy;
+    }
+    printf("1 puzzle_resolution\n");
+    printf("1 puzzle_resolution (*ref_pzl)->line: %p \n",(*ref_pzl)->line);
+    buffer_pzl(ref_pzl, get_t_tetro(t, index_t), try_piece);
+    printf("2 puzzle_resolution\n");
+    index_t++;
+  }
+
+  if((*ref_pzl)->tetro_used < (*ref_pzl)->tetro_num) {
+    puzzle_print((*ref_pzl), 1);
+    res = 0;
+  }
+  if(!res) {
+    inc_index_pzl(try_pzl);
+    (*ref_pzl)->tetro_used = 0;
+    puzzle_resolution(ref_pzl, t, try_piece);
+  }
+  free(try_piece);
+  return(res);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int puzzle(t_tetro *t, int print_info_is) {
   t_puzzle *pzl;
-  t_try *try;
+  t_try *try_pzl;
 
   if(!(pzl = (t_puzzle*)malloc(sizeof(t_puzzle))))
 		return (0);
   puzzle_init(pzl);
-  try = new_try();
-  // try to build the smallest grid for the first time and increment step by step
+  try_pzl = new_try();
+  set_try(try_pzl, pzl->size, t->size);
   build_grid_puzzle(&pzl, t);
-
-  int index_t = 0;
-  while(index_t < pzl->tetro_num) {
-    buffer_pzl(&pzl, get_t_tetro(t, index_t), try);
-    index_t++;
-  }
-
+  puzzle_resolution(&pzl, t, try_pzl);
   puzzle_print(pzl, print_info_is);
   free_puzzle(pzl);
-  free(try);
+  free(try_pzl);
   return (1);
 }
 

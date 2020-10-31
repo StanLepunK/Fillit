@@ -52,9 +52,6 @@ int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
   return (1);
 }
 
-
-
-
 void brick_switch(char *line, char target_char, char new_char) {
   int index;
 
@@ -66,7 +63,6 @@ void brick_switch(char *line, char target_char, char new_char) {
     index++;
   }
 }
-
 
 
 char get_cell(t_line *src, int x, int y) {
@@ -92,7 +88,7 @@ void set_cell(t_line *dst, int x, int y, char c) {
 void set_try(t_try *try, t_ivec3 size_pzl, t_ivec2 size_tetro) {
   try->pzl_ix = 0;
   try->pzl_iy = 0;
-  try->pzl_mox = size_pzl.x - size_tetro.x;
+  try->pzl_mox = (size_pzl.x - size_tetro.x) + 1;
   try->pzl_moy = size_pzl.y - size_tetro.y;
   try->num = 0;
   try->put = 0;
@@ -111,7 +107,10 @@ int resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
 
   i_x = 0;
   succes = 0;
-  while(i_x < tetro->size.x && try->pzl_ix <= try->pzl_mox) {
+  if(tetro->name == 'E') {
+    printf("try->pzl_ix: %i\n",try->pzl_ix);
+  }
+  while(i_x < tetro->size.x && try->pzl_ix < try->pzl_mox) {
     if(tetro->line->content[i_x + tetro->offset.x] == tetro->line->a) {
       if(buf_pzl->content[i_x + try->pzl_ix] == tetro->line->b) {
         buf_pzl->content[i_x + try->pzl_ix] = tetro->name;
@@ -182,18 +181,12 @@ t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
 
 
 void inc_index_pzl(t_try *try) {
-  if(try->num%2) {
+  try->pzl_ix++;
+  if(try->num%try->pzl_mox == 0) {
+    try->pzl_ix = 0;
     try->pzl_iy++;
-  } else {
-    try->pzl_ix++;
   }
   try->num++;
-
-  // if(try->num%2) {
-  //   try->pzl_iy = 0;
-  //   try->pzl_ix++;
-  // }
-  // try->num++;
 }
 
 
@@ -205,7 +198,6 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try) {
   pzl = puzzle_dup(ref_pzl);
   set_try(try, pzl->size, tetro->size);
   while(try->num < try->max) {
-    printf("try %i xy: %i %i\n", try->num, try->pzl_ix, try->pzl_iy);
     if(complete_line_try(pzl->line, buf_tetro, try)) {
       pzl->tetro_used++;
       break;

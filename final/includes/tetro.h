@@ -117,6 +117,7 @@ void free_line_list(t_line **ref);
 t_line *get_t_line(t_line *ln, int index);
 int copy_t_line_at(t_line *dst, const t_line *src, int index);
 void copy_t_line(t_line *dst, const t_line *src);
+int malloc_line(char **ref, size_t len);
 int fill_line(char **ref, char c, size_t len);
 int fill_t_line(t_line **ref, char c, size_t len);
 void reverse_t_line(t_line **ref);

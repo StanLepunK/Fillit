@@ -65,6 +65,21 @@ void brick_switch(char *line, char target_char, char new_char) {
 }
 
 
+void clear_puzzle(t_puzzle **ref_pzl, t_tetro *t) {
+  int index;
+  char c;
+  t_line *ln;
+
+  index = 0;
+  while(index < (*ref_pzl)->size.y) {
+    c = t->line->b;
+    ln = get_t_line((*ref_pzl)->line,index);
+    fill_line(&ln->content, c, (*ref_pzl)->size.x);
+    index++;
+  }
+}
+
+
 char get_cell(t_line *src, int x, int y) {
   while(src) {
     if(src->id == y) {
@@ -155,16 +170,6 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
   return (1);
 }
 
-
-
-
-
-
-t_line *header_t_line(t_line *ptr) {
-	t_line *header = ptr;
-	return (header);
-}
-
 t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
   t_puzzle *buffer;
 
@@ -187,6 +192,12 @@ void inc_index_pzl(t_try *try) {
 }
 
 
+
+
+
+
+
+
 int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try) {
   t_puzzle *pzl;
   t_tetro *buf_tetro;
@@ -203,15 +214,14 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try) {
     free_tetro(buf_tetro);
     buf_tetro = tetro_dup(&tetro);
     free_puzzle(pzl);
-    pzl = puzzle_dup(ref_pzl);
-    
+    pzl = puzzle_dup(ref_pzl);   
   }
   (*ref_pzl) = pzl;
   return (1);
 }
 
 
-int buffer_pzl(t_puzzle **ref_pzl, t_tetro *t, t_try *try) {
+int buffering_calc(t_puzzle **ref_pzl, t_tetro *t, t_try *try) {
   t_puzzle *buffer;
   
   buffer = (*ref_pzl);
@@ -219,14 +229,6 @@ int buffer_pzl(t_puzzle **ref_pzl, t_tetro *t, t_try *try) {
   (*ref_pzl) = buffer;
   return (1);
 }
-
-
-
-
-
-
-
-
 
 
 int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *t, t_try *try_pzl) {
@@ -237,18 +239,14 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *t, t_try *try_pzl) {
   try_piece = new_try();
   index_t = 0;
   res = 1;
-  
   while(index_t < (*ref_pzl)->tetro_num) {
-    printf("tetro: %c try piece: %i\n",get_t_tetro(t, index_t)->name,try_piece->num);
+    // printf("tetro: %c try piece: %i\n",get_t_tetro(t, index_t)->name,try_piece->num);
     set_try(try_piece, (*ref_pzl)->size, t->size);
     if(index_t == 0) {
       try_piece->pzl_ix = try_pzl->pzl_ix;
       try_piece->pzl_iy = try_pzl->pzl_iy;
     }
-    printf("1 puzzle_resolution\n");
-    printf("1 puzzle_resolution (*ref_pzl)->line: %p \n",(*ref_pzl)->line);
-    buffer_pzl(ref_pzl, get_t_tetro(t, index_t), try_piece);
-    printf("2 puzzle_resolution\n");
+    buffering_calc(ref_pzl, get_t_tetro(t, index_t), try_piece);
     index_t++;
   }
 
@@ -259,6 +257,7 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *t, t_try *try_pzl) {
   if(!res) {
     inc_index_pzl(try_pzl);
     (*ref_pzl)->tetro_used = 0;
+    clear_puzzle(ref_pzl, t);
     puzzle_resolution(ref_pzl, t, try_piece);
   }
   free(try_piece);

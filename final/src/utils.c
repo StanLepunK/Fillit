@@ -130,18 +130,25 @@ t_line *get_t_line(t_line *ln, int index) {
 	return (0);
 }
 
+int malloc_line(char **ref, size_t len) {
+	if(!((*ref) = (char*)malloc(sizeof(char) * (len + 1))))
+    return (0);
+	return(1);
+}
 
 int fill_line(char **ref, char c, size_t len) {
   int index;
 
   index = 0;
-  if(!((*ref) = (char*)malloc(sizeof(char) * (len + 1))))
-    return (0);
+  // if(!((*ref) = (char*)malloc(sizeof(char) * (len + 1))))
+  //   return (0);
   while (index < len) {
     (*ref)[index] = c;
+		// printf("0 fill_line(), %c\n",(*ref)[index]);
     index++;
   }
   (*ref)[index] = '\0';
+	 // printf("1 fill_line() %s\n",(*ref));
   return (1);
 }
 
@@ -150,6 +157,7 @@ int fill_t_line(t_line **ref, char c, size_t len) {
     return (0);
 	(*ref)->length = len;
 	(*ref)->col_max = len;
+	malloc_line(&(*ref)->content, len);
   fill_line(&(*ref)->content, c, len);
   return(1);
 }

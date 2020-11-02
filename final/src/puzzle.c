@@ -116,15 +116,17 @@ void set_try(t_try *try, t_ivec3 size_pzl, t_ivec2 size_tetro) {
 
 
 
-int line_resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
+int line_resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try, int index) {
   int i_x;
   int succes;
+  t_line *buf_tetro_ln;
 
   i_x = 0;
   succes = 0;
+  buf_tetro_ln = get_t_line(tetro->line, index);
   while(i_x < tetro->size.x && try->pzl_ix < try->pzl_mox) {
-    if(tetro->line->content[i_x + tetro->offset.x] == tetro->line->a) {
-      if(buf_pzl->content[i_x + try->pzl_ix] == tetro->line->b) {
+    if(buf_tetro_ln->content[i_x + tetro->offset.x] == buf_tetro_ln->a) {
+      if(buf_pzl->content[i_x + try->pzl_ix] == buf_tetro_ln->b) {
         buf_pzl->content[i_x + try->pzl_ix] = tetro->name;
         succes = 1;
         try->put++;
@@ -137,38 +139,95 @@ int line_resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
   return (succes);
 }
 
-
 int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
-  int index_t_ln;
+  int index_real;
+  int index;
   int i_y;
   t_line *buf_pzl;
+  t_line *buf_tetro_ln;
 
-  index_t_ln = 0;
+  index = tetro->offset.y;
+  index_real = 0;
   i_y = 0;
-  while(tetro->line) {
-    if(index_t_ln > tetro->size.y) {
+  while(index < tetro->canvas.y) {
+    if(index_real > tetro->size.y) {
       return (0);
     }
-    if(!tetro->line->empty) {
-      if(try->pzl_iy + i_y > try->pzl_moy + index_t_ln)
+    buf_tetro_ln = get_t_line(tetro->line, index);
+    if(!buf_tetro_ln->empty) {
+      if(try->pzl_iy + i_y > try->pzl_moy + index_real)
         return(0);
-      while(try->pzl_iy + i_y <= try->pzl_moy + index_t_ln) {
+      while(try->pzl_iy + i_y <= try->pzl_moy + index_real) {
         buf_pzl = get_t_line(dst_pzl_ln, try->pzl_iy + i_y);
-        if(buf_pzl->space >= tetro->line->brick) {
+        if(buf_pzl->space >= buf_tetro_ln->brick) {
           i_y++;
-          if(line_resolution(buf_pzl, tetro, try)) {
+          if(line_resolution(buf_pzl, tetro, try, index)) {
             break;
           } else {
             return(0);
           }
         }
       }
-      index_t_ln++;
+      index_real++;
     }
-    tetro->line = tetro->line->next;
+    index++;
   }
   return (1);
 }
+
+
+// int line_resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try) {
+//   int i_x;
+//   int succes;
+
+//   i_x = 0;
+//   succes = 0;
+//   while(i_x < tetro->size.x && try->pzl_ix < try->pzl_mox) {
+//     if(tetro->line->content[i_x + tetro->offset.x] == tetro->line->a) {
+//       if(buf_pzl->content[i_x + try->pzl_ix] == tetro->line->b) {
+//         buf_pzl->content[i_x + try->pzl_ix] = tetro->name;
+//         succes = 1;
+//         try->put++;
+//       } else {
+//         return (0);
+//       }
+//     }
+//     i_x++;
+//   }
+//   return (succes);
+// }
+
+// int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try) {
+//   int index_t_ln;
+//   int i_y;
+//   t_line *buf_pzl;
+
+//   index_t_ln = 0;
+//   i_y = 0;
+//   while(tetro->line) {
+//     if(index_t_ln > tetro->size.y) {
+//       return (0);
+//     }
+//     if(!tetro->line->empty) {
+//       if(try->pzl_iy + i_y > try->pzl_moy + index_t_ln)
+//         return(0);
+//       while(try->pzl_iy + i_y <= try->pzl_moy + index_t_ln) {
+//         buf_pzl = get_t_line(dst_pzl_ln, try->pzl_iy + i_y);
+//         if(buf_pzl->space >= tetro->line->brick) {
+//           i_y++;
+//           if(line_resolution(buf_pzl, tetro, try)) {
+//             break;
+//           } else {
+//             return(0);
+//           }
+//         }
+//       }
+//       index_t_ln++;
+//     }
+//     tetro->line = tetro->line->next;
+//   }
+//   return (1);
+// }
 
 t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
   t_puzzle *buffer;
@@ -203,6 +262,8 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try) {
   t_tetro *buf_tetro;
 
   buf_tetro = tetro_dup(&tetro);
+    //     printf("buf_tetro->name: %c\n",buf_tetro->name);
+    // tetro_print(buf_tetro, 0);
   pzl = puzzle_dup(ref_pzl);
   while(try->num < try->max) {
     if(complete_line_try(pzl->line, buf_tetro, try)) {
@@ -223,7 +284,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try) {
 
 int buffering_calc(t_puzzle **ref_pzl, t_tetro *t, t_try *try) {
   t_puzzle *buffer;
-  
+
   buffer = (*ref_pzl);
   complete_puzzle(&buffer, t, try);
   (*ref_pzl) = buffer;
@@ -246,13 +307,14 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *t, t_try *try_pzl) {
       try_piece->pzl_ix = try_pzl->pzl_ix;
       try_piece->pzl_iy = try_pzl->pzl_iy;
     }
+
     buffering_calc(ref_pzl, get_t_tetro(t, index_t), try_piece);
     index_t++;
   }
 
   if((*ref_pzl)->tetro_used < (*ref_pzl)->tetro_num) {
     puzzle_print((*ref_pzl), 1);
-    res = 0;
+    // res = 0;
   }
   if(!res) {
     inc_index_pzl(try_pzl);

@@ -37,22 +37,13 @@ char	*strcpy_from_to(const char *src, int start, int end)
 	return (copy);
 }
 
-void dup_tetro_line_list(t_line **ref_dst, t_line *src) {
-	int rank;
-
-	rank = 0;
-	while(src) {
-		add_t_line(ref_dst, rank, src);
-		rank++;
-		src = src->next;
-	}
-}
 
 void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src) {
   dst->id = src->id;
 	dst->tetro_num = src->tetro_num;
 	dst->tetro_used = src->tetro_used;
-	dup_tetro_line_list(&dst->line, src->line);
+	all_lines_dup(&dst->line, src->line);
+	reverse_t_line(&dst->line);
 	copy_ivec3(&dst->size, &src->size);
 	dst->brick = src->brick;
 	dst->space = src->space;
@@ -120,6 +111,24 @@ int add_t_line(t_line **ref, int rank, t_line *src) {
 	return(1);
 }
 
+
+int all_lines_dup(t_line **ref, t_line *src) {
+	int rank;
+	int ret;
+
+	rank = 0;
+	ret = 0;
+  while(src) {
+		ret = add_t_line(ref, rank, src);
+		if(!ret)
+			break;
+		rank++;
+		src = src->next;
+	}
+	return(ret);
+}
+
+
 t_line *get_t_line(t_line *ln, int index) {
 	while(ln) {
 		if(ln->id == index) {
@@ -140,15 +149,11 @@ int fill_line(char **ref, char c, size_t len) {
   int index;
 
   index = 0;
-  // if(!((*ref) = (char*)malloc(sizeof(char) * (len + 1))))
-  //   return (0);
   while (index < len) {
     (*ref)[index] = c;
-		// printf("0 fill_line(), %c\n",(*ref)[index]);
     index++;
   }
   (*ref)[index] = '\0';
-	 // printf("1 fill_line() %s\n",(*ref));
   return (1);
 }
 

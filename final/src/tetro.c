@@ -11,6 +11,17 @@ t_tetro *get_t_tetro(t_tetro *t, int index) {
 }
 
 
+void tetro_lines_dup(t_line **ref, t_tetro *tetro) {
+	int index;
+
+	index = 0;
+  while(index < tetro->canvas.y) {
+		if(!add_t_line(ref, index, get_t_line(tetro->line, index)))
+			break;
+		index++;	
+	}
+}
+
 t_tetro *tetro_dup(t_tetro **ref) {
 	t_tetro *buffer;
 
@@ -30,7 +41,8 @@ t_tetro *tetro_dup(t_tetro **ref) {
 	buffer->size.copy(&buffer->size,&(*ref)->size);
 	buffer->start = (*ref)->start;
 	buffer->end = (*ref)->end;
-	tetro_line_dup(&buffer->line, (*ref)->line);
+	// tetro_lines_dup(&buffer->line, (*ref)); // copy in the same order
+	all_lines_dup(&buffer->line, (*ref)->line);
 	return (buffer);
 }
 
@@ -44,7 +56,7 @@ int tetro_add(t_tetro **ref, t_line *tl, int id) {
 		return (0);
 	tetro_init(temp_tetro);
 	temp_tetro->id = (++id);
-	ret = tetro_line_dup(&temp_tetro->line, tl);
+	ret = all_lines_dup(&temp_tetro->line, tl);
 	temp_tetro->next = (*ref);
   (*ref) = temp_tetro;
 	return(ret);
@@ -78,6 +90,8 @@ int size_t_tetro(t_tetro *tetro) {
 }
 
 
+
+
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length) {
 	t_tetro *temp_tetro;
 	t_line *temp_tl;
@@ -97,51 +111,18 @@ void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl
 
 
 
-int tetro_line_dup(t_line **ref, t_line *src) {
-	int rank;
-	int ret;
-
-	rank = 0;
-	ret = 0;
-  while(src) {
-		ret = add_t_line(ref, rank, src);
-		if(!ret)
-			break;
-		rank++;
-		src = src->next;
-	}
-	return(ret);
-}
 
 
 
-void tetro_line_print(t_line *ln) {
-	while(ln) {
-		printf("str: %s\n",ln->content);
-		ln = ln->next;
-  }
-}
 
-void print_tetro(t_tetro *t, int print_info_is) {
-	tetro_line_print(t->line);
-	if(print_info_is) {
-		printf("name: %c \n",t->name);
-		printf("id: %i \n",t->id);
-		printf("offset x: %i \n",t->offset.x);
-		printf("offset y: %i \n",t->offset.y);
-		printf("size x: %i \n",t->size.x);
-		printf("size y: %i \n",t->size.y);
-		printf("start.x: %i\n", t->start.x);
-		printf("end.x: %i\n", t->end.x);
-	}
-}
+
 
 
 void print_all_tetro(t_tetro *t, int print_info_is) {
 	printf("PRINT ALL TETROMINOS\n");
   while(t) {
     printf("\nprint tetromino %c\n", t->name);
-		print_tetro(t, print_info_is);
+		tetro_print(t, print_info_is);
     t = t->next;
   }
 }

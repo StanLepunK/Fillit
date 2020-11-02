@@ -124,6 +124,7 @@ void reverse_t_line(t_line **ref);
 int add_t_line(t_line **ref, int rank, t_line *t_ln);
 int line_init(t_line *temp_line);
 void line_set_arguments(t_line *temp_line);
+int all_lines_dup(t_line **ref, t_line *src);
 
 
 // block
@@ -140,9 +141,8 @@ t_tetro *tetro_dup(t_tetro **ref);
 t_tetro *get_t_tetro(t_tetro *t, int index);
 void tetro_init(t_tetro *t);
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
-int tetro_line_dup(t_line **ref, t_line *src);
 int size_t_tetro(t_tetro *tetro);
-void print_tetro(t_tetro *t, int print_info_is);
+void tetro_print(t_tetro *t, int print_info_is);
 void print_all_tetro(t_tetro *t, int print_info_is);
 void tetro_clean_and_format(t_tetro *t);
 // puzzle

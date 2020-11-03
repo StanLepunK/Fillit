@@ -2,10 +2,11 @@
 // try
 t_try *new_try() {
   t_try *try;
-
   try = NULL;
   if(!(try = (t_try*)malloc(sizeof(t_try))))
     return (0);
+  ivec2_init(&try->index);
+  ivec2_init(&try->offset);
   return (try);
 }
 

@@ -87,6 +87,7 @@ struct s_tetro {
 
 typedef struct s_try t_try;
 struct  s_try {
+	char name;
 	t_ivec2 index;
 	t_ivec2 offset;
 	int num;

@@ -9,7 +9,13 @@
 #include "vec.h"
 
 
-
+typedef struct s_pair t_pair;
+struct s_pair {
+	int id;
+	char a;
+	char b;
+	t_pair *next;
+};
 
 typedef struct s_line t_line;
 struct s_line {
@@ -17,8 +23,7 @@ struct s_line {
 	char *content;
 	size_t length;
 
-	char a;
-	char b;
+	t_pair pair;
 
 	int empty;
 	int offset;
@@ -57,6 +62,7 @@ struct s_block {
 
 typedef struct s_puzzle t_puzzle;
 struct s_puzzle {
+	char blank;
 	int id;
 	int brick;
 	int space;

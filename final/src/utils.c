@@ -65,8 +65,8 @@ void copy_t_line(t_line *dst, const t_line *src) {
   
   dst->content = ft_strdup(src->content);
   dst->length = src->length;
-	dst->a = src->a;
-	dst->b = src->b;
+	dst->pair.a = src->pair.a;
+	dst->pair.b = src->pair.b;
 
 	dst->empty = src->empty;
 	dst->offset = src->offset;

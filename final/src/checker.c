@@ -47,14 +47,14 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 }
 
 void info_line(char elem, char previous, t_line *t_ln) {
-	if(elem == t_ln->a) {
+	if(elem == t_ln->pair.a) {
 		t_ln->empty = 0;
 		t_ln->brick++;
 	}
 	if(previous != 0 && previous != elem) {
 		t_ln->state++;
 	}
-	if(elem == t_ln->b && t_ln->state < 1) {
+	if(elem == t_ln->pair.b && t_ln->state < 1) {
 		t_ln->offset++;
 	}
 }
@@ -68,7 +68,7 @@ void checker_line(t_line *t_ln, char *line) {
 		t_ln->state = 0;
 		previous = 0;
     while((c = *line++) !=  '\0') {
-			if(c == t_ln->b || c == t_ln->a) {
+			if(c == t_ln->pair.b || c == t_ln->pair.a) {
 				info_line(c, previous, t_ln);
 				previous = c;
 			} else {
@@ -102,7 +102,7 @@ void checker_compare_lines(t_block *t_blk, t_line *t_ln) {
 	index = 0;
 	if(t_blk->p_line->empty == 0) {
 		while(index < t_ln->col_max) {
-			if(t_ln->content[index] == t_ln->a && t_ln->content[index] == t_blk->p_line->content[index]) {
+			if(t_ln->content[index] == t_ln->pair.a && t_ln->content[index] == t_blk->p_line->content[index]) {
 				t_ln->valid = 1;
 				break;
 			}

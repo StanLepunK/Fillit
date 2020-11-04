@@ -44,8 +44,8 @@ void line_set_arguments(t_line *ln) {
   ln->valid = 0;
   ln->empty = 1;
   ln->offset = 0;
-  ln->a = '#';
-	ln->b = '.';
+  ln->pair.a = '#';
+	ln->pair.b = '.';
   ln->threshold = 3; // can be used like a failed
   ln->brick = 0;
   ln->col_max = 4;

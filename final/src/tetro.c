@@ -134,7 +134,7 @@ void calc_size_x(t_tetro *t, t_line *ln) {
 	index  = 0;
 	while(ln->content[index]) {
 		c = ln->content[index];
-		if(c == ln->a) {
+		if(c == ln->pair.a) {
 			if(t->start.x < 0 || t->start.x > index)
 				t->start.x = index;
 			if(t->end.x < index)

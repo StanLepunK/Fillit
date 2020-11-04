@@ -130,8 +130,8 @@ int fill_line(char **ref, char c, size_t len);
 int fill_t_line(t_line **ref, char c, size_t len);
 void reverse_t_line(t_line **ref);
 int add_t_line(t_line **ref, int rank, t_line *t_ln);
-int line_init(t_line *temp_line);
-void line_set_arguments(t_line *temp_line);
+int line_init(t_line *ln, t_pair *pair);
+void line_set_arguments(t_line *temp_line, t_pair *pair);
 int all_lines_dup(t_line **ref, t_line *src);
 
 
@@ -154,8 +154,8 @@ void tetro_print(t_tetro *t, int print_info_is);
 void print_all_tetro(t_tetro *t, int print_info_is);
 void tetro_clean_and_format(t_tetro *t);
 // puzzle
-void puzzle_init(t_puzzle *pzl);
-int puzzle(t_tetro *t, int print_info_is);
+void puzzle_init(t_puzzle *pzl, char blank);
+int puzzle(t_tetro *tetro, t_pair *pair, int print_info_is);
 void puzzle_print(t_puzzle *pzl, int print_info_is);
 void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src);
 

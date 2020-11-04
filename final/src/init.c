@@ -12,10 +12,11 @@ t_try *new_try() {
 
 
 // puzzle
-void puzzle_init(t_puzzle *pzl) {
+void puzzle_init(t_puzzle *pzl, char blank) {
   pzl->id = 0;
   pzl->line = NULL;
   ivec3_init(&pzl->size);
+  pzl->blank = blank;
   pzl->brick = 0;
   pzl->space = 0;
   pzl->tetro_num = 0;
@@ -39,21 +40,21 @@ void tetro_init(t_tetro *t) {
 }
 
 // line
-void line_set_arguments(t_line *ln) {
+void line_set_arguments(t_line *ln, t_pair *pair) {
   ln->state = 0;
   ln->valid = 0;
   ln->empty = 1;
   ln->offset = 0;
-  ln->pair.a = '#';
-	ln->pair.b = '.';
+  ln->pair.a = pair->a;
+	ln->pair.b = pair->b;
   ln->threshold = 3; // can be used like a failed
   ln->brick = 0;
   ln->col_max = 4;
   ln->space = ln->col_max;
 }
 
-int line_init(t_line *ln) {
-  line_set_arguments(ln);
+int line_init(t_line *ln, t_pair *pair) {
+  line_set_arguments(ln, pair);
   if (!(ln->content = (char*)malloc(sizeof(char) *(ln->col_max + 1))))
 		return (0);
   return(1);

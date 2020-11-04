@@ -97,6 +97,7 @@ struct  s_try {
 
 // try
 t_try *new_try();
+void try_print(t_try *try);
 
 // utils
 int sqrt_ceil(float value);

@@ -1,5 +1,12 @@
 #include "../includes/tetro.h"
 
+void try_print(t_try *try) {
+  printf("name: %c try: %i / %i\n", try->name, try->num, try->max);
+  printf("index: %i %i\n", try->index.x, try->index.y);
+  printf("offset: %i %i\n", try->offset.x, try->offset.y);
+  printf("put: %i\n", try->put);
+}
+
 
 void puzzle_print(t_puzzle *pzl, int print_info_is) {
   int index;

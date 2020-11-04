@@ -190,9 +190,9 @@ t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
 }
 
 
-void inc_index_pzl(t_try *try) {
+void update_try(t_try *try) {
   try->index.x++;
-  if(try->num%try->offset.x == 0) {
+  if(try->index.x > try->offset.x) {
     try->index.x = 0;
     try->index.y++;
   }
@@ -212,7 +212,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_piece) {
       pzl->tetro_used++;
       break;
     } else {
-      inc_index_pzl(try_piece);
+      update_try(try_piece);
     }
     free_tetro(buf_tetro);
     buf_tetro = tetro_dup(&tetro);
@@ -237,15 +237,16 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_pzl) {
   int index_t;
   int res;
   t_try *try_piece;
+  printf("0 puzzle_resolution() try pzl\n");
+  try_print(try_pzl);
 
-  printf("0 puzzle_resolution() try pzl %i < %i \n",try_pzl->num, try_pzl->max);
-  printf("0 puzzle_resolution() try index %i / %i \n",try_pzl->index.x, try_pzl->index.y);
-  printf("0 puzzle_resolution() try offset %i / %i \n",try_pzl->offset.x, try_pzl->offset.y);
   try_piece = new_try();
   index_t = 0;
   res = 1;
   while(index_t < (*ref_pzl)->tetro_num) {
-    set_try(try_piece, (*ref_pzl)->size, tetro);
+    set_try(try_piece, (*ref_pzl)->size, get_t_tetro(tetro, index_t));
+    // printf("0 puzzle_resolution() try_piece\n");
+    // try_print(try_piece);
     if(index_t == 0) {
       try_piece->index.copy(&try_piece->index, &try_pzl->index); // why ?
     }
@@ -258,7 +259,8 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_pzl) {
     res = 0;
   }
   if(!res) {
-    inc_index_pzl(try_pzl);
+    // set_try(try_pzl, (*ref_pzl)->size, tetro);
+    update_try(try_pzl);
     (*ref_pzl)->tetro_used = 0;
     clear_puzzle(ref_pzl, tetro);
     // set_try(try_pzl, (*ref_pzl)->size, tetro);

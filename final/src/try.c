@@ -7,7 +7,8 @@ void set_try(t_try *try, t_ivec3 size_pzl, t_tetro *t) {
   try->offset.y = size_pzl.y - t->size.y;
   try->num = 0;
   try->put = 0;
-  try->max = (size_pzl.x * size_pzl.y) - (t->size.x * t->size.y) - 1;
+  try->max = (try->offset.x + 1) * (try->offset.y + 1) - 1;
+  // try->max = (size_pzl.x * size_pzl.y) - (t->size.x * t->size.y) - 1;
   if(try->max < 1) {
     try->max = 1;
   }

@@ -237,7 +237,7 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_pzl) {
     res = 0;
   }
   if(!res) {
-    set_try(try_pzl, (*ref_pzl)->size, tetro);
+    // set_try(try_pzl, (*ref_pzl)->size, tetro);
     update_try(try_pzl);
     (*ref_pzl)->tetro_used = 0;
     clear_puzzle(ref_pzl, tetro);

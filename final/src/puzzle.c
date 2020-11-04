@@ -101,21 +101,6 @@ void set_cell(t_line *dst, int x, int y, char c) {
 }
 
 
-void set_try(t_try *try, t_ivec3 size_pzl, t_tetro *t) {
-  try->name = t->name;
-  try->index.set(&try->index,0,0);
-  try->offset.x = size_pzl.x - t->size.x + 1;
-  try->offset.y = size_pzl.y - t->size.y;
-  try->num = 0;
-  try->put = 0;
-  try->max = (size_pzl.x * size_pzl.y) - (t->size.x * t->size.y) - 1;
-  // printf("(%i * %i) - (%i * %i) -1 = %i\n",size_pzl.x,size_pzl.y,size_tetro.x,size_tetro.y, try->max);
-  if(try->max < 1) {
-    try->max = 1;
-  }
-}
-
-
 
 int line_resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try_piece, int index) {
   int i_x;
@@ -190,14 +175,7 @@ t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
 }
 
 
-void update_try(t_try *try) {
-  try->index.x++;
-  if(try->index.x > try->offset.x) {
-    try->index.x = 0;
-    try->index.y++;
-  }
-  try->num++;
-}
+
 
 
 
@@ -259,7 +237,7 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_pzl) {
     res = 0;
   }
   if(!res) {
-    // set_try(try_pzl, (*ref_pzl)->size, tetro);
+    set_try(try_pzl, (*ref_pzl)->size, tetro);
     update_try(try_pzl);
     (*ref_pzl)->tetro_used = 0;
     clear_puzzle(ref_pzl, tetro);
@@ -269,22 +247,6 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_pzl) {
   free(try_piece);
   return(res);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

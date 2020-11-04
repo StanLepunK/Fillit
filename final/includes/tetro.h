@@ -98,6 +98,8 @@ struct  s_try {
 // try
 t_try *new_try();
 void try_print(t_try *try);
+void set_try(t_try *try, t_ivec3 size_pzl, t_tetro *t);
+void update_try(t_try *try);
 
 // utils
 int sqrt_ceil(float value);

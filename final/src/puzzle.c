@@ -24,13 +24,14 @@ int init_temp_puzzle_line(t_line **ref_ln, int len) {
   return (1);
 }
 
-void set_grid_size(t_puzzle *pzl, t_tetro *tetro) {
+void set_grid_size(t_puzzle *pzl, t_tetro *tetro, int *inc) {
   if(size_t_tetro(tetro) > 1) {
     while(tetro) {
       pzl->tetro_num++;
       pzl->size.z +=(tetro->size.x + tetro->size.y);
       tetro = tetro->next;
     }
+    pzl->size.z += inc[0];
     pzl->size.x = sqrt_ceil(pzl->size.z);
     pzl->size.y = pzl->size.x;
   } else {
@@ -40,12 +41,12 @@ void set_grid_size(t_puzzle *pzl, t_tetro *tetro) {
   }
 }
 
-int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *tetro) {
+int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int *inc) {
   char c;
   int index;
   t_line *t_line;
   
-  set_grid_size(*ref_pzl, tetro);
+  set_grid_size(*ref_pzl, tetro, inc);
   c = tetro->line->pair.b;
   fill_t_line(&t_line, c, (*ref_pzl)->size.x);
   t_line->pair.b = c;
@@ -315,14 +316,14 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_puzzle **ref_pzl_list, t_tetro *tetr
 
 
 
-int puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_pair *pair) {
+int puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_pair *pair, int *inc) {
   t_puzzle *pzl;
   t_try *try_pzl;
 
   if(!(pzl = (t_puzzle*)malloc(sizeof(t_puzzle))))
 		return (0);
   puzzle_init(pzl, pair->b);
-  build_grid_puzzle(&pzl, tetro);
+  build_grid_puzzle(&pzl, tetro, inc);
   try_pzl = new_try();
   set_try(try_pzl, pzl, tetro);
   puzzle_resolution(&pzl, ref_pzl, tetro, try_pzl);
@@ -330,6 +331,13 @@ int puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_pair *pair) {
   // puzzle_print_info(pzl);
   free_puzzle(pzl);
   free(try_pzl);
+  if(!size_t_puzzle((*ref_pzl))) {
+    printf("\033[1;31mLA LOOSE J'INCREMENTE\033[0m\n");
+    inc[0]++;
+    puzzle(ref_pzl, tetro, pair, inc);
+    // pas super avec les arrays inc to pass arg :(
+  }
+
   return (size_t_puzzle((*ref_pzl)));
 }
 

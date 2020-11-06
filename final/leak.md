@@ -1,3 +1,10 @@
+==21539== LEAK SUMMARY:
+==21539== definitely lost: 28,891 bytes in 164 blocks
+==21539== indirectly lost: 67,366 bytes in 1,441 blocks
+==21539== possibly lost: 48 bytes in 2 blocks
+==21539== still reachable: 216 bytes in 7 blocks
+==21539== suppressed: 23,153 bytes in 161 blocks
+
 ==19195== LEAK SUMMARY:
 ==19195== definitely lost: 28,891 bytes in 164 blocks
 ==19195== indirectly lost: 67,366 bytes in 1,441 blocks

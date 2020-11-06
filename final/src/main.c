@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/11/06 17:21:39 by stan             ###   ########.fr       */
+/*   Updated: 2020/11/06 17:53:09 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ int main(int num, char **arg) {
 	t_block checker_block;
 	t_tetro *tetro;
 	t_pair pair;
+	int *inc;
 
+	inc[0] = 0;
 	pzl_list = NULL;
 	tetro = NULL;
-	int print_info_is = 0;
 	pair.a = '#';
 	pair.b = '.';
 
@@ -81,9 +82,9 @@ int main(int num, char **arg) {
 	tetro_clean_and_format(tetro);
 
 	// print_info_is = 1;
-	print_all_tetro(tetro, print_info_is);
+	print_all_tetro(tetro, 0);
 	
-	if(puzzle(&pzl_list, tetro, &pair)) {
+	if(puzzle(&pzl_list, tetro, &pair, inc)) {
 		puzzle_list_print(pzl_list);
 	} else {
 		printf("\nNO SOLUTION TRY AGAIN LOOSER\n");

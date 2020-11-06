@@ -164,7 +164,7 @@ void tetro_clean_and_format(t_tetro *t);
 int size_t_puzzle(t_puzzle *pzl);
 void puzzle_analyze(t_puzzle *pzl);
 void puzzle_init(t_puzzle *pzl, char blank);
-int puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_pair *pair);
+int puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_pair *pair, int *inc);
 void puzzle_print_info(t_puzzle *pzl);
 void puzzle_list_print(t_puzzle *list);
 void puzzle_print(t_puzzle *pzl);

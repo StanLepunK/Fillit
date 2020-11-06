@@ -35,10 +35,6 @@ void puzzle_list_print(t_puzzle *list) {
     puzzle_print(list);
     list = list->next;
   }
-  // while((*ref)) {
-  //   puzzle_print((*ref));
-  //   (*ref) = (*ref)->next;
-  // }
 }
 
 void puzzle_print_info (t_puzzle *pzl) {

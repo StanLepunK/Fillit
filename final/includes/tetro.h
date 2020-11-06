@@ -70,6 +70,9 @@ struct s_puzzle {
 	int tetro_used;
 
 	t_ivec3 size;
+	t_ivec2 start_pos;
+	t_ivec2 last_pos;
+
 
 	t_line *line;
 	t_puzzle *next;
@@ -81,6 +84,7 @@ struct s_tetro {
 	int id;
 	char name;
 	t_ivec2 offset;
+	t_ivec2 pos;
 	t_ivec2 size;
 	t_ivec2 canvas;
 	t_ivec2 start;
@@ -104,7 +108,8 @@ struct  s_try {
 // try
 t_try *new_try();
 void try_print(t_try *try);
-void set_try(t_try *try, t_ivec3 size_pzl, t_tetro *t);
+void set_try(t_try *try, t_puzzle *pzl, t_tetro *t);
+void update_try(t_try *try);
 void update_try(t_try *try);
 
 // utils
@@ -154,9 +159,11 @@ void tetro_print(t_tetro *t, int print_info_is);
 void print_all_tetro(t_tetro *t, int print_info_is);
 void tetro_clean_and_format(t_tetro *t);
 // puzzle
+void puzzle_analyze(t_puzzle *pzl);
 void puzzle_init(t_puzzle *pzl, char blank);
 int puzzle(t_tetro *tetro, t_pair *pair, int print_info_is);
-void puzzle_print(t_puzzle *pzl, int print_info_is);
+void puzzle_print_info(t_puzzle *pzl);
+void puzzle_print(t_puzzle *pzl);
 void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src);
 
 #endif

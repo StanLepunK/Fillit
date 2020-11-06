@@ -45,6 +45,8 @@ void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src) {
 	all_lines_dup(&dst->line, src->line);
 	reverse_t_line(&dst->line);
 	copy_ivec3(&dst->size, &src->size);
+	copy_ivec2(&dst->start_pos, &src->start_pos);
+	copy_ivec2(&dst->last_pos, &src->last_pos);
 	dst->brick = src->brick;
 	dst->space = src->space;
 }

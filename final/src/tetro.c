@@ -33,6 +33,7 @@ t_tetro *tetro_dup(t_tetro **ref) {
 	buffer->name = (*ref)->name;
 	// printf("tetro_dup() buffer->name: %c\n",buffer->name);
 	// printf("tetro_dup() (*ref)->name: %c\n",(*ref)->name);
+	ivec2_init(&buffer->pos);
 	ivec2_init(&buffer->offset);
 	ivec2_init(&buffer->size);
 	ivec2_init(&buffer->canvas);

@@ -16,6 +16,8 @@ void puzzle_init(t_puzzle *pzl, char blank) {
   pzl->id = 0;
   pzl->line = NULL;
   ivec3_init(&pzl->size);
+  ivec2_init(&pzl->start_pos);
+  ivec2_init(&pzl->last_pos);
   pzl->blank = blank;
   pzl->brick = 0;
   pzl->space = 0;
@@ -32,10 +34,12 @@ void tetro_init(t_tetro *t) {
   t->line = NULL;
   ivec2_init(&t->canvas);
   ivec2_init(&t->size);
+  ivec2_init(&t->pos);
   ivec2_init(&t->offset);
   ivec2_init(&t->start);
-  t->start.set(&t->start,-1,-1);
   ivec2_init(&t->end);
+  t->pos.set(&t->pos,-1,-1);
+  t->start.set(&t->start,-1,-1);
   t->end.set(&t->end,-1,-1);
 }
 

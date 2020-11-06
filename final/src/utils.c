@@ -38,7 +38,7 @@ char	*strcpy_from_to(const char *src, int start, int end)
 }
 
 
-void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src) {
+void copy_t_puzzle(t_puzzle *dst, t_puzzle *src) {
   dst->id = src->id;
 	dst->tetro_num = src->tetro_num;
 	dst->tetro_used = src->tetro_used;

@@ -116,7 +116,9 @@ void update_try(t_try *try);
 int sqrt_ceil(float value);
 char	*strcpy_from_to(const char *src, int start, int end);
 // free
-void free_puzzle(t_puzzle *pzl);
+void free_puzzle(t_puzzle *pzl);;
+void free_puzzle_list(t_puzzle **ref_pzl_list);
+
 void free_block(t_block *blk);
 
 void free_tetro(t_tetro *tetro);
@@ -159,11 +161,13 @@ void tetro_print(t_tetro *t, int print_info_is);
 void print_all_tetro(t_tetro *t, int print_info_is);
 void tetro_clean_and_format(t_tetro *t);
 // puzzle
+int size_t_puzzle(t_puzzle *pzl);
 void puzzle_analyze(t_puzzle *pzl);
 void puzzle_init(t_puzzle *pzl, char blank);
-int puzzle(t_tetro *tetro, t_pair *pair, int print_info_is);
+int puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_pair *pair);
 void puzzle_print_info(t_puzzle *pzl);
+void puzzle_list_print(t_puzzle *list);
 void puzzle_print(t_puzzle *pzl);
-void copy_t_puzzle_struct(t_puzzle *dst, t_puzzle *src);
+void copy_t_puzzle(t_puzzle *dst, t_puzzle *src);
 
 #endif

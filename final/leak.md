@@ -1,3 +1,52 @@
+==19195== LEAK SUMMARY:
+==19195== definitely lost: 28,891 bytes in 164 blocks
+==19195== indirectly lost: 67,366 bytes in 1,441 blocks
+==19195== possibly lost: 48 bytes in 2 blocks
+==19195== still reachable: 216 bytes in 7 blocks
+==19195== suppressed: 23,153 bytes in 161 blocks
+
+==19059== LEAK SUMMARY:
+==19059== definitely lost: 28,891 bytes in 164 blocks
+==19059== indirectly lost: 67,366 bytes in 1,441 blocks
+==19059== possibly lost: 48 bytes in 2 blocks
+==19059== still reachable: 216 bytes in 7 blocks
+==19059== suppressed: 23,153 bytes in 161 blocks
+
+==18980== LEAK SUMMARY:
+==18980== definitely lost: 29,035 bytes in 165 blocks
+==18980== indirectly lost: 67,836 bytes in 1,451 blocks
+==18980== possibly lost: 48 bytes in 2 blocks
+==18980== still reachable: 216 bytes in 7 blocks
+==18980== suppressed: 23,153 bytes in 161 blocks
+
+==18882== LEAK SUMMARY:
+==18882== definitely lost: 28,907 bytes in 165 blocks
+==18882== indirectly lost: 67,366 bytes in 1,441 blocks
+==18882== possibly lost: 48 bytes in 2 blocks
+==18882== still reachable: 200 bytes in 6 blocks
+==18882== suppressed: 23,153 bytes in 161 blocks
+
+==18482== LEAK SUMMARY:
+==18482== definitely lost: 28,907 bytes in 165 blocks
+==18482== indirectly lost: 67,366 bytes in 1,441 blocks
+==18482== possibly lost: 48 bytes in 2 blocks
+==18482== still reachable: 200 bytes in 6 blocks
+==18482== suppressed: 23,153 bytes in 161 blocks
+
+==18383== LEAK SUMMARY:
+==18383== definitely lost: 28,907 bytes in 165 blocks
+==18383== indirectly lost: 67,366 bytes in 1,441 blocks
+==18383== possibly lost: 48 bytes in 2 blocks
+==18383== still reachable: 200 bytes in 6 blocks
+==18383== suppressed: 23,153 bytes in 161 blocks
+
+==18094== LEAK SUMMARY:
+==18094== definitely lost: 28,891 bytes in 164 blocks
+==18094== indirectly lost: 67,366 bytes in 1,441 blocks
+==18094== possibly lost: 48 bytes in 2 blocks
+==18094== still reachable: 216 bytes in 7 blocks
+==18094== suppressed: 23,153 bytes in 161 blocks
+
 ==6413== LEAK SUMMARY:
 ==6413== definitely lost: 3,123 bytes in 38 blocks
 ==6413== indirectly lost: 4,160 bytes in 129 blocks

@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/11/04 18:12:07 by stan             ###   ########.fr       */
+/*   Updated: 2020/11/06 17:21:39 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,28 +63,34 @@ valgrind --leak-check=full --track-origins=yes --show-leak-kinds=definite,indire
 
 // clang src/*.c header/*.h -I ./ -I./libft -L ./libft/ -lft && ./a.out "./import/sample_0.fillit"
 int main(int num, char **arg) {
+	t_puzzle *pzl_list;
 	t_block checker_block;
-	t_tetro *tetrominos;
+	t_tetro *tetro;
 	t_pair pair;
 
-	tetrominos = NULL;
+	pzl_list = NULL;
+	tetro = NULL;
 	int print_info_is = 0;
 	pair.a = '#';
 	pair.b = '.';
 
 	if(num > 0) {
 		int fd = open(arg[1], O_RDONLY);
-		builder(fd, &checker_block, &tetrominos, &pair);
+		builder(fd, &checker_block, &tetro, &pair);
 	}
-	tetro_clean_and_format(tetrominos);
+	tetro_clean_and_format(tetro);
 
 	// print_info_is = 1;
-	print_all_tetro(tetrominos, print_info_is);
-	//print_all_tetro(tetrominos, print_info_is);
-// tetre_name(tetrominos);
-	print_info_is = 1;
-	puzzle(tetrominos, &pair, print_info_is);
-	free_tetro_list(&tetrominos);
+	print_all_tetro(tetro, print_info_is);
+	
+	if(puzzle(&pzl_list, tetro, &pair)) {
+		puzzle_list_print(pzl_list);
+	} else {
+		printf("\nNO SOLUTION TRY AGAIN LOOSER\n");
+	}
+
+	free_puzzle_list(&pzl_list);
+	free_tetro_list(&tetro);
 	free_block(&checker_block);
 	return (0);
 }

@@ -1,5 +1,16 @@
 #include "../includes/tetro.h"
 
+int size_t_puzzle(t_puzzle *pzl) {
+	int size;
+
+	size = 0;
+	while(pzl) {
+		size++;
+		pzl = pzl->next;
+	}
+	return (size);
+}
+
 int init_temp_puzzle_line(t_line **ref_ln, int len) {
   t_line *ln;
 
@@ -102,6 +113,27 @@ void set_cell(t_line *dst, int x, int y, char c) {
   }
 }
 
+void puzzle_analyze(t_puzzle *pzl) {
+  int index_x;
+  int index_y;
+  char c;
+
+  index_y = 0;
+  while(index_y < pzl->size.y) {
+    index_x = 0;
+    while(index_x < pzl->size.x) {
+      c = get_t_line(pzl->line,index_y)->content[index_x];
+      if(c == pzl->blank) {
+         pzl->space++;
+      } else {
+        pzl->brick++;
+      }
+      index_x++;
+    }
+    index_y++;
+  }
+}
+
 
 
 int line_resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try_piece, int index) {
@@ -162,7 +194,6 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try_piece) {
     index++;
   }
   tetro->pos.copy(&tetro->pos,&try_piece->index);
-  // tetro_print(tetro,1);
   return (1);
 }
 
@@ -174,15 +205,12 @@ t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
   if(!(buffer = (t_puzzle*)malloc(sizeof(t_puzzle))))
 		return (0);
   puzzle_init(buffer, (*ref_pzl)->blank);
-  copy_t_puzzle_struct(buffer, (*ref_pzl));
+  copy_t_puzzle(buffer, (*ref_pzl));
   return (buffer);
 }
 
 
 void update_puzzle(t_puzzle **pzl, t_tetro *tetro) {
-  // printf("\033[1;33mtetro id %i\n", tetro->id);
-  // printf("Start tetro pos: %i, %i\n", (*pzl)->start_pos.x, (*pzl)->start_pos.y);
-  // printf("Last tetro pos: %i, %i\n\033[0m", (*pzl)->last_pos.x, (*pzl)->last_pos.y);
   (*pzl)->last_pos.copy(&(*pzl)->last_pos,&tetro->pos);
   if(tetro->id == 0) {
     (*pzl)->start_pos.copy(&(*pzl)->start_pos,&tetro->pos);
@@ -234,7 +262,24 @@ int buffering_calc(t_puzzle **ref_pzl, t_tetro *t, t_try *try_piece) {
   return (1);
 }
 
-int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_pzl) {
+
+int add_t_puzzle(t_puzzle **dst, t_puzzle *src) {
+  t_puzzle *temp_pzl;
+
+  temp_pzl = NULL;
+  if(!(temp_pzl = (t_puzzle*)malloc(sizeof(t_puzzle))))
+		return (0);
+  puzzle_init(temp_pzl, src->blank);
+  copy_t_puzzle(temp_pzl, src);
+  if((*dst))
+    temp_pzl->id = (*dst)->id++;
+	temp_pzl->next = (*dst);
+	(*dst) = temp_pzl;
+
+  return (1);
+}
+
+int puzzle_resolution(t_puzzle **ref_pzl, t_puzzle **ref_pzl_list, t_tetro *tetro, t_try *try_pzl) {
   int index_t;
   int res;
   t_try *try_piece;
@@ -245,55 +290,32 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_pzl) {
   while(index_t < (*ref_pzl)->tetro_num) {
     set_try(try_piece, (*ref_pzl), get_t_tetro(tetro, index_t));
     if(index_t == 0) {
-      
       try_piece->index.copy(&try_piece->index, &try_pzl->index); // why ?
     }
     buffering_calc(ref_pzl, get_t_tetro(tetro, index_t), try_piece);
-    // puzzle_print_info(*ref_pzl);
-    // puzzle_print((*ref_pzl));
     index_t++;
   }
 
-  // if((*ref_pzl)->tetro_used < (*ref_pzl)->tetro_num && try_pzl->num < 12) {
-  if((*ref_pzl)->tetro_used < (*ref_pzl)->tetro_num && try_pzl->num < try_pzl->max) {
+  if(try_pzl->num < try_pzl->max) {
     puzzle_print_info(*ref_pzl);
-    puzzle_print((*ref_pzl));
+    if((*ref_pzl)->tetro_used ==  (*ref_pzl)->tetro_num) {
+      add_t_puzzle(ref_pzl_list, (*ref_pzl));
+    }
     res = 0;
   }
   if(!res) {
-    // set_try(try_pzl, (*ref_pzl), tetro);
     update_try(try_pzl);
     (*ref_pzl)->tetro_used = 0;
     clear_puzzle(ref_pzl, tetro);
-    // set_try(try_pzl, (*ref_pzl), tetro);
-    puzzle_resolution(ref_pzl, tetro, try_pzl);
+    puzzle_resolution(ref_pzl, ref_pzl_list, tetro, try_pzl);
   }
   free(try_piece);
   return(res);
 }
 
-void puzzle_analyze(t_puzzle *pzl) {
-  int index_x;
-  int index_y;
-  char c;
 
-  index_y = 0;
-  while(index_y < pzl->size.y) {
-    index_x = 0;
-    while(index_x < pzl->size.x) {
-      c = get_t_line(pzl->line,index_y)->content[index_x];
-      if(c == pzl->blank) {
-         pzl->space++;
-      } else {
-        pzl->brick++;
-      }
-      index_x++;
-    }
-    index_y++;
-  }
-}
 
-int puzzle(t_tetro *tetro, t_pair *pair, int print_info_is) {
+int puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_pair *pair) {
   t_puzzle *pzl;
   t_try *try_pzl;
 
@@ -303,18 +325,12 @@ int puzzle(t_tetro *tetro, t_pair *pair, int print_info_is) {
   build_grid_puzzle(&pzl, tetro);
   try_pzl = new_try();
   set_try(try_pzl, pzl, tetro);
-  puzzle_resolution(&pzl, tetro, try_pzl);
-  
-
-  if(print_info_is) {
-    puzzle_print_info(pzl);
-  } else {
-    puzzle_analyze(pzl);
-  }
-  puzzle_print(pzl);
+  puzzle_resolution(&pzl, ref_pzl, tetro, try_pzl);
+  puzzle_analyze(pzl);
+  // puzzle_print_info(pzl);
   free_puzzle(pzl);
   free(try_pzl);
-  return (1);
+  return (size_t_puzzle((*ref_pzl)));
 }
 
 

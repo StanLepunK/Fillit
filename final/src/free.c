@@ -46,6 +46,14 @@ void free_puzzle(t_puzzle *pzl) {
   free(pzl);
 }
 
+void free_puzzle_list(t_puzzle **ref_pzl_list) {
+  while((*ref_pzl_list)) {
+    free_puzzle((*ref_pzl_list));
+    (*ref_pzl_list) = (*ref_pzl_list)->next;
+  }
+}
+
+	
 
 
 void free_block(t_block *blk) {

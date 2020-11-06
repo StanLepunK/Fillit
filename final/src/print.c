@@ -30,16 +30,27 @@ void try_print(t_try *try) {
 }
 
 
+void puzzle_list_print(t_puzzle *list) {
+  while(list) {
+    puzzle_print(list);
+    list = list->next;
+  }
+  // while((*ref)) {
+  //   puzzle_print((*ref));
+  //   (*ref) = (*ref)->next;
+  // }
+}
+
 void puzzle_print_info (t_puzzle *pzl) {
   puzzle_analyze(pzl);
   printf("\nPUZZLE INFO");
   printf("\n\033[1;36mBuild with %i on %i pieces\033[0m\n",  pzl->tetro_used, pzl->tetro_num);
   printf("Start tetro pos: %i, %i\n", pzl->start_pos.x, pzl->start_pos.y);
   printf("Last tetro pos: %i, %i\n", pzl->last_pos.x, pzl->last_pos.y);
-  // printf("Size: %ix%i\n", pzl->size.x, pzl->size.y);
-  // printf("Brick used: %i\n", pzl->brick);
-  // printf("Space available: %i\n", pzl->space);
-  // printf("Space total: %i\n", pzl->size.x * pzl->size.y);
+  printf("Size: %ix%i\n", pzl->size.x, pzl->size.y);
+  printf("Brick used: %i\n", pzl->brick);
+  printf("Space available: %i\n", pzl->space);
+  printf("Space total: %i\n", pzl->size.x * pzl->size.y);
 }
 
 

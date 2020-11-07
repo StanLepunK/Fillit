@@ -1,10 +1,10 @@
 #include "../includes/tetro.h"
 
-void set_try(t_try *try, t_puzzle *pzl, t_tetro *t) {
-  try->name = t->name;
+void set_try(t_try *try, t_puzzle *pzl, t_tetro *tetro) {
+  try->name = tetro->name;
   try->index.copy(&try->index,&pzl->start_pos);
-  try->offset.x = pzl->size.x - t->size.x + 1;
-  try->offset.y = pzl->size.y - t->size.y;
+  try->offset.x = pzl->size.x - tetro->size.x + 1;
+  try->offset.y = pzl->size.y - tetro->size.y;
   try->num = 0;
   try->put = 0;
   try->max = (try->offset.x + 1) * (try->offset.y + 1) - 1;

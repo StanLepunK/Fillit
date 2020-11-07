@@ -63,6 +63,17 @@ void puzzle_print(t_puzzle *pzl) {
 
 
 
+
+void print_all_tetro(t_tetro *t, int print_info_is) {
+	printf("PRINT ALL TETROMINOS\n");
+  while(t) {
+    printf("\nprint tetromino %c\n", t->name);
+		tetro_print(t, print_info_is);
+    t = t->next;
+  }
+}
+
+
 void tetro_line_print(t_line *ln) {
 	while(ln) {
 		printf("str: %s\n",ln->content);

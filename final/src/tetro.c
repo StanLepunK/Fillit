@@ -43,8 +43,6 @@ t_tetro *tetro_dup(t_tetro **ref) {
 	tetro_init(buffer);
 	buffer->id = (*ref)->id;
 	buffer->name = (*ref)->name;
-	// printf("tetro_dup() buffer->name: %c\n",buffer->name);
-	// printf("tetro_dup() (*ref)->name: %c\n",(*ref)->name);
 	ivec2_init(&buffer->pos);
 	ivec2_init(&buffer->offset);
 	ivec2_init(&buffer->size);
@@ -54,7 +52,6 @@ t_tetro *tetro_dup(t_tetro **ref) {
 	buffer->size.copy(&buffer->size,&(*ref)->size);
 	buffer->start = (*ref)->start;
 	buffer->end = (*ref)->end;
-	// tetro_lines_dup(&buffer->line, (*ref)); // copy in the same order
 	all_lines_dup(&buffer->line, (*ref)->line);
 	return (buffer);
 }
@@ -108,15 +105,6 @@ void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl
 	(*ref_tl) = temp_tl;
 }
 
-void print_all_tetro(t_tetro *t, int print_info_is) {
-	printf("PRINT ALL TETROMINOS\n");
-  while(t) {
-    printf("\nprint tetromino %c\n", t->name);
-		tetro_print(t, print_info_is);
-    t = t->next;
-  }
-}
-
 void calc_size_x(t_tetro *t, t_line *ln) {
 	int index;
 	char c;
@@ -161,7 +149,6 @@ void tetro_line_clean(t_tetro *t, t_line *ln) {
 		ln = ln->next;
 	}
 	t->size.x = t->end.x - t->start.x + 1;
-
 }
 
 void reverse_t_tetro(t_tetro **ref_tetro) {
@@ -198,3 +185,5 @@ void tetro_clean_and_format(t_tetro **ref_tetro) {
 		index++;
 	}
 }
+
+

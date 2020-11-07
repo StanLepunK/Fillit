@@ -113,12 +113,8 @@ void set_try(t_try *try, t_puzzle *pzl, t_tetro *t);
 void update_try(t_try *try);
 void update_try(t_try *try);
 
-
-
-
 // line
 t_line *get_t_line(t_line *ln, int index);
-int copy_t_line_at(t_line *dst, const t_line *src, int index);
 void copy_t_line(t_line *dst, const t_line *src);
 int malloc_line(char **ref, size_t len);
 int fill_line(char **ref, char c, size_t len);
@@ -161,7 +157,6 @@ void checker_compare_lines(t_block *temp_block, t_line *temp_line);
 
 // utils
 int sqrt_ceil(float value);
-char	*strcpy_from_to(const char *src, int start, int end);
 // free
 void free_puzzle(t_puzzle *pzl);;
 void free_puzzle_list(t_puzzle **ref_pzl_list);

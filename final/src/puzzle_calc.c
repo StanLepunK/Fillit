@@ -2,36 +2,6 @@
 
 
 
-
-int init_temp_puzzle_line(t_line **ref_ln, int len) {
-  t_line *ln;
-
-  ln = (*ref_ln);
-  if (!(ln = (t_line*)malloc(sizeof(t_line))))
-    return(0);
-  ln->col_max = len;
-  if (!(ln->content = (char*)malloc(sizeof(char) *ln->col_max)))
-    return (0);
-  (*ref_ln) = ln;
-  return (1);
-}
-
-
-
-void brick_switch(char *line, char target_char, char new_char) {
-  int index;
-
-  index = 0;
-  while(index < ft_strlen(line)) {
-    if(line[index] == target_char) {
-      line[index] = new_char;
-    }
-    index++;
-  }
-}
-
-
-
 int line_resolution(t_line *buf_pzl, t_tetro *tetro, t_try *try_piece, int index) {
   int i_x;
   int succes;

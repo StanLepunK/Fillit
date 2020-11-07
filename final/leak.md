@@ -1,3 +1,10 @@
+==5224== LEAK SUMMARY:
+==5224== definitely lost: 28,907 bytes in 165 blocks
+==5224== indirectly lost: 67,366 bytes in 1,441 blocks
+==5224== possibly lost: 48 bytes in 2 blocks
+==5224== still reachable: 200 bytes in 6 blocks
+==5224== suppressed: 23,153 bytes in 161 blocks
+
 ==21539== LEAK SUMMARY:
 ==21539== definitely lost: 28,891 bytes in 164 blocks
 ==21539== indirectly lost: 67,366 bytes in 1,441 blocks

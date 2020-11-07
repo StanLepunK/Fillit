@@ -156,10 +156,12 @@ t_tetro *tetro_dup(t_tetro **ref);
 t_tetro *get_t_tetro(t_tetro *t, int index);
 void tetro_init(t_tetro *t);
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
+void reverse_t_tetro(t_tetro **ref_tetro);
 int size_t_tetro(t_tetro *tetro);
 void tetro_print(t_tetro *t, int print_info_is);
 void print_all_tetro(t_tetro *t, int print_info_is);
-void tetro_clean_and_format(t_tetro *t);
+void tetro_clean_and_format(t_tetro **ref_tetro);
+// void tetro_clean_and_format(t_tetro *t);
 // puzzle
 int size_t_puzzle(t_puzzle *pzl);
 void puzzle_analyze(t_puzzle *pzl);

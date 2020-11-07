@@ -1,5 +1,19 @@
 #include "../includes/tetro.h"
 
+void copy_t_puzzle(t_puzzle *dst, t_puzzle *src) {
+  dst->id = src->id;
+	dst->tetro_num = src->tetro_num;
+	dst->tetro_used = src->tetro_used;
+	all_lines_dup(&dst->line, src->line);
+	reverse_t_line(&dst->line);
+	copy_ivec3(&dst->size, &src->size);
+	copy_ivec2(&dst->start_pos, &src->start_pos);
+	copy_ivec2(&dst->last_pos, &src->last_pos);
+	dst->brick = src->brick;
+	dst->space = src->space;
+}
+
+
 int size_t_puzzle(t_puzzle *pzl) {
 	int size;
 
@@ -33,7 +47,7 @@ void set_grid_size(t_puzzle *pzl, t_tetro *tetro, int *inc) {
     }
     pzl->size.z += inc[0];
     pzl->size.x = sqrt_ceil(pzl->size.z);
-    pzl->size.y = pzl->size.x;
+    pzl->size.y = pzl->size.x -1;
   } else {
     pzl->tetro_num = 1;
     pzl->size.x = tetro->size.x;
@@ -298,7 +312,7 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_puzzle **ref_pzl_list, t_tetro *tetr
   }
 
   if(try_pzl->num < try_pzl->max) {
-    puzzle_print_info(*ref_pzl);
+    // puzzle_print_info(*ref_pzl);
     if((*ref_pzl)->tetro_used ==  (*ref_pzl)->tetro_num) {
       add_t_puzzle(ref_pzl_list, (*ref_pzl));
     }

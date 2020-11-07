@@ -10,6 +10,18 @@ t_tetro *get_t_tetro(t_tetro *t, int index) {
 	return (0);
 }
 
+int size_t_tetro(t_tetro *tetro) {
+	int size;
+
+	size = 0;
+	while(tetro) {
+		size++;
+		tetro = tetro->next;
+	}
+	return (size);
+}
+
+
 
 void tetro_lines_dup(t_line **ref, t_tetro *tetro) {
 	int index;
@@ -79,20 +91,6 @@ void add_tetrominos(t_block *t_blk, t_tetro **ref_tetro, t_line **ref_tl) {
 	(*ref_tetro) = temp;
 }
 
-int size_t_tetro(t_tetro *tetro) {
-	int size;
-
-	size = 0;
-	while(tetro) {
-		size++;
-		tetro = tetro->next;
-	}
-	return (size);
-}
-
-
-
-
 void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length) {
 	t_tetro *temp_tetro;
 	t_line *temp_tl;
@@ -109,15 +107,6 @@ void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl
 	(*ref_tetro) = temp_tetro;
 	(*ref_tl) = temp_tl;
 }
-
-
-
-
-
-
-
-
-
 
 void print_all_tetro(t_tetro *t, int print_info_is) {
 	printf("PRINT ALL TETROMINOS\n");
@@ -175,16 +164,37 @@ void tetro_line_clean(t_tetro *t, t_line *ln) {
 
 }
 
-void tetro_clean_and_format(t_tetro *t) {
+void reverse_t_tetro(t_tetro **ref_tetro) {
+	t_tetro *prev;
+	t_tetro *current;
+	t_tetro *next;
+
+	prev = NULL;
+	current = *ref_tetro;
+	next = NULL;
+	while(current) {
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	(*ref_tetro) = prev;
+}
+
+void tetro_clean_and_format(t_tetro **ref_tetro) {
 	char name;
-	int id;
+	int index;
+	int length;
+	t_tetro *buffer;
 	
 	name = 'A';
-	id = 0;
-  while(t) {
-		tetro_line_clean(t, t->line);
-		t->name = (name++);
-		t->id = (id++);
-    t = t->next;
-  }
+	length = size_t_tetro((*ref_tetro));
+	index = 0;
+	while(index < length) {
+		buffer = get_t_tetro((*ref_tetro), index);
+		tetro_line_clean(buffer, buffer->line);
+		buffer->name = name++;
+		buffer->id = index;
+		index++;
+	}
 }

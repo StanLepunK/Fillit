@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/11/06 17:53:09 by stan             ###   ########.fr       */
+/*   Updated: 2020/11/07 12:25:18 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int main(int num, char **arg) {
 		int fd = open(arg[1], O_RDONLY);
 		builder(fd, &checker_block, &tetro, &pair);
 	}
-	tetro_clean_and_format(tetro);
+	tetro_clean_and_format(&tetro);
+	// tetro_clean_and_format(tetro);
 
 	// print_info_is = 1;
 	print_all_tetro(tetro, 0);

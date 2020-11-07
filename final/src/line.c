@@ -117,3 +117,24 @@ int fill_t_line(t_line **ref, char c, size_t len) {
   fill_line(&(*ref)->content, c, len);
   return(1);
 }
+
+
+char get_cell(t_line *src, int x, int y) {
+  while(src) {
+    if(src->id == y) {
+      return (src->content[x]); // dangerous, because there is no out bound exception
+    }
+    src = src->next;
+  }
+  return (0);
+}
+
+void set_cell(t_line *dst, int x, int y, char c) {
+  while(dst) {
+    if(dst->id == y) {
+      dst->content[x] = c; // dangerous, because there is no out bound exception
+      break;
+    }
+    dst = dst->next;
+  }
+}

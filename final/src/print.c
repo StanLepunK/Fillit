@@ -54,7 +54,7 @@ void puzzle_print(t_puzzle *pzl) {
   int index;
 
   index = 0;
-  printf("\033[1;36mPUZZLE PRINT\033[0m\n");
+  printf("\033[1;36mPUZZLE PRINT %i\033[0m\n", pzl->id);
   while(index < pzl->size.y) {
     printf("%s\n",get_t_line(pzl->line,index)->content);
     index++;

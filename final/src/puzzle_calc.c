@@ -84,7 +84,6 @@ void update_puzzle(t_puzzle **pzl, t_tetro *tetro) {
 
 
 
-
 int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_piece) {
   t_puzzle *pzl;
   t_tetro *buf_tetro;
@@ -96,9 +95,8 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_piece) {
       update_puzzle(&pzl, buf_tetro);
       printf("BINGO\n");
       break;
-    } else {
-      update_try(try_piece);
     }
+    update_try(try_piece);
     free_tetro(buf_tetro);
     buf_tetro = tetro_dup(&tetro);
     free_puzzle(pzl);

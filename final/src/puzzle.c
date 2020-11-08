@@ -89,8 +89,8 @@ void set_grid_size(t_puzzle *pzl, t_tetro *tetro, int *inc) {
       tetro = tetro->next;
     }
     pzl->size.z += inc[0];
-    pzl->size.x = sqrt_ceil(pzl->size.z);
-    pzl->size.y = pzl->size.x -1;
+    pzl->size.x = sqrt_ceil(pzl->size.z) -1;
+    pzl->size.y = pzl->size.x;
   } else {
     pzl->tetro_num = 1;
     pzl->size.x = tetro->size.x;

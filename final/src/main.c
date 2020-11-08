@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/11/07 12:25:18 by stan             ###   ########.fr       */
+/*   Updated: 2020/11/08 11:20:00 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,39 +18,7 @@
 #include "libft.h"
 #include "../includes/tetro.h"
 
-int builder(const int fd, t_block *t_blk, t_tetro **ref_tetro, t_pair *pair) {
-	char *line;
-  t_line *buffer;
-	t_line *tl;
-	t_tetro *temp_tetro;
 
-	temp_tetro = (*ref_tetro);
-	tl = NULL;
-	buffer = NULL;
-  if (!(buffer = (t_line*)malloc(sizeof(t_line))))
-    return(0);
-  line_init(buffer, pair);
-	block_init(t_blk);
-	while (get_next_line(fd, &line) > 0) {
-		build_dict_tetrominos(t_blk, &temp_tetro, &tl, ft_strlen(line));
-		checker_line_set(buffer, line);
-		checker_block_set(t_blk, buffer, line);
-		if(buffer->valid) {
-			add_t_line(&tl, t_blk->row, buffer);
-			// free(t_blk->p_line->content);
-		} else {
-			free_line_list(&tl);
-			// free(t_blk->p_line->content);
-		}
-		free(line);
-	}
-	get_next_line(fd, &line);
-	free_line(buffer);
-	free(line);
-	close(fd);
-	(*ref_tetro) = temp_tetro;
-	return (1);
-}
 /**
 to launche setph code
 make dans le dossier lidft
@@ -77,7 +45,7 @@ int main(int num, char **arg) {
 
 	if(num > 0) {
 		int fd = open(arg[1], O_RDONLY);
-		builder(fd, &checker_block, &tetro, &pair);
+		build(fd, &checker_block, &tetro, &pair);
 	}
 	tetro_clean_and_format(&tetro);
 	// tetro_clean_and_format(tetro);

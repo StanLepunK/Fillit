@@ -106,6 +106,25 @@ struct  s_try {
 	int put;
 };
 
+
+// build
+int build(const int fd, t_block *t_blk, t_tetro **ref_tetro, t_pair *pair);
+void checker_line_set(t_line *temp_line, char *line);
+void checker_line(t_line *temp_line, char *line);
+void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
+void checker_compare_lines(t_block *temp_block, t_line *temp_line);
+// block
+void block_set_arguments(t_block *temp_block);
+
+// tetro
+t_tetro *tetro_dup(t_tetro **ref);
+t_tetro *get_t_tetro(t_tetro *t, int index);
+void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
+void reverse_t_tetro(t_tetro **ref_tetro);
+int size_t_tetro(t_tetro *tetro);
+void tetro_clean_and_format(t_tetro **ref_tetro);
+
+
 // try
 t_try *new_try();
 void try_print(t_try *try);
@@ -126,13 +145,7 @@ int all_lines_dup(t_line **ref, t_line *src);
 
 
 
-// tetro
-t_tetro *tetro_dup(t_tetro **ref);
-t_tetro *get_t_tetro(t_tetro *t, int index);
-void build_dict_tetrominos(t_block *t_blk , t_tetro **ref_tetro, t_line **ref_tl, int length);
-void reverse_t_tetro(t_tetro **ref_tetro);
-int size_t_tetro(t_tetro *tetro);
-void tetro_clean_and_format(t_tetro **ref_tetro);
+
 
 // puzzle
 void copy_t_puzzle(t_puzzle *dst, t_puzzle *src);
@@ -147,13 +160,8 @@ t_puzzle *puzzle_dup(t_puzzle **ref_pzl);
 int puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_pair *pair, int *inc);
 
 
-// block
-void block_set_arguments(t_block *temp_block);
-// checker
-void checker_line_set(t_line *temp_line, char *line);
-void checker_line(t_line *temp_line, char *line);
-void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
-void checker_compare_lines(t_block *temp_block, t_line *temp_line);
+
+
 
 // utils
 int sqrt_ceil(float value);

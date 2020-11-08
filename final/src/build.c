@@ -1,12 +1,6 @@
 
 #include "../includes/tetro.h"
 
-void block_dup_old(t_block *t_blk, t_line *t_ln) {
-	t_blk->p_line->content = ft_strdup(t_ln->content);
-	t_blk->p_line->empty = t_ln->empty;
-	t_blk->row += 1;
-}
-
 void block_dup(t_block *t_blk, t_line *t_ln) {
 	char *temp_str;
 
@@ -31,7 +25,6 @@ void checker_block_set(t_block *t_blk, t_line *t_ln, char *line) {
 
 	if(t_ln->valid == 1) {
 		block_dup(t_blk, t_ln);
-		// block_dup_old(t_blk, t_ln);
 	}
 	
 	if(t_blk->row == t_blk->row_max 
@@ -111,6 +104,41 @@ void checker_compare_lines(t_block *t_blk, t_line *t_ln) {
 	} else {
 		t_ln->valid = 1;
 	}
+}
+
+
+int build(const int fd, t_block *t_blk, t_tetro **ref_tetro, t_pair *pair) {
+	char *line;
+  t_line *buffer;
+	t_line *tl;
+	t_tetro *temp_tetro;
+
+	temp_tetro = (*ref_tetro);
+	tl = NULL;
+	buffer = NULL;
+  if (!(buffer = (t_line*)malloc(sizeof(t_line))))
+    return(0);
+  line_init(buffer, pair);
+	block_init(t_blk);
+	while (get_next_line(fd, &line) > 0) {
+		build_dict_tetrominos(t_blk, &temp_tetro, &tl, ft_strlen(line));
+		checker_line_set(buffer, line);
+		checker_block_set(t_blk, buffer, line);
+		if(buffer->valid) {
+			add_t_line(&tl, t_blk->row, buffer);
+			// free(t_blk->p_line->content);
+		} else {
+			free_line_list(&tl);
+			// free(t_blk->p_line->content);
+		}
+		free(line);
+	}
+	get_next_line(fd, &line);
+	free_line(buffer);
+	free(line);
+	close(fd);
+	(*ref_tetro) = temp_tetro;
+	return (1);
 }
 
 

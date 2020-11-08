@@ -82,6 +82,10 @@ void puzzle_analyze(t_puzzle *pzl) {
 
 
 void set_grid_size(t_puzzle *pzl, t_tetro *tetro, int *inc) {
+  t_ivec2 min_size;
+
+  min_size.x = tetro->canvas.x;
+  min_size.y = tetro->canvas.y;
   if(size_t_tetro(tetro) > 1) {
     while(tetro) {
       pzl->tetro_num++;
@@ -90,7 +94,13 @@ void set_grid_size(t_puzzle *pzl, t_tetro *tetro, int *inc) {
     }
     pzl->size.z += inc[0];
     pzl->size.x = sqrt_ceil(pzl->size.z) -1;
+    if(pzl->size.x < min_size.x) {
+      pzl->size.x = min_size.x;
+    }
     pzl->size.y = pzl->size.x;
+    if(pzl->size.y < min_size.y) {
+      pzl->size.y = min_size.y;
+    }
   } else {
     pzl->tetro_num = 1;
     pzl->size.x = tetro->size.x;

@@ -7,6 +7,9 @@ t_try *new_try() {
     return (0);
   ivec2_init(&try->index);
   ivec2_init(&try->offset);
+  try->tetro_start = 0;
+  try->num = 0;
+	try->max = 0;
   return (try);
 }
 

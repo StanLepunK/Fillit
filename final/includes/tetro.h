@@ -103,7 +103,6 @@ struct  s_try {
 	int tetro_start;
 	int num;
 	int max;
-	int put;
 };
 
 

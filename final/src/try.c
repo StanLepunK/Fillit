@@ -6,7 +6,6 @@ void set_try(t_try *try, t_puzzle *pzl, t_tetro *tetro) {
   try->offset.x = pzl->size.x - tetro->size.x + 1;
   try->offset.y = pzl->size.y - tetro->size.y;
   try->num = 0;
-  try->put = 0;
   try->max = (try->offset.x + 1) * (try->offset.y + 1) - 1;
   if(try->max < 1) {
     try->max = 1;

@@ -26,7 +26,6 @@ void try_print(t_try *try) {
   printf("\033[1;36mname: %c try: %i / %i\033[0m\n", try->name, try->num, try->max);
   printf("index: %i %i\n", try->index.x, try->index.y);
   printf("offset: %i %i\n", try->offset.x, try->offset.y);
-  printf("put: %i\n", try->put);
 }
 
 

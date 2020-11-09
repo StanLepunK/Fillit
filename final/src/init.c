@@ -21,6 +21,7 @@ void puzzle_init(t_puzzle *pzl, char blank) {
   ivec3_init(&pzl->size);
   ivec2_init(&pzl->start_pos);
   ivec2_init(&pzl->last_pos);
+  ivec2_init(&pzl->offset);
   pzl->blank = blank;
   pzl->brick = 0;
   pzl->space = 0;

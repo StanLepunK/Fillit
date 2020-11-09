@@ -72,6 +72,7 @@ struct s_puzzle {
 	t_ivec3 size;
 	t_ivec2 start_pos;
 	t_ivec2 last_pos;
+	t_ivec2 offset;
 
 
 	t_line *line;
@@ -147,6 +148,7 @@ int all_lines_dup(t_line **ref, t_line *src);
 
 
 // puzzle
+void finalize_puzzle(t_puzzle **ref_pzl);
 void copy_t_puzzle(t_puzzle *dst, t_puzzle *src);
 int add_t_puzzle(t_puzzle **dst, t_puzzle *src);
 int size_t_puzzle(t_puzzle *pzl);

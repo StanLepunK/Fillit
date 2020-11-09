@@ -32,6 +32,7 @@ void try_print(t_try *try) {
 void puzzle_list_print(t_puzzle *list) {
   while(list) {
     puzzle_print(list);
+    // puzzle_print(&list);
     list = list->next;
   }
 }
@@ -42,6 +43,7 @@ void puzzle_print_info (t_puzzle *pzl) {
   printf("\n\033[1;36mBuild with %i on %i pieces\033[0m\n",  pzl->tetro_used, pzl->tetro_num);
   printf("Start tetro pos: %i, %i\n", pzl->start_pos.x, pzl->start_pos.y);
   printf("Last tetro pos: %i, %i\n", pzl->last_pos.x, pzl->last_pos.y);
+  printf("offset: %i, %i\n", pzl->offset.x, pzl->offset.y);
   printf("Size: %ix%i\n", pzl->size.x, pzl->size.y);
   printf("Brick used: %i\n", pzl->brick);
   printf("Space available: %i\n", pzl->space);
@@ -49,11 +51,25 @@ void puzzle_print_info (t_puzzle *pzl) {
 }
 
 
+
+// void puzzle_print(t_puzzle **ref_pzl) {
+//   int index;
+
+//   index = 0;
+  
+//   printf("\033[1;36mPUZZLE PRINT %i\033[0m\n", (*ref_pzl)->id);
+//   finalize_puzzle(ref_pzl);
+//   while(index < (*ref_pzl)->size.y) {
+//     printf("%s\n",get_t_line((*ref_pzl)->line,index)->content);
+//     index++;
+//   }
+// }
 void puzzle_print(t_puzzle *pzl) {
   int index;
 
   index = 0;
   printf("\033[1;36mPUZZLE PRINT %i\033[0m\n", pzl->id);
+  finalize_puzzle(&pzl);
   while(index < pzl->size.y) {
     printf("%s\n",get_t_line(pzl->line,index)->content);
     index++;

@@ -123,7 +123,7 @@ void calc_size_x(t_tetro *t, t_line *ln) {
 }
 
 
-void tetro_line_clean(t_tetro *t, t_line *ln) {
+void tetro_line_clean(t_tetro *tetro, t_line *ln) {
 	int lock_x;
 	int lock_y;
 
@@ -131,24 +131,24 @@ void tetro_line_clean(t_tetro *t, t_line *ln) {
 	lock_y = 0;
 	while(ln) {
 		if(!ln->empty) {
-			t->size.y++;
+			tetro->size.y++;
 			lock_y = 1;
 		}
 		if(ln->empty && !lock_y) {
-			t->offset.y++;
+			tetro->offset.y++;
 		}
 
-		if(t->offset.x <= ln->offset && !lock_x) {
-			t->offset.x = ln->offset;
+		if(tetro->offset.x <= ln->offset && !lock_x) {
+			tetro->offset.x = ln->offset;
 			lock_x = 1;
-		} else if(ln->offset < t->offset.x) {
-			t->offset.x = ln->offset;
+		} else if(ln->offset < tetro->offset.x) {
+			tetro->offset.x = ln->offset;
 		}
 
-		calc_size_x(t, ln);
+		calc_size_x(tetro, ln);
 		ln = ln->next;
 	}
-	t->size.x = t->end.x - t->start.x + 1;
+	tetro->size.x = tetro->end.x - tetro->start.x + 1;
 }
 
 void reverse_t_tetro(t_tetro **ref_tetro) {

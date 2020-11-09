@@ -109,11 +109,11 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_piece) {
 
 
 int buffering_calc(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_piece) {
-  t_puzzle *buffer;
+  t_puzzle *buf_pzl;
 
-  buffer = (*ref_pzl);
-  complete_puzzle(&buffer, tetro, try_piece);
-  (*ref_pzl) = buffer;
+  buf_pzl = (*ref_pzl);
+  complete_puzzle(&buf_pzl, tetro, try_piece);
+  (*ref_pzl) = buf_pzl;
   return (1);
 }
 
@@ -129,12 +129,12 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_puzzle **ref_pzl_list, t_tetro *tetr
       try_piece->index.copy(&try_piece->index, &try_pzl->index); // why ?
     }
     buffering_calc(ref_pzl, get_t_tetro(tetro, try_pzl->tetro_start), try_piece);
-    printf("NEXT PIECE %i\n", try_pzl->tetro_start);
+    // printf("NEXT PIECE %i\n", try_pzl->tetro_start);
     try_pzl->tetro_start++;
   }
   if(try_pzl->num < try_pzl->max) {
     if((*ref_pzl)->tetro_used == (*ref_pzl)->tetro_num) {
-      printf("ADD PUZZLE\n");
+      // printf("ADD PUZZLE\n");
       add_t_puzzle(ref_pzl_list, (*ref_pzl));
     }
     res = 0;
@@ -162,13 +162,10 @@ int puzzle(t_puzzle **ref_list, t_tetro *tetro, t_pair *pair, int *inc) {
   try_pzl = new_try();
 
   index = 0;
-  // while(index < pzl->tetro_num) {
-    set_try(try_pzl, pzl, tetro);
-    puzzle_resolution(&pzl, ref_list, tetro, try_pzl);
-    puzzle_analyze(pzl);
-    index++;
-    // try_pzl->tetro_start++;
- // }
+  set_try(try_pzl, pzl, tetro);
+  puzzle_resolution(&pzl, ref_list, tetro, try_pzl);
+  puzzle_analyze(pzl);
+  index++;
 
   // puzzle_print_info(pzl);
 

@@ -9,6 +9,7 @@ void copy_t_puzzle(t_puzzle *dst, t_puzzle *src) {
 	copy_ivec3(&dst->size, &src->size);
 	copy_ivec2(&dst->start_pos, &src->start_pos);
 	copy_ivec2(&dst->last_pos, &src->last_pos);
+  copy_ivec2(&dst->offset, &src->offset);
 	dst->brick = src->brick;
 	dst->space = src->space;
 }
@@ -142,4 +143,91 @@ t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
   puzzle_init(buffer, (*ref_pzl)->blank);
   copy_t_puzzle(buffer, (*ref_pzl));
   return (buffer);
+}
+
+
+
+void calc_offset_puzzle(t_puzzle **ref_pzl) {
+  t_ivec2 pos;
+  char c;
+
+  pos.x = 0;
+  pos.y = 0; 
+  while(pos.y < (*ref_pzl)->size.y) {
+    pos.x = 0;
+    while(pos.x < (*ref_pzl)->size.x) {
+      c = get_t_line((*ref_pzl)->line, pos.y)->content[pos.x];
+      if(c == (*ref_pzl)->blank && (*ref_pzl)->offset.x <= pos.x && pos.y == 0) {
+        (*ref_pzl)->offset.x++;
+      }
+      if(c != (*ref_pzl)->blank) {
+        if((*ref_pzl)->offset.x > 0 && pos.x < (*ref_pzl)->offset.x) {
+          (*ref_pzl)->offset.x = pos.x;
+        }  
+        break;
+      }
+      pos.x++;
+    }
+    if((*ref_pzl)->offset.x == (*ref_pzl)->size.x) {
+      (*ref_pzl)->offset.y++;
+    }  
+    pos.y++;
+  }
+}
+
+
+void translate_x_puzzle(t_puzzle **ref_pzl) {
+  t_ivec2 pos;
+  char c;
+  int ix;
+
+  pos.y = 0;
+  while(pos.y < (*ref_pzl)->size.y) {
+    pos.x = (*ref_pzl)->offset.x;
+    while(pos.x < (*ref_pzl)->size.x + (*ref_pzl)->offset.x) {
+      ix = pos.x - (*ref_pzl)->offset.x;
+      if(pos.x < (*ref_pzl)->size.x) {
+        c = get_t_line((*ref_pzl)->line, pos.y)->content[pos.x];
+        get_t_line((*ref_pzl)->line, pos.y)->content[ix] = c;
+      } else {
+        get_t_line((*ref_pzl)->line, pos.y)->content[ix] = (*ref_pzl)->blank;
+      }
+      pos.x++;
+    }
+    pos.y++;
+  }
+}
+
+void translate_y_puzzle(t_puzzle **ref_pzl) {
+  t_ivec2 pos;
+  char c;
+  int iy;
+
+  pos.y = (*ref_pzl)->offset.y;
+  while(pos.y < (*ref_pzl)->size.y + (*ref_pzl)->offset.y) {
+    pos.x = 0;
+    iy = pos.y - (*ref_pzl)->offset.y;
+    if(pos.y < (*ref_pzl)->size.y) {
+      while(pos.x < (*ref_pzl)->size.x) {
+        c = get_t_line((*ref_pzl)->line, pos.y)->content[pos.x];
+        get_t_line((*ref_pzl)->line, iy)->content[pos.x] = c;
+        pos.x++;
+      }
+    } else {
+      c = (*ref_pzl)->blank;
+      fill_line(&get_t_line((*ref_pzl)->line, iy)->content, c, (*ref_pzl)->size.x);
+    }
+    pos.y++;
+  }
+}
+
+void finalize_puzzle(t_puzzle **ref_pzl) {
+  calc_offset_puzzle(ref_pzl);
+  if((*ref_pzl)->offset.x > 0) {
+    translate_x_puzzle(ref_pzl);
+  }
+
+  if((*ref_pzl)->offset.y > 0) {
+    translate_y_puzzle(ref_pzl);
+  }
 }

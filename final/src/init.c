@@ -27,6 +27,7 @@ void puzzle_init(t_puzzle *pzl, char blank) {
   pzl->space = 0;
   pzl->tetro_num = 0;
   pzl->tetro_used = 0;
+  pzl->score = 0;
 }
 
 

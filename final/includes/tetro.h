@@ -68,6 +68,7 @@ struct s_puzzle {
 	int space;
 	int tetro_num;
 	int tetro_used;
+	int score;
 
 	t_ivec3 size;
 	t_ivec2 start_pos;

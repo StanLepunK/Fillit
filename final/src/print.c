@@ -9,7 +9,7 @@
  * 
  * [0... normal
  * [1... bold
- * [2... italic
+ * [3... italic
  * [4... underline
  * [7... reverse background
  * 
@@ -48,28 +48,16 @@ void puzzle_print_info (t_puzzle *pzl) {
   printf("Brick used: %i\n", pzl->brick);
   printf("Space available: %i\n", pzl->space);
   printf("Space total: %i\n", pzl->size.x * pzl->size.y);
+  printf("score: %i\n", pzl->score);
 }
 
-
-
-// void puzzle_print(t_puzzle **ref_pzl) {
-//   int index;
-
-//   index = 0;
-  
-//   printf("\033[1;36mPUZZLE PRINT %i\033[0m\n", (*ref_pzl)->id);
-//   finalize_puzzle(ref_pzl);
-//   while(index < (*ref_pzl)->size.y) {
-//     printf("%s\n",get_t_line((*ref_pzl)->line,index)->content);
-//     index++;
-//   }
-// }
 void puzzle_print(t_puzzle *pzl) {
   int index;
 
   index = 0;
-  printf("\033[1;36mPUZZLE PRINT %i\033[0m\n", pzl->id);
+  printf("\033[1;33mPUZZLE PRINT %i\033[0m\n", pzl->id);
   finalize_puzzle(&pzl);
+  printf("\033[3;36mSCORE: %i\033[0m\n",pzl->score);
   while(index < pzl->size.y) {
     printf("%s\n",get_t_line(pzl->line,index)->content);
     index++;

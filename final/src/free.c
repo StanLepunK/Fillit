@@ -57,5 +57,6 @@ void free_puzzle_list(t_puzzle **ref_pzl_list) {
 
 
 void free_block(t_block *blk) {
+  free(blk);
   free_line(blk->p_line);
 }

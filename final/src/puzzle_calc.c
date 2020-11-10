@@ -62,10 +62,6 @@ int complete_line_try(t_line *dst_pzl_ln, t_tetro *tetro, t_try *try_piece) {
   return (1);
 }
 
-
-
-
-
 void update_puzzle(t_puzzle **pzl, t_tetro *tetro) {
   (*pzl)->last_pos.copy(&(*pzl)->last_pos,&tetro->pos);
   if(tetro->id == 0) {
@@ -88,13 +84,12 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_piece) {
   t_tetro *buf_tetro;
 
   buf_tetro = tetro_dup(&tetro);
+  // pzl = (*ref_pzl); // cause seg fault
   pzl = puzzle_dup(ref_pzl);
   while(try_piece->num < try_piece->max) {
     if(complete_line_try(pzl->line, buf_tetro, try_piece)) {
       update_puzzle(&pzl, buf_tetro);
       update_try(try_piece);
-      // printf("BINGO try piece: %i < %i\n", try_piece->num,try_piece->max);
-      // puzzle_print(pzl);
       break;
     }
     update_try(try_piece);
@@ -104,16 +99,6 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_piece) {
     pzl = puzzle_dup(ref_pzl);   
   }
   (*ref_pzl) = pzl;
-  return (1);
-}
-
-
-int buffering_calc(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_piece) {
-  t_puzzle *buf_pzl;
-
-  buf_pzl = (*ref_pzl);
-  complete_puzzle(&buf_pzl, tetro, try_piece);
-  (*ref_pzl) = buf_pzl;
   return (1);
 }
 
@@ -128,10 +113,11 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_puzzle **ref_pzl_list, t_tetro *tetr
     if(try_pzl->tetro_start == 0) {
       try_piece->index.copy(&try_piece->index, &try_pzl->index); // why ?
     }
-    buffering_calc(ref_pzl, get_t_tetro(tetro, try_pzl->tetro_start), try_piece);
-    // printf("NEXT PIECE %i\n", try_pzl->tetro_start);
+    complete_puzzle(ref_pzl, get_t_tetro(tetro, try_pzl->tetro_start), try_piece);
     try_pzl->tetro_start++;
   }
+  free(try_piece);
+
   if(try_pzl->num < try_pzl->max) {
     if((*ref_pzl)->tetro_used == (*ref_pzl)->tetro_num) {
       // printf("ADD PUZZLE\n");
@@ -146,7 +132,6 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_puzzle **ref_pzl_list, t_tetro *tetr
     clear_puzzle(ref_pzl, tetro);
     puzzle_resolution(ref_pzl, ref_pzl_list, tetro, try_pzl);
   }
-  free(try_piece);
   return(res);
 }
 
@@ -155,10 +140,11 @@ int puzzle(t_puzzle **ref_list, t_tetro *tetro, t_pair *pair, int *inc) {
   t_try *try_pzl;
   int index;
 
-  if(!(pzl = (t_puzzle*)malloc(sizeof(t_puzzle))))
-		return (0);
-  puzzle_init(pzl, pair->b);
+  if(!puzzle_init(&pzl, pair->b))
+    return(0);
   build_grid_puzzle(&pzl, tetro, inc);
+  // ==77418==    definitely lost: 8 bytes in 4 blocks
+
   try_pzl = new_try();
 
   index = 0;
@@ -166,9 +152,6 @@ int puzzle(t_puzzle **ref_list, t_tetro *tetro, t_pair *pair, int *inc) {
   puzzle_resolution(&pzl, ref_list, tetro, try_pzl);
   puzzle_analyze(pzl);
   index++;
-
-  // puzzle_print_info(pzl);
-
   free_puzzle(pzl);
   free(try_pzl);
 

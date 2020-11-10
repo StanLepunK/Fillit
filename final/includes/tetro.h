@@ -109,7 +109,7 @@ struct  s_try {
 
 
 // build
-int build(const int fd, t_block *t_blk, t_tetro **ref_tetro, t_pair *pair);
+int build(const int fd, t_block **ref_blk, t_tetro **ref_tetro, t_pair *pair);
 void checker_line_set(t_line *temp_line, char *line);
 void checker_line(t_line *temp_line, char *line);
 void checker_block_set(t_block *t_blk, t_line *t_ln, char *line);
@@ -176,10 +176,11 @@ void free_tetro_list(t_tetro **ref);
 void free_line(t_line *line);
 void free_line_list(t_line **ref);
 // init
-void puzzle_init(t_puzzle *pzl, char blank);
-int block_init(t_block *temp_block);
+int puzzle_init(t_puzzle **ref_pzl, char blank);
+int block_init(t_block **ref_blk);
+// int block_init(t_block *temp_block);
 void tetro_init(t_tetro *t);
-int line_init(t_line *ln, t_pair *pair);
+int line_init(t_line **ref_line, t_pair *pair);
 // print
 void puzzle_print(t_puzzle *pzl);
 void puzzle_print_info(t_puzzle *pzl);

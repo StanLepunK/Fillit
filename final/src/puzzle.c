@@ -18,10 +18,8 @@ void copy_t_puzzle(t_puzzle *dst, t_puzzle *src) {
 int add_t_puzzle(t_puzzle **dst, t_puzzle *src) {
   t_puzzle *temp_pzl;
 
-  temp_pzl = NULL;
-  if(!(temp_pzl = (t_puzzle*)malloc(sizeof(t_puzzle))))
-		return (0);
-  puzzle_init(temp_pzl, src->blank);
+  if(!puzzle_init(&temp_pzl, src->blank))
+    return (0);
   copy_t_puzzle(temp_pzl, src);
   temp_pzl->id = src->id++;
 	temp_pzl->next = (*dst);
@@ -130,6 +128,7 @@ int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int *inc) {
     // free(t_line);
     index++;
   }
+  free(t_line);
   return (1);
 }
 
@@ -138,10 +137,8 @@ int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int *inc) {
 t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
   t_puzzle *buffer;
 
-  buffer = NULL;
-  if(!(buffer = (t_puzzle*)malloc(sizeof(t_puzzle))))
-		return (0);
-  puzzle_init(buffer, (*ref_pzl)->blank);
+  if(!puzzle_init(&buffer, (*ref_pzl)->blank))
+    return (NULL);
   copy_t_puzzle(buffer, (*ref_pzl));
   return (buffer);
 }
@@ -235,13 +232,14 @@ void calc_score_puzzle(t_puzzle **ref_pzl) {
       if(c == (*ref_pzl)->blank) {
          val.x = (*ref_pzl)->size.x - pos.x;
          val.y = (*ref_pzl)->size.y - pos.y;
-        (*ref_pzl)->score += (val.x +val.y);
+        (*ref_pzl)->score += (val.x + val.y);
       }
       pos.x++;
     }  
     pos.y++;
   }
 }
+
 void finalize_puzzle(t_puzzle **ref_pzl) {
   calc_offset_puzzle(ref_pzl);
   if((*ref_pzl)->offset.x > 0) {

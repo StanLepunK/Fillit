@@ -1,3 +1,32 @@
+==82687== LEAK SUMMARY:
+==82687== definitely lost: 50,014 bytes in 255 blocks
+==82687== indirectly lost: 100,840 bytes in 2,160 blocks
+==82687== possibly lost: 48 bytes in 2 blocks
+==82687== still reachable: 216 bytes in 7 blocks
+==82687== suppressed: 23,153 bytes in 161 blocks
+
+==77333== LEAK SUMMARY:
+==77333== definitely lost: 50,014 bytes in 255 blocks
+==77333== indirectly lost: 100,840 bytes in 2,160 blocks
+==77333== possibly lost: 48 bytes in 2 blocks
+==77333== still reachable: 216 bytes in 7 blocks
+==77333== suppressed: 23,153 bytes in 161 blocks
+
+==76106== LEAK SUMMARY:
+==76106== definitely lost: 50,179 bytes in 255 blocks
+==76106== indirectly lost: 100,851 bytes in 2,162 blocks
+==76106== possibly lost: 48 bytes in 2 blocks
+==76106== still reachable: 216 bytes in 7 blocks
+==76106== suppressed: 23,153 bytes in 161 blocks
+==76106== Rerun with --leak-check=full to see details of leaked memory
+
+==66230== LEAK SUMMARY:
+==66230== definitely lost: 50,179 bytes in 255 blocks
+==66230== indirectly lost: 100,851 bytes in 2,162 blocks
+==66230== possibly lost: 48 bytes in 2 blocks
+==66230== still reachable: 216 bytes in 7 blocks
+==66230== suppressed: 23,153 bytes in 161 blocks
+
 ==5224== LEAK SUMMARY:
 ==5224== definitely lost: 28,907 bytes in 165 blocks
 ==5224== indirectly lost: 67,366 bytes in 1,441 blocks

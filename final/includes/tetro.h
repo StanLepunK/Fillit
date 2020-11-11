@@ -107,6 +107,18 @@ struct  s_try {
 	int max;
 };
 
+// new
+int new_t_puzzle(t_puzzle **ref_pzl, char blank);
+int new_t_try(t_try **ref_try);
+int new_t_line(t_line **ref_line, t_pair *pair);
+int new_t_block(t_block **ref_blk);
+
+// init
+
+// int block_init(t_block *temp_block);
+void tetro_init(t_tetro *t);
+
+
 
 // build
 int build(const int fd, t_block **ref_blk, t_tetro **ref_tetro, t_pair *pair);
@@ -127,7 +139,6 @@ void tetro_clean_and_format(t_tetro **ref_tetro);
 
 
 // try
-t_try *new_try();
 void try_print(t_try *try);
 void set_try(t_try *try, t_puzzle *pzl, t_tetro *t);
 void update_try(t_try *try);
@@ -143,9 +154,6 @@ void reverse_t_line(t_line **ref);
 int add_t_line(t_line **ref, int rank, t_line *t_ln);
 void line_set_arguments(t_line *temp_line, t_pair *pair);
 int all_lines_dup(t_line **ref, t_line *src);
-
-
-
 
 
 // puzzle
@@ -175,12 +183,7 @@ void free_tetro(t_tetro *tetro);
 void free_tetro_list(t_tetro **ref);
 void free_line(t_line *line);
 void free_line_list(t_line **ref);
-// init
-int puzzle_init(t_puzzle **ref_pzl, char blank);
-int block_init(t_block **ref_blk);
-// int block_init(t_block *temp_block);
-void tetro_init(t_tetro *t);
-int line_init(t_line **ref_line, t_pair *pair);
+
 // print
 void puzzle_print(t_puzzle *pzl);
 void puzzle_print_info(t_puzzle *pzl);

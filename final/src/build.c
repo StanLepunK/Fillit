@@ -115,8 +115,8 @@ int build(const int fd, t_block **ref_blk, t_tetro **ref_tetro, t_pair *pair) {
 
 	temp_tetro = (*ref_tetro);
 	tl = NULL;
-  line_init(&buffer, pair);
-	block_init(ref_blk);
+  new_t_line(&buffer, pair);
+	new_t_block(ref_blk);
 	while (get_next_line(fd, &line) > 0) {
 		build_dict_tetrominos((*ref_blk), &temp_tetro, &tl, ft_strlen(line));
 		checker_line_set(buffer, line);

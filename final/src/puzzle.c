@@ -15,10 +15,20 @@ void copy_t_puzzle(t_puzzle *dst, t_puzzle *src) {
   dst->score = src->score;
 }
 
+
+t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
+  t_puzzle *buffer;
+
+  if(!new_t_puzzle(&buffer, (*ref_pzl)->blank))
+    return (NULL);
+  copy_t_puzzle(buffer, (*ref_pzl));
+  return (buffer);
+}
+
 int add_t_puzzle(t_puzzle **dst, t_puzzle *src) {
   t_puzzle *temp_pzl;
 
-  if(!puzzle_init(&temp_pzl, src->blank))
+  if(!new_t_puzzle(&temp_pzl, src->blank))
     return (0);
   copy_t_puzzle(temp_pzl, src);
   temp_pzl->id = src->id++;
@@ -125,23 +135,15 @@ int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int *inc) {
   index = 0;
   while (index < (*ref_pzl)->size.y) {
     add_t_line(&(*ref_pzl)->line, index, t_line);
-    // free(t_line);
     index++;
   }
-  free(t_line);
+  free_line(t_line);
   return (1);
 }
 
 
 
-t_puzzle *puzzle_dup(t_puzzle **ref_pzl) {
-  t_puzzle *buffer;
 
-  if(!puzzle_init(&buffer, (*ref_pzl)->blank))
-    return (NULL);
-  copy_t_puzzle(buffer, (*ref_pzl));
-  return (buffer);
-}
 
 
 

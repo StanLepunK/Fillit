@@ -98,6 +98,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_piece) {
     free_puzzle(pzl);
     pzl = puzzle_dup(ref_pzl);   
   }
+  free_tetro(buf_tetro);
   (*ref_pzl) = pzl;
   return (1);
 }
@@ -106,7 +107,7 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_puzzle **ref_pzl_list, t_tetro *tetr
   int res;
   t_try *try_piece;
 
-  try_piece = new_try();
+  new_t_try(&try_piece);
   res = 1;
   while(try_pzl->tetro_start < size_t_tetro(tetro)) {
     set_try(try_piece, (*ref_pzl), get_t_tetro(tetro, try_pzl->tetro_start));
@@ -140,12 +141,12 @@ int puzzle(t_puzzle **ref_list, t_tetro *tetro, t_pair *pair, int *inc) {
   t_try *try_pzl;
   int index;
 
-  if(!puzzle_init(&pzl, pair->b))
+  if(!new_t_puzzle(&pzl, pair->b))
     return(0);
   build_grid_puzzle(&pzl, tetro, inc);
   // ==77418==    definitely lost: 8 bytes in 4 blocks
 
-  try_pzl = new_try();
+  new_t_try(&try_pzl);
 
   index = 0;
   set_try(try_pzl, pzl, tetro);

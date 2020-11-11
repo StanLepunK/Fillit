@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/11/10 18:48:37 by stan             ###   ########.fr       */
+/*   Updated: 2020/11/11 09:47:51 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int main(int num, char **arg) {
 	}
 	free_block(blk);
 	// ==75988== definitely lost: 3 bytes in 3 blocks
+	// ==77696== definitely lost: 19 bytes in 4 blocks
 	
 	tetro_clean_and_format(&tetro);
 

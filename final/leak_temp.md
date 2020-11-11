@@ -1,3 +1,14 @@
+==77922== definitely lost: 24 bytes in 5 blocks
+==77922== indirectly lost: 0 bytes in 0 blocks
+
+==77483== LEAK SUMMARY:
+==77483== definitely lost: 19 bytes in 4 blocks
+==77483== indirectly lost: 0 bytes in 0 block
+
+==77183== LEAK SUMMARY:
+==77183== definitely lost: 24 bytes in 5 blocks
+==77183== indirectly lost: 0 bytes in 0 blocks
+
 ==80946== LEAK SUMMARY:
 ==80946== definitely lost: 2,008 bytes in 14 blocks
 ==80946== indirectly lost: 3,720 bytes in 80 blocks

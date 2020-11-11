@@ -1,38 +1,10 @@
 #include "../includes/tetro.h"
 // try
-t_try *new_try() {
-  t_try *try;
-  try = NULL;
-  if(!(try = (t_try*)malloc(sizeof(t_try))))
-    return (0);
-  ivec2_init(&try->index);
-  ivec2_init(&try->offset);
-  try->tetro_start = 0;
-  try->num = 0;
-	try->max = 0;
-  return (try);
-}
+
 
 
 // puzzle
-int puzzle_init(t_puzzle **ref_pzl, char blank) {
-  (*ref_pzl) = NULL;
-  if(!((*ref_pzl) = (t_puzzle*)malloc(sizeof(t_puzzle))))
-		return (0);
-  (*ref_pzl)->id = 0;
-  (*ref_pzl)->line = NULL;
-  ivec3_init(&(*ref_pzl)->size);
-  ivec2_init(&(*ref_pzl)->start_pos);
-  ivec2_init(&(*ref_pzl)->last_pos);
-  ivec2_init(&(*ref_pzl)->offset);
-  (*ref_pzl)->blank = blank;
-  (*ref_pzl)->brick = 0;
-  (*ref_pzl)->space = 0;
-  (*ref_pzl)->tetro_num = 0;
-  (*ref_pzl)->tetro_used = 0;
-  (*ref_pzl)->score = 0;
-  return(1);
-}
+
 
 
 

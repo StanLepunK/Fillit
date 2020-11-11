@@ -79,30 +79,26 @@ t_line *get_t_line(t_line *ln, int index) {
 	return (0);
 }
 
-int malloc_line(char **ref, size_t len) {
-	if(!((*ref) = (char*)malloc(sizeof(char) * (len + 1))))
-    return (0);
-	return(1);
-}
 
-int fill_line(char **ref, char c, size_t len) {
+int fill_line(char **ref_string, char c, size_t len) {
   int index;
 
   index = 0;
   while (index < len) {
-    (*ref)[index] = c;
+    (*ref_string)[index] = c;
     index++;
   }
-  (*ref)[index] = '\0';
+  (*ref_string)[index] = '\0';
   return (1);
 }
 
-int fill_t_line(t_line **ref, char c, size_t len) {
-  if(!((*ref) = (t_line*)malloc(sizeof(t_line))))
-    return (0);
-	(*ref)->length = len;
-	(*ref)->col_max = len;
-	malloc_line(&(*ref)->content, len);
-  fill_line(&(*ref)->content, c, len);
+int fill_t_line(t_line **ref_line, char c, size_t len) {
+  // if(!((*ref_line) = (t_line*)malloc(sizeof(t_line))))
+  //   return (0);
+	(*ref_line)->length = len;
+	(*ref_line)->col_max = len;
+	// if(!new_string(&(*ref_line)->content, len))
+	// 	return(0);
+  fill_line(&(*ref_line)->content, c, len);
   return(1);
 }

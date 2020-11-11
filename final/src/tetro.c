@@ -37,10 +37,8 @@ void tetro_lines_dup(t_line **ref, t_tetro *tetro) {
 t_tetro *tetro_dup(t_tetro **ref) {
 	t_tetro *buffer;
 
-	buffer = NULL;
-	if(!(buffer = (t_tetro*)malloc(sizeof(t_tetro))))
-		return (0);
-	tetro_init(buffer);
+	if(!new_t_tetro(&buffer))
+		return(NULL);
 	buffer->id = (*ref)->id;
 	buffer->name = (*ref)->name;
 	ivec2_init(&buffer->pos);
@@ -56,19 +54,17 @@ t_tetro *tetro_dup(t_tetro **ref) {
 	return (buffer);
 }
 
-int tetro_add(t_tetro **ref, t_line *tl, int id) {
+int tetro_add(t_tetro **ref_tetro, t_line *tl, int id) {
 	t_tetro *temp_tetro;
 	int ret;
 
 	ret = 0;
-	temp_tetro = NULL;
-	if(!(temp_tetro = (t_tetro*)malloc(sizeof(t_tetro))))
-		return (0);
-	tetro_init(temp_tetro);
+	if(!new_t_tetro(&temp_tetro))
+		return(0);
 	temp_tetro->id = (++id);
 	ret = all_lines_dup(&temp_tetro->line, tl);
-	temp_tetro->next = (*ref);
-  (*ref) = temp_tetro;
+	temp_tetro->next = (*ref_tetro);
+  (*ref_tetro) = temp_tetro;
 	return(ret);
 }
 

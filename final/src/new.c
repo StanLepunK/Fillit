@@ -1,13 +1,40 @@
 #include "../includes/tetro.h"
 
+
+int new_t_tetro(t_tetro **ref_tetro) {
+  (*ref_tetro) = NULL;
+	if(!((*ref_tetro) = (t_tetro*)malloc(sizeof(t_tetro))))
+		return (0);
+  tetro_init((*ref_tetro));
+  return (1);
+}
+
+int new_t_line_puzzle(t_line **ref_line, char c, size_t len) {
+  if(!((*ref_line) = (t_line*)malloc(sizeof(t_line))))
+    return (0);
+	(*ref_line)->length = len;
+	(*ref_line)->col_max = len;
+	if(!new_string(&(*ref_line)->content, len))
+		return(0);
+  fill_line(&(*ref_line)->content, c, len);
+  return(1);
+}
+
+
 int new_t_line(t_line **ref_line, t_pair *pair) {
   (*ref_line) = NULL;
   if (!((*ref_line) = (t_line*)malloc(sizeof(t_line))))
     return(0);
   line_set_arguments((*ref_line), pair);
-  if (!((*ref_line)->content = (char*)malloc(sizeof(char) *((*ref_line)->col_max + 1))))
+  if (!new_string(&(*ref_line)->content, (*ref_line)->col_max))
 		return (0);
   return(1);
+}
+
+int new_string(char **ref, size_t len) {
+	if(!((*ref) = (char*)malloc(sizeof(char) * (len + 1))))
+    return (0);
+	return(1);
 }
 
 

@@ -125,7 +125,7 @@ int build_grid_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, int *inc) {
   
   set_grid_size(*ref_pzl, tetro, inc);
   c = tetro->line->pair.b;
-  fill_t_line(&t_line, c, (*ref_pzl)->size.x);
+  new_t_line_puzzle(&t_line, c, (*ref_pzl)->size.x);
   t_line->pair.b = c;
   t_line->empty = 1;
   t_line->offset = 0;

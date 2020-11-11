@@ -111,12 +111,14 @@ struct  s_try {
 int new_t_puzzle(t_puzzle **ref_pzl, char blank);
 int new_t_try(t_try **ref_try);
 int new_t_line(t_line **ref_line, t_pair *pair);
+int new_t_line_puzzle(t_line **ref_line, char c, size_t len);
 int new_t_block(t_block **ref_blk);
+int new_string(char **ref, size_t len);
+int new_t_tetro(t_tetro **ref_tetro);
+
 
 // init
-
-// int block_init(t_block *temp_block);
-void tetro_init(t_tetro *t);
+void tetro_init(t_tetro *tetro);
 
 
 
@@ -147,19 +149,17 @@ void update_try(t_try *try);
 // line
 t_line *get_t_line(t_line *ln, int index);
 void copy_t_line(t_line *dst, const t_line *src);
-int malloc_line(char **ref, size_t len);
-int fill_line(char **ref, char c, size_t len);
-int fill_t_line(t_line **ref, char c, size_t len);
-void reverse_t_line(t_line **ref);
-int add_t_line(t_line **ref, int rank, t_line *t_ln);
-void line_set_arguments(t_line *temp_line, t_pair *pair);
-int all_lines_dup(t_line **ref, t_line *src);
+int fill_line(char **ref_string, char c, size_t len);
+void reverse_t_line(t_line **ref_line);
+int add_t_line(t_line **ref_line, int rank, t_line *t_ln);
+void line_set_arguments(t_line *line, t_pair *pair);
+int all_lines_dup(t_line **ref_line, t_line *src);
 
 
 // puzzle
 void finalize_puzzle(t_puzzle **ref_pzl);
 void copy_t_puzzle(t_puzzle *dst, t_puzzle *src);
-int add_t_puzzle(t_puzzle **dst, t_puzzle *src);
+int add_t_puzzle(t_puzzle **ref_dst, t_puzzle *src);
 int size_t_puzzle(t_puzzle *pzl);
 void clear_puzzle(t_puzzle **ref_pzl, t_tetro *t);
 void puzzle_analyze(t_puzzle *pzl);
@@ -180,15 +180,15 @@ void free_puzzle(t_puzzle *pzl);;
 void free_puzzle_list(t_puzzle **ref_pzl_list);
 void free_block(t_block *blk);
 void free_tetro(t_tetro *tetro);
-void free_tetro_list(t_tetro **ref);
+void free_tetro_list(t_tetro **ref_tetro);
 void free_line(t_line *line);
-void free_line_list(t_line **ref);
+void free_line_list(t_line **ref_line);
 
 // print
 void puzzle_print(t_puzzle *pzl);
 void puzzle_print_info(t_puzzle *pzl);
 void puzzle_list_print(t_puzzle *list);
-void tetro_print(t_tetro *t, int print_info_is);
-void print_all_tetro(t_tetro *t, int print_info_is);
+void tetro_print(t_tetro *tetro, int print_info_is);
+void print_all_tetro(t_tetro *tetro, int print_info_is);
 
 #endif

@@ -144,7 +144,6 @@ int puzzle(t_puzzle **ref_list, t_tetro *tetro, t_pair *pair, int *inc) {
   if(!new_t_puzzle(&pzl, pair->b))
     return(0);
   build_grid_puzzle(&pzl, tetro, inc);
-  // ==77418==    definitely lost: 8 bytes in 4 blocks
 
   new_t_try(&try_pzl);
 

@@ -92,13 +92,3 @@ int fill_line(char **ref_string, char c, size_t len) {
   return (1);
 }
 
-int fill_t_line(t_line **ref_line, char c, size_t len) {
-  // if(!((*ref_line) = (t_line*)malloc(sizeof(t_line))))
-  //   return (0);
-	(*ref_line)->length = len;
-	(*ref_line)->col_max = len;
-	// if(!new_string(&(*ref_line)->content, len))
-	// 	return(0);
-  fill_line(&(*ref_line)->content, c, len);
-  return(1);
-}

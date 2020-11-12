@@ -1,3 +1,7 @@
+==4249== LEAK SUMMARY:
+==4249== definitely lost: 371 bytes in 5 blocks
+==4249== indirectly lost: 720 bytes in 16 blocks
+
 ==77922== definitely lost: 24 bytes in 5 blocks
 ==77922== indirectly lost: 0 bytes in 0 blocks
 

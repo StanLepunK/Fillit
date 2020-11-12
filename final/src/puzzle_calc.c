@@ -99,6 +99,7 @@ int complete_puzzle(t_puzzle **ref_pzl, t_tetro *tetro, t_try *try_piece) {
     pzl = puzzle_dup(ref_pzl);   
   }
   free_tetro(buf_tetro);
+  free_puzzle((*ref_pzl));
   (*ref_pzl) = pzl;
   return (1);
 }
@@ -121,7 +122,6 @@ int puzzle_resolution(t_puzzle **ref_pzl, t_puzzle **ref_pzl_list, t_tetro *tetr
 
   if(try_pzl->num < try_pzl->max) {
     if((*ref_pzl)->tetro_used == (*ref_pzl)->tetro_num) {
-      // printf("ADD PUZZLE\n");
       add_t_puzzle(ref_pzl_list, (*ref_pzl));
     }
     res = 0;

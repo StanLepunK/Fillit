@@ -9,6 +9,9 @@
 #include "vec.h"
 
 
+extern int COUNT_NEW;
+extern int COUNT_FREE;
+extern int COUNT_FREE_LIST;
 typedef struct s_pair t_pair;
 struct s_pair {
 	int id;

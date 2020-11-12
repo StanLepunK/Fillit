@@ -1,6 +1,16 @@
+==4724== LEAK SUMMARY:
+==4724== definitely lost: 3 bytes in 3 blocks
+==4724== indirectly lost: 0 bytes in 0 blocks
+COUNT_NEW 1515
+COUNT_FREE 7958
+COUNT_FREE_LIST 757
+
 ==79397== LEAK SUMMARY:
 ==79397== definitely lost: 23,003 bytes in 128 blocks
 ==79397== indirectly lost: 54,340 bytes in 1,160 blocks
+COUNT_NEW 1515
+COUNT_FREE 7253
+COUNT_FREE_LIST 757
 
 ==78126== LEAK SUMMARY:
 ==78126== definitely lost: 23,019 bytes in 129 blocks

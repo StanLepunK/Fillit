@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/11/11 09:47:51 by stan             ###   ########.fr       */
+/*   Updated: 2020/11/12 13:27:00 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,14 @@ gcc -o fillit *.c -I -L libft/libft.a && ./fillit "../import/sample.fillit"
 valgrind --leak-check=full --track-origins=yes --show-leak-kinds=definite,indirect ./fillit ..import/sample.fillit
 */
 
-
+int COUNT_NEW;
+int COUNT_FREE;
+int COUNT_FREE_LIST;
 // clang src/*.c header/*.h -I ./ -I./libft -L ./libft/ -lft && ./a.out "./import/sample_0.fillit"
 int main(int num, char **arg) {
+	COUNT_NEW = 0;
+	COUNT_FREE = 0;
+	COUNT_FREE_LIST = 0;
 	t_puzzle *pzl_list;
 	t_block *blk;
 	t_tetro *tetro;
@@ -51,8 +56,6 @@ int main(int num, char **arg) {
 		build(fd, &blk, &tetro, &pair);
 	}
 	free_block(blk);
-	// ==75988== definitely lost: 3 bytes in 3 blocks
-	// ==77696== definitely lost: 19 bytes in 4 blocks
 	
 	tetro_clean_and_format(&tetro);
 
@@ -68,5 +71,8 @@ int main(int num, char **arg) {
 	free(inc);
 	free_puzzle_list(&pzl_list);
 	free_tetro_list(&tetro);
+	printf("COUNT_NEW %i\n",COUNT_NEW);
+	printf("COUNT_FREE %i\n",COUNT_FREE);
+	printf("COUNT_FREE_LIST %i\n",COUNT_FREE_LIST);
 	return (0);
 }

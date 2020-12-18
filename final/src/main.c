@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 12:08:29 by smarcais          #+#    #+#             */
-/*   Updated: 2020/11/12 13:40:05 by stan             ###   ########.fr       */
+/*   Updated: 2020/12/18 11:04:16 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ gcc -o fillit *.c -I -L libft/libft.a && ./fillit "../import/sample.fillit"
 valgrind --leak-check=full --track-origins=yes --show-leak-kinds=definite,indirect ./fillit ..import/sample.fillit
 */
 // clang src/*.c header/*.h -I ./ -I./libft -L ./libft/ -lft && ./a.out "./import/sample_0.fillit"
+// clang src/*.c includes/*.h -I ./ -I./libft -L ./libft/ -lft && ./a.out "./import/example4.txt"
 int main(int num, char **arg) {
 	t_puzzle *pzl_list;
 	t_block *blk;
@@ -54,7 +55,6 @@ int main(int num, char **arg) {
 
 	print_all_tetro(tetro, 0);
 	
-
 	if(puzzle(&pzl_list, tetro, &pair, inc)) {
 		puzzle_list_print(pzl_list);
 	} else {
